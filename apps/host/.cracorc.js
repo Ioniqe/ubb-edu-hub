@@ -12,10 +12,11 @@ module.exports = () => ({
     plugins: {
       add: [
         new ModuleFederationPlugin({
-          name: "student",
+          name: "host",
           filename: "remoteEntry.js",
-          exposes: {
-            "./Dashboard": "./src/Dashboard",
+          exposes: {},
+          remotes: {
+            student: "student@http://localhost:3001/remoteEntry.js",
           },
           shared: {
             ...deps,
