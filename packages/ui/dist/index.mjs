@@ -6365,7 +6365,7 @@ var Wrapper = ({ title, routes, children }) => {
           Box_default,
           {
             sx: {
-              width: "20vw",
+              width: "15vw",
               height: "auto",
               flexDirection: "column",
               alignItems: "start",
