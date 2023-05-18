@@ -4,11 +4,15 @@ const deps = require("./package.json").dependencies;
 
 module.exports = () => ({
   webpack: {
-    configure: {
-      output: {
-        publicPath: "auto",
-      },
+    configure: (config, { env }) => {
+      config.output.publicPath =
+        env === "development"
+          ? "http://localhost:3000/"
+          : "http://localhost:3000/";
+
+      return config;
     },
+
     plugins: {
       add: [
         new ModuleFederationPlugin({
