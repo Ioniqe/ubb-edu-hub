@@ -22,7 +22,7 @@ export const Wrapper = ({ title, routes, children }: WrapperProps) => {
     >
       <Box
         sx={{
-          width: "15vw",
+          width: "250px",
           height: "auto",
           flexDirection: "column",
           alignItems: "start",

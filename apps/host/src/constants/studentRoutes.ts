@@ -2,7 +2,7 @@ import { Route } from "ui/types/route";
 
 export const studentRoutes: Route[] = [
   {
-    name: "Dashboard",
+    name: "Student Dashboard",
     route: "/",
     iconName: "dashboard",
   },
