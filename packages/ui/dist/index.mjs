@@ -1385,18 +1385,6 @@ var require_hoist_non_react_statics_cjs = __commonJS({
   }
 });
 
-// Button.tsx
-import { jsx } from "react/jsx-runtime";
-var Button = () => {
-  return /* @__PURE__ */ jsx("button", { onClick: () => alert("boop"), children: "Boop" });
-};
-
-// Header.tsx
-import { jsx as jsx2 } from "react/jsx-runtime";
-var Header = ({ text }) => {
-  return /* @__PURE__ */ jsx2("h1", { children: text });
-};
-
 // ../../node_modules/.pnpm/@mui+material@5.4.2_@emotion+react@11.7.1_@emotion+styled@11.6.0_react-dom@17.0.2_react@17.0.2/node_modules/@mui/material/colors/common.js
 var common = {
   black: "#000",
@@ -6349,7 +6337,7 @@ process.env.NODE_ENV !== "production" ? Divider.propTypes = {
 var Divider_default = Divider;
 
 // Wrapper.tsx
-import { jsx as jsx3, jsxs } from "react/jsx-runtime";
+import { jsx, jsxs } from "react/jsx-runtime";
 var Wrapper = ({ title, routes, children }) => {
   return /* @__PURE__ */ jsxs(
     Box_default,
@@ -6374,9 +6362,9 @@ var Wrapper = ({ title, routes, children }) => {
               py: 3
             },
             children: [
-              /* @__PURE__ */ jsx3(Typography_default, { textAlign: "center", children: `UBB'S EDU HUB` }),
-              /* @__PURE__ */ jsx3(Typography_default, { textAlign: "center", children: title }),
-              /* @__PURE__ */ jsx3(
+              /* @__PURE__ */ jsx(Typography_default, { textAlign: "center", children: `UBB'S EDU HUB` }),
+              /* @__PURE__ */ jsx(Typography_default, { textAlign: "center", children: title }),
+              /* @__PURE__ */ jsx(
                 Divider_default,
                 {
                   sx: {
@@ -6386,7 +6374,7 @@ var Wrapper = ({ title, routes, children }) => {
                   color: "#FFFFFF" /* WHITE */
                 }
               ),
-              /* @__PURE__ */ jsx3(Box_default, { sx: { px: 2 }, children: routes.map((route, index) => /* @__PURE__ */ jsxs(
+              /* @__PURE__ */ jsx(Box_default, { sx: { px: 2 }, children: routes.map((route, index) => /* @__PURE__ */ jsxs(
                 Box_default,
                 {
                   sx: {
@@ -6395,8 +6383,8 @@ var Wrapper = ({ title, routes, children }) => {
                     justifyContent: "start"
                   },
                   children: [
-                    /* @__PURE__ */ jsx3("span", { className: "material-icons", children: route.iconName }),
-                    /* @__PURE__ */ jsx3(Typography_default, { sx: { pl: 2 }, children: route.name })
+                    /* @__PURE__ */ jsx("span", { className: "material-icons", children: route.iconName }),
+                    /* @__PURE__ */ jsx(Typography_default, { sx: { pl: 2 }, children: route.name })
                   ]
                 },
                 index
@@ -6404,14 +6392,12 @@ var Wrapper = ({ title, routes, children }) => {
             ]
           }
         ),
-        /* @__PURE__ */ jsx3(Box_default, { sx: { flex: 1, p: 4, backgroundColor: "#F0F2F3" /* MAIN */ }, children })
+        /* @__PURE__ */ jsx(Box_default, { sx: { flex: 1, p: 4, backgroundColor: "#F0F2F3" /* MAIN */ }, children })
       ]
     }
   );
 };
 export {
-  Button,
-  Header,
   Wrapper
 };
 /*! Bundled license information:
