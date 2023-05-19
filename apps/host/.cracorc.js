@@ -8,7 +8,7 @@ module.exports = () => ({
       config.output.publicPath =
         env === "development"
           ? "http://localhost:3000/"
-          : "http://localhost:3000/";
+          : "https://ubb-edu-hub-host-ioniqe.vercel.app/";
 
       return config;
     },
@@ -20,7 +20,8 @@ module.exports = () => ({
           filename: "remoteEntry.js",
           exposes: {},
           remotes: {
-            student: "student@http://localhost:3001/remoteEntry.js",
+            student:
+              "student@https://ubb-edu-hub-student-ioniqe.vercel.app/remoteEntry.js",
           },
           shared: {
             ...deps,
