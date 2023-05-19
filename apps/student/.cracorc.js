@@ -8,7 +8,7 @@ module.exports = () => ({
       config.output.publicPath =
         env === "development"
           ? "http://localhost:3001/"
-          : "http://localhost:3001/";
+          : "https://ubb-edu-hub-student-i6ylq2vmk-ioniqe.vercel.app/";
 
       return config;
     },
