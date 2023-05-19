@@ -4,11 +4,15 @@ const deps = require("./package.json").dependencies;
 
 module.exports = () => ({
   webpack: {
-    configure: {
-      output: {
-        publicPath: "auto",
-      },
+    configure: (config, { env }) => {
+      config.output.publicPath =
+        env === "development"
+          ? "http://localhost:3000/"
+          : "https://ubb-edu-hub-host-ioniqe.vercel.app/";
+
+      return config;
     },
+
     plugins: {
       add: [
         new ModuleFederationPlugin({
@@ -16,7 +20,8 @@ module.exports = () => ({
           filename: "remoteEntry.js",
           exposes: {},
           remotes: {
-            student: "student@http://localhost:3001/remoteEntry.js",
+            student:
+              "student@https://ubb-edu-hub-student-ioniqe.vercel.app/remoteEntry.js",
           },
           shared: {
             ...deps,

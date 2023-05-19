@@ -1394,23 +1394,9 @@ var require_hoist_non_react_statics_cjs = __commonJS({
 // index.tsx
 var ui_exports = {};
 __export(ui_exports, {
-  Button: () => Button,
-  Header: () => Header,
   Wrapper: () => Wrapper
 });
 module.exports = __toCommonJS(ui_exports);
-
-// Button.tsx
-var import_jsx_runtime = require("react/jsx-runtime");
-var Button = () => {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => alert("boop"), children: "Boop" });
-};
-
-// Header.tsx
-var import_jsx_runtime2 = require("react/jsx-runtime");
-var Header = ({ text }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h1", { children: text });
-};
 
 // ../../node_modules/.pnpm/@mui+material@5.4.2_@emotion+react@11.7.1_@emotion+styled@11.6.0_react-dom@17.0.2_react@17.0.2/node_modules/@mui/material/colors/common.js
 var common = {
@@ -4871,7 +4857,7 @@ function clsx() {
 var clsx_m_default = clsx;
 
 // ../../node_modules/.pnpm/@mui+system@5.12.3_@emotion+react@11.7.1_@emotion+styled@11.6.0_react@17.0.2/node_modules/@mui/system/esm/createBox.js
-var import_jsx_runtime3 = require("react/jsx-runtime");
+var import_jsx_runtime = require("react/jsx-runtime");
 var _excluded4 = ["className", "component"];
 function createBox(options = {}) {
   const {
@@ -4889,7 +4875,7 @@ function createBox(options = {}) {
       className,
       component = "div"
     } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded4);
-    return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(BoxRoot, _extends({
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BoxRoot, _extends({
       as: component,
       ref,
       className: clsx_m_default(className, generateClassName ? generateClassName(defaultClassName) : defaultClassName),
@@ -5930,7 +5916,7 @@ function getTypographyUtilityClass(slot) {
 var typographyClasses = generateUtilityClasses("MuiTypography", ["root", "h1", "h2", "h3", "h4", "h5", "h6", "subtitle1", "subtitle2", "body1", "body2", "inherit", "button", "caption", "overline", "alignLeft", "alignRight", "alignCenter", "alignJustify", "noWrap", "gutterBottom", "paragraph"]);
 
 // ../../node_modules/.pnpm/@mui+material@5.4.2_@emotion+react@11.7.1_@emotion+styled@11.6.0_react-dom@17.0.2_react@17.0.2/node_modules/@mui/material/Typography/Typography.js
-var import_jsx_runtime4 = require("react/jsx-runtime");
+var import_jsx_runtime2 = require("react/jsx-runtime");
 var _excluded11 = ["align", "className", "component", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"];
 var useUtilityClasses = (ownerState) => {
   const {
@@ -6026,7 +6012,7 @@ var Typography = /* @__PURE__ */ React3.forwardRef(function Typography2(inProps,
   });
   const Component = component || (paragraph ? "p" : variantMapping[variant] || defaultVariantMapping[variant]) || "span";
   const classes = useUtilityClasses(ownerState);
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(TypographyRoot, _extends({
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(TypographyRoot, _extends({
     as: Component,
     ref,
     ownerState,
@@ -6130,7 +6116,7 @@ function getDividerUtilityClass(slot) {
 var dividerClasses = generateUtilityClasses("MuiDivider", ["root", "absolute", "fullWidth", "inset", "middle", "flexItem", "light", "vertical", "withChildren", "withChildrenVertical", "textAlignRight", "textAlignLeft", "wrapper", "wrapperVertical"]);
 
 // ../../node_modules/.pnpm/@mui+material@5.4.2_@emotion+react@11.7.1_@emotion+styled@11.6.0_react-dom@17.0.2_react@17.0.2/node_modules/@mui/material/Divider/Divider.js
-var import_jsx_runtime5 = require("react/jsx-runtime");
+var import_jsx_runtime3 = require("react/jsx-runtime");
 var _excluded12 = ["absolute", "children", "className", "component", "flexItem", "light", "orientation", "role", "textAlign", "variant"];
 var useUtilityClasses2 = (ownerState) => {
   const {
@@ -6285,14 +6271,14 @@ var Divider = /* @__PURE__ */ React4.forwardRef(function Divider2(inProps, ref) 
     variant
   });
   const classes = useUtilityClasses2(ownerState);
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(DividerRoot, _extends({
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(DividerRoot, _extends({
     as: component,
     className: clsx_m_default(classes.root, className),
     role,
     ref,
     ownerState
   }, other, {
-    children: children ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(DividerWrapper, {
+    children: children ? /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(DividerWrapper, {
       className: classes.wrapper,
       ownerState,
       children
@@ -6364,9 +6350,9 @@ process.env.NODE_ENV !== "production" ? Divider.propTypes = {
 var Divider_default = Divider;
 
 // Wrapper.tsx
-var import_jsx_runtime6 = require("react/jsx-runtime");
+var import_jsx_runtime4 = require("react/jsx-runtime");
 var Wrapper = ({ title, routes, children }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
     Box_default,
     {
       sx: {
@@ -6376,7 +6362,7 @@ var Wrapper = ({ title, routes, children }) => {
         flexDirection: "row"
       },
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
           Box_default,
           {
             sx: {
@@ -6389,9 +6375,9 @@ var Wrapper = ({ title, routes, children }) => {
               py: 3
             },
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Typography_default, { textAlign: "center", children: `UBB'S EDU HUB` }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Typography_default, { textAlign: "center", children: title }),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Typography_default, { textAlign: "center", children: `UBB'S EDU HUB` }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Typography_default, { textAlign: "center", children: title }),
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
                 Divider_default,
                 {
                   sx: {
@@ -6401,7 +6387,7 @@ var Wrapper = ({ title, routes, children }) => {
                   color: "#FFFFFF" /* WHITE */
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Box_default, { sx: { px: 2 }, children: routes.map((route, index) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
+              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Box_default, { sx: { px: 2 }, children: routes.map((route, index) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
                 Box_default,
                 {
                   sx: {
@@ -6410,8 +6396,8 @@ var Wrapper = ({ title, routes, children }) => {
                     justifyContent: "start"
                   },
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "material-icons", children: route.iconName }),
-                    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Typography_default, { sx: { pl: 2 }, children: route.name })
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: "material-icons", children: route.iconName }),
+                    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Typography_default, { sx: { pl: 2 }, children: route.name })
                   ]
                 },
                 index
@@ -6419,15 +6405,13 @@ var Wrapper = ({ title, routes, children }) => {
             ]
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Box_default, { sx: { flex: 1, p: 4, backgroundColor: "#F0F2F3" /* MAIN */ }, children })
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Box_default, { sx: { flex: 1, p: 4, backgroundColor: "#F0F2F3" /* MAIN */ }, children })
       ]
     }
   );
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  Button,
-  Header,
   Wrapper
 });
 /*! Bundled license information:
