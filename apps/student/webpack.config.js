@@ -1,14 +1,15 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const path = require("path");
-
 const deps = require("./package.json").dependencies;
+
 module.exports = (_, argv) => ({
   output: {
     publicPath:
       argv.mode === "development"
         ? "http://localhost:3001/"
         : "https://ubb-edu-hub-student-ioniqe.vercel.app/",
+    path: path.resolve("./dist"),
   },
 
   resolve: {
