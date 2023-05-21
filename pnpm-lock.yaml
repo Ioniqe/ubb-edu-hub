@@ -198,6 +198,9 @@ importers:
 
   packages/ui:
     dependencies:
+      '@babel/runtime':
+        specifier: ^7.21.5
+        version: 7.21.5
       '@types/node':
         specifier: ^16.11.26
         version: 16.18.30
