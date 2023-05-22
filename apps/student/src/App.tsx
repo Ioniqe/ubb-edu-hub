@@ -3,16 +3,13 @@ import ReactDOM from "react-dom";
 
 import "./index.css";
 import Dashboard from "./Dashboard";
+import { Box } from "@mui/material";
 
 const App = () => {
   return (
-    <div className="container">
-      <div>Name: student</div>
-      <div>Framework: react</div>
-      <div>Language: TypeScript</div>
-      <div>CSS: Empty CSS</div>
+    <Box>
       <Dashboard />
-    </div>
+    </Box>
   );
 };
 
