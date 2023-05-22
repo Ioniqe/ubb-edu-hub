@@ -8,10 +8,10 @@ export const useCustomTheme = (mode: PaletteMode) => {
   return useMemo(
     () =>
       createTheme({
-        palette: getPaletteConfig(mode),
+        palette: { ...getPaletteConfig(mode) },
         typography: TypographyConfig,
         components,
       }),
-    []
+    [mode]
   );
 };

@@ -1,5 +1,3 @@
-import { Colors } from "../../enums/colors";
-
 // TODO
 export const Button = {
   styleOverrides: {
@@ -14,7 +12,7 @@ export const Button = {
       // },
     },
     contained: {
-      color: Colors.WHITE,
+      // color: Colors.WHITE,
       // "&:disabled": {
       //   border: "1px solid #BDBDBD",
       //   color: Colors.TEXT_LIGHT_2,

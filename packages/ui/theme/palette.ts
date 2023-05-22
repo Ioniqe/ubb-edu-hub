@@ -2,11 +2,11 @@ import { PaletteMode } from "@mui/material";
 import { Colors } from "../enums/colors";
 
 export const getPaletteConfig = (mode: PaletteMode) => ({
-  mode: mode as PaletteMode,
   ...(mode === "light"
     ? {
         // palette values for light mode
         primary: { main: Colors.MAIN_BLUE },
+        secondary: { main: Colors.MAIN_LIGHT },
         background: {
           default: Colors.MAIN,
           paper: Colors.MAIN_LIGHT,
@@ -17,10 +17,11 @@ export const getPaletteConfig = (mode: PaletteMode) => ({
         // dark theme
         // palette values for colorblind students (initially 'dark' theme)
         primary: { main: Colors.RED_TEST },
+        secondary: { main: Colors.RED_TEST },
         background: {
-          default: Colors.MAIN,
-          paper: Colors.MAIN_LIGHT,
+          default: Colors.RED_TEST,
+          paper: Colors.RED_TEST,
         },
-        text: { primary: Colors.TEXT },
+        text: { primary: Colors.RED_TEST },
       }),
 });
