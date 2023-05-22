@@ -8,4 +8,6 @@ export enum Colors {
   ACCENT_YELLOW = "#FFC37B",
   ACCENT_BLUE = "#5C97C4",
   ACCENT_SALMON = "#F47976",
+
+  RED_TEST = "#670a07",
 }
