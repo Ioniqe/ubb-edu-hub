@@ -80,7 +80,15 @@ module.exports = (_, argv) => ({
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./Dashboard": "./src/Dashboard",
+        "./Assignments": "./src/pages/Assignments",
+        "./Badges": "./src/pages/Badges",
+        "./Challenges": "./src/pages/Challenges",
+        "./Checklists": "./src/pages/Checklists",
+        "./Dashboard": "./src/pages/Dashboard",
+        "./Roadmaps": "./src/pages/Roadmaps",
+        "./Subjects": "./src/pages/Subjects",
+        "./Profile": "./src/pages/Profile",
+        "./Settings": "./src/pages/Settings",
       },
       shared: {
         ...deps,

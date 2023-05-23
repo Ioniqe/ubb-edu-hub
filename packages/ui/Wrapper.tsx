@@ -9,8 +9,8 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { Colors } from "./enums/colors";
-import { Route } from "./types/route";
+import { Colors } from "./enums";
+import { Route } from "./types";
 import { useCustomTheme } from "./theme";
 
 type WrapperProps = {
@@ -22,6 +22,7 @@ type WrapperProps = {
 export const Wrapper = ({ title, routes, children }: WrapperProps) => {
   const [mode, setMode] = React.useState<PaletteMode>("light");
   const theme = useCustomTheme(mode);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -55,7 +56,7 @@ export const Wrapper = ({ title, routes, children }: WrapperProps) => {
             color={Colors.WHITE}
           />
 
-          <Box sx={{ px: 2 }}>
+          <Box sx={{ mx: 2 }}>
             {routes.map((route: Route, index) => (
               <Box
                 key={index}
@@ -63,10 +64,32 @@ export const Wrapper = ({ title, routes, children }: WrapperProps) => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "start",
+                  py: 1,
                 }}
               >
-                <span className="material-icons">{route.iconName}</span>
-                <Typography sx={{ pl: 2 }}>{route.name}</Typography>
+                <Divider
+                  flexItem
+                  orientation="vertical"
+                  color={Colors.WHITE}
+                  sx={{
+                    width: "3px",
+                    m: 0,
+                    ml: -2,
+                    mr: 2,
+                  }}
+                />
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box className="material-icons" sx={{ fontSize: "18px" }}>
+                    {route.iconName}
+                  </Box>
+                  <Typography sx={{ pl: 1 }}>{route.name}</Typography>
+                </Box>
               </Box>
             ))}
           </Box>
@@ -75,6 +98,7 @@ export const Wrapper = ({ title, routes, children }: WrapperProps) => {
         <Box sx={{ flex: 1, p: 4, backgroundColor: Colors.MAIN }}>
           {children}
         </Box>
+
         <Button
           onClick={() =>
             setMode((prevMode: PaletteMode) =>

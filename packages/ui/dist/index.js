@@ -1386,6 +1386,7 @@ var require_hoist_non_react_statics_cjs = __commonJS({
 // index.tsx
 var ui_exports = {};
 __export(ui_exports, {
+  Colors: () => Colors,
   Wrapper: () => Wrapper
 });
 module.exports = __toCommonJS(ui_exports);
@@ -8375,6 +8376,20 @@ process.env.NODE_ENV !== "production" ? Divider.propTypes = {
 } : void 0;
 var Divider_default = Divider;
 
+// enums/colors.ts
+var Colors = /* @__PURE__ */ ((Colors2) => {
+  Colors2["MAIN_BLUE"] = "#162949";
+  Colors2["MAIN"] = "#F0F2F3";
+  Colors2["MAIN_LIGHT"] = "#F7F7F7";
+  Colors2["WHITE"] = "#FFFFFF";
+  Colors2["TEXT"] = "#8F9296";
+  Colors2["ACCENT_YELLOW"] = "#FFC37B";
+  Colors2["ACCENT_BLUE"] = "#5C97C4";
+  Colors2["ACCENT_SALMON"] = "#F47976";
+  Colors2["RED_TEST"] = "#670a07";
+  return Colors2;
+})(Colors || {});
+
 // theme/useCustomTheme.ts
 var import_react11 = require("react");
 
@@ -8609,17 +8624,43 @@ var Wrapper = ({ title, routes, children }) => {
                     color: "#FFFFFF" /* WHITE */
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Box_default, { sx: { px: 2 }, children: routes.map((route, index) => /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+                /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Box_default, { sx: { mx: 2 }, children: routes.map((route, index) => /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
                   Box_default,
                   {
                     sx: {
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "start"
+                      justifyContent: "start",
+                      py: 1
                     },
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "material-icons", children: route.iconName }),
-                      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Typography_default, { sx: { pl: 2 }, children: route.name })
+                      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+                        Divider_default,
+                        {
+                          flexItem: true,
+                          orientation: "vertical",
+                          color: "#FFFFFF" /* WHITE */,
+                          sx: {
+                            width: "3px",
+                            m: 0,
+                            ml: -2,
+                            mr: 2
+                          }
+                        }
+                      ),
+                      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+                        Box_default,
+                        {
+                          sx: {
+                            display: "flex",
+                            alignItems: "center"
+                          },
+                          children: [
+                            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Box_default, { className: "material-icons", sx: { fontSize: "18px" }, children: route.iconName }),
+                            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Typography_default, { sx: { pl: 1 }, children: route.name })
+                          ]
+                        }
+                      )
                     ]
                   },
                   index
@@ -8644,6 +8685,7 @@ var Wrapper = ({ title, routes, children }) => {
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  Colors,
   Wrapper
 });
 /*! Bundled license information:

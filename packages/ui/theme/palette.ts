@@ -1,5 +1,5 @@
 import { PaletteMode } from "@mui/material";
-import { Colors } from "../enums/colors";
+import { Colors } from "../enums";
 
 export const getPaletteConfig = (mode: PaletteMode) => ({
   ...(mode === "light"

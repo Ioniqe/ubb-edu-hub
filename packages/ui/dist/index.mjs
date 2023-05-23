@@ -8362,6 +8362,20 @@ process.env.NODE_ENV !== "production" ? Divider.propTypes = {
 } : void 0;
 var Divider_default = Divider;
 
+// enums/colors.ts
+var Colors = /* @__PURE__ */ ((Colors2) => {
+  Colors2["MAIN_BLUE"] = "#162949";
+  Colors2["MAIN"] = "#F0F2F3";
+  Colors2["MAIN_LIGHT"] = "#F7F7F7";
+  Colors2["WHITE"] = "#FFFFFF";
+  Colors2["TEXT"] = "#8F9296";
+  Colors2["ACCENT_YELLOW"] = "#FFC37B";
+  Colors2["ACCENT_BLUE"] = "#5C97C4";
+  Colors2["ACCENT_SALMON"] = "#F47976";
+  Colors2["RED_TEST"] = "#670a07";
+  return Colors2;
+})(Colors || {});
+
 // theme/useCustomTheme.ts
 import { useMemo as useMemo4 } from "react";
 
@@ -8596,17 +8610,43 @@ var Wrapper = ({ title, routes, children }) => {
                     color: "#FFFFFF" /* WHITE */
                   }
                 ),
-                /* @__PURE__ */ jsx(Box_default, { sx: { px: 2 }, children: routes.map((route, index) => /* @__PURE__ */ jsxs(
+                /* @__PURE__ */ jsx(Box_default, { sx: { mx: 2 }, children: routes.map((route, index) => /* @__PURE__ */ jsxs(
                   Box_default,
                   {
                     sx: {
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "start"
+                      justifyContent: "start",
+                      py: 1
                     },
                     children: [
-                      /* @__PURE__ */ jsx("span", { className: "material-icons", children: route.iconName }),
-                      /* @__PURE__ */ jsx(Typography_default, { sx: { pl: 2 }, children: route.name })
+                      /* @__PURE__ */ jsx(
+                        Divider_default,
+                        {
+                          flexItem: true,
+                          orientation: "vertical",
+                          color: "#FFFFFF" /* WHITE */,
+                          sx: {
+                            width: "3px",
+                            m: 0,
+                            ml: -2,
+                            mr: 2
+                          }
+                        }
+                      ),
+                      /* @__PURE__ */ jsxs(
+                        Box_default,
+                        {
+                          sx: {
+                            display: "flex",
+                            alignItems: "center"
+                          },
+                          children: [
+                            /* @__PURE__ */ jsx(Box_default, { className: "material-icons", sx: { fontSize: "18px" }, children: route.iconName }),
+                            /* @__PURE__ */ jsx(Typography_default, { sx: { pl: 1 }, children: route.name })
+                          ]
+                        }
+                      )
                     ]
                   },
                   index
@@ -8630,6 +8670,7 @@ var Wrapper = ({ title, routes, children }) => {
   ] });
 };
 export {
+  Colors,
   Wrapper
 };
 /*! Bundled license information:

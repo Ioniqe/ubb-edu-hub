@@ -8,7 +8,7 @@ const StudentDashboard = lazy(() => import("student/Dashboard"));
 
 const App = () => {
   return (
-    <Wrapper title={"Host"} routes={studentRoutes}>
+    <Wrapper title={"Student"} routes={studentRoutes}>
       <Suspense fallback={"loading"}>
         <StudentDashboard />
       </Suspense>
