@@ -8376,9 +8376,221 @@ process.env.NODE_ENV !== "production" ? Divider.propTypes = {
 } : void 0;
 var Divider_default = Divider;
 
+// ../../node_modules/.pnpm/@mui+material@5.4.2_@emotion+react@11.7.1_@emotion+styled@11.6.0_react-dom@17.0.2_react@17.0.2/node_modules/@mui/material/Link/Link.js
+var import_objectWithoutPropertiesLoose17 = __toESM(require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose"));
+var import_extends29 = __toESM(require("@babel/runtime/helpers/esm/extends"));
+var React24 = __toESM(require("react"));
+var import_prop_types17 = __toESM(require_prop_types());
+
+// ../../node_modules/.pnpm/@mui+material@5.4.2_@emotion+react@11.7.1_@emotion+styled@11.6.0_react-dom@17.0.2_react@17.0.2/node_modules/@mui/material/Link/linkClasses.js
+function getLinkUtilityClass(slot) {
+  return generateUtilityClass("MuiLink", slot);
+}
+var linkClasses = generateUtilityClasses("MuiLink", ["root", "underlineNone", "underlineHover", "underlineAlways", "button", "focusVisible"]);
+var linkClasses_default = linkClasses;
+
+// ../../node_modules/.pnpm/@mui+material@5.4.2_@emotion+react@11.7.1_@emotion+styled@11.6.0_react-dom@17.0.2_react@17.0.2/node_modules/@mui/material/Link/Link.js
+var import_jsx_runtime17 = require("react/jsx-runtime");
+var _excluded16 = ["className", "color", "component", "onBlur", "onFocus", "TypographyClasses", "underline", "variant"];
+var colorTransformations2 = {
+  primary: "primary.main",
+  textPrimary: "text.primary",
+  secondary: "secondary.main",
+  textSecondary: "text.secondary",
+  error: "error.main"
+};
+var transformDeprecatedColors2 = (color2) => {
+  return colorTransformations2[color2] || color2;
+};
+var useUtilityClasses5 = (ownerState) => {
+  const {
+    classes,
+    component,
+    focusVisible,
+    underline
+  } = ownerState;
+  const slots = {
+    root: ["root", `underline${capitalize_default(underline)}`, component === "button" && "button", focusVisible && "focusVisible"]
+  };
+  return composeClasses(slots, getLinkUtilityClass, classes);
+};
+var LinkRoot = styled_default(Typography_default, {
+  name: "MuiLink",
+  slot: "Root",
+  overridesResolver: (props, styles2) => {
+    const {
+      ownerState
+    } = props;
+    return [styles2.root, styles2[`underline${capitalize_default(ownerState.underline)}`], ownerState.component === "button" && styles2.button];
+  }
+})(({
+  theme,
+  ownerState
+}) => {
+  const color2 = getPath(theme, `palette.${transformDeprecatedColors2(ownerState.color)}`) || ownerState.color;
+  return (0, import_extends29.default)({}, ownerState.underline === "none" && {
+    textDecoration: "none"
+  }, ownerState.underline === "hover" && {
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "underline"
+    }
+  }, ownerState.underline === "always" && {
+    textDecoration: "underline",
+    textDecorationColor: color2 !== "inherit" ? alpha(color2, 0.4) : void 0,
+    "&:hover": {
+      textDecorationColor: "inherit"
+    }
+  }, ownerState.component === "button" && {
+    position: "relative",
+    WebkitTapHighlightColor: "transparent",
+    backgroundColor: "transparent",
+    // Reset default value
+    // We disable the focus ring for mouse, touch and keyboard users.
+    outline: 0,
+    border: 0,
+    margin: 0,
+    // Remove the margin in Safari
+    borderRadius: 0,
+    padding: 0,
+    // Remove the padding in Firefox
+    cursor: "pointer",
+    userSelect: "none",
+    verticalAlign: "middle",
+    MozAppearance: "none",
+    // Reset
+    WebkitAppearance: "none",
+    // Reset
+    "&::-moz-focus-inner": {
+      borderStyle: "none"
+      // Remove Firefox dotted outline.
+    },
+    [`&.${linkClasses_default.focusVisible}`]: {
+      outline: "auto"
+    }
+  });
+});
+var Link = /* @__PURE__ */ React24.forwardRef(function Link2(inProps, ref) {
+  const props = useThemeProps2({
+    props: inProps,
+    name: "MuiLink"
+  });
+  const {
+    className,
+    color: color2 = "primary",
+    component = "a",
+    onBlur,
+    onFocus,
+    TypographyClasses,
+    underline = "always",
+    variant = "inherit"
+  } = props, other = (0, import_objectWithoutPropertiesLoose17.default)(props, _excluded16);
+  const {
+    isFocusVisibleRef,
+    onBlur: handleBlurVisible,
+    onFocus: handleFocusVisible,
+    ref: focusVisibleRef
+  } = useIsFocusVisible_default();
+  const [focusVisible, setFocusVisible] = React24.useState(false);
+  const handlerRef = useForkRef_default(ref, focusVisibleRef);
+  const handleBlur = (event) => {
+    handleBlurVisible(event);
+    if (isFocusVisibleRef.current === false) {
+      setFocusVisible(false);
+    }
+    if (onBlur) {
+      onBlur(event);
+    }
+  };
+  const handleFocus = (event) => {
+    handleFocusVisible(event);
+    if (isFocusVisibleRef.current === true) {
+      setFocusVisible(true);
+    }
+    if (onFocus) {
+      onFocus(event);
+    }
+  };
+  const ownerState = (0, import_extends29.default)({}, props, {
+    color: color2,
+    component,
+    focusVisible,
+    underline,
+    variant
+  });
+  const classes = useUtilityClasses5(ownerState);
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LinkRoot, (0, import_extends29.default)({
+    className: clsx_m_default(classes.root, className),
+    classes: TypographyClasses,
+    color: color2,
+    component,
+    onBlur: handleBlur,
+    onFocus: handleFocus,
+    ref: handlerRef,
+    ownerState,
+    variant
+  }, other));
+});
+process.env.NODE_ENV !== "production" ? Link.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+  /**
+   * The content of the component.
+   */
+  children: import_prop_types17.default.node,
+  /**
+   * Override or extend the styles applied to the component.
+   */
+  classes: import_prop_types17.default.object,
+  /**
+   * @ignore
+   */
+  className: import_prop_types17.default.string,
+  /**
+   * The color of the link.
+   * @default 'primary'
+   */
+  color: import_prop_types17.default.any,
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: elementTypeAcceptingRef_default,
+  /**
+   * @ignore
+   */
+  onBlur: import_prop_types17.default.func,
+  /**
+   * @ignore
+   */
+  onFocus: import_prop_types17.default.func,
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx: import_prop_types17.default.oneOfType([import_prop_types17.default.arrayOf(import_prop_types17.default.oneOfType([import_prop_types17.default.func, import_prop_types17.default.object, import_prop_types17.default.bool])), import_prop_types17.default.func, import_prop_types17.default.object]),
+  /**
+   * `classes` prop applied to the [`Typography`](/api/typography/) element.
+   */
+  TypographyClasses: import_prop_types17.default.object,
+  /**
+   * Controls when the link should have an underline.
+   * @default 'always'
+   */
+  underline: import_prop_types17.default.oneOf(["always", "hover", "none"]),
+  /**
+   * Applies the theme typography styles.
+   * @default 'inherit'
+   */
+  variant: import_prop_types17.default.oneOfType([import_prop_types17.default.oneOf(["body1", "body2", "button", "caption", "h1", "h2", "h3", "h4", "h5", "h6", "inherit", "overline", "subtitle1", "subtitle2"]), import_prop_types17.default.string])
+} : void 0;
+var Link_default = Link;
+
 // enums/colors.ts
 var Colors = /* @__PURE__ */ ((Colors2) => {
   Colors2["MAIN_BLUE"] = "#162949";
+  Colors2["MAIN_BLUE_LIGHT"] = "#30599f";
   Colors2["MAIN"] = "#F0F2F3";
   Colors2["MAIN_LIGHT"] = "#F7F7F7";
   Colors2["WHITE"] = "#FFFFFF";
@@ -8582,14 +8794,80 @@ var useCustomTheme = (mode) => {
   );
 };
 
+// internal-components/MenuItem.tsx
+var import_jsx_runtime18 = require("react/jsx-runtime");
+var MenuItem = ({ isActive, currentPath, route }) => /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+  Box_default,
+  {
+    sx: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "start",
+      py: 0.5
+    },
+    children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        Divider_default,
+        {
+          flexItem: true,
+          orientation: "vertical",
+          color: isActive ? "#FFFFFF" /* WHITE */ : "transparent",
+          sx: {
+            width: "3px",
+            mr: 0,
+            ml: -1,
+            "&:hover": {
+              color: isActive ? "transparent" : "#FFFFFF" /* WHITE */
+            }
+          }
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+        Link_default,
+        {
+          href: currentPath,
+          color: "#FFFFFF" /* WHITE */,
+          underline: "none",
+          width: "100%",
+          sx: {
+            display: "flex",
+            alignItems: "center",
+            px: 2,
+            py: 0.5,
+            borderTopRightRadius: "8px",
+            borderBottomRightRadius: "8px",
+            transition: "0.2s linear",
+            "&:hover": {
+              backgroundColor: "#30599f" /* MAIN_BLUE_LIGHT */
+            }
+          },
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Box_default, { className: "material-icons", sx: { fontSize: "18px" }, children: route.iconName }),
+            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Typography_default, { sx: { pl: 1 }, children: route.name })
+          ]
+        }
+      )
+    ]
+  }
+);
+var MenuItem_default = MenuItem;
+
 // Wrapper.tsx
-var import_jsx_runtime17 = require("react/jsx-runtime");
-var Wrapper = ({ title, routes, children }) => {
+var import_jsx_runtime19 = require("react/jsx-runtime");
+var Wrapper = ({
+  title,
+  customBaseRoute,
+  customRoutes,
+  standardRoutes,
+  children
+}) => {
   const [mode, setMode] = import_react12.default.useState("light");
   const theme = useCustomTheme(mode);
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(ThemeProvider_default2, { theme, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(CssBaseline_default, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+  const { pathname } = window.location;
+  const isCurrentPage = (0, import_react12.useCallback)((path) => path === pathname, []);
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(ThemeProvider_default2, { theme, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(CssBaseline_default, {}),
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
       Box_default,
       {
         sx: {
@@ -8599,7 +8877,7 @@ var Wrapper = ({ title, routes, children }) => {
           flexDirection: "row"
         },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
             Box_default,
             {
               sx: {
@@ -8612,9 +8890,9 @@ var Wrapper = ({ title, routes, children }) => {
                 py: 3
               },
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Typography_default, { textAlign: "center", children: `UBB'S EDU HUB` }),
-                /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Typography_default, { textAlign: "center", children: title }),
-                /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Typography_default, { textAlign: "center", children: `UBB'S EDU HUB` }),
+                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Typography_default, { textAlign: "center", children: title }),
+                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
                   Divider_default,
                   {
                     sx: {
@@ -8624,52 +8902,37 @@ var Wrapper = ({ title, routes, children }) => {
                     color: "#FFFFFF" /* WHITE */
                   }
                 ),
-                /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Box_default, { sx: { mx: 2 }, children: routes.map((route, index) => /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
-                  Box_default,
-                  {
-                    sx: {
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "start",
-                      py: 1
-                    },
-                    children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
-                        Divider_default,
-                        {
-                          flexItem: true,
-                          orientation: "vertical",
-                          color: "#FFFFFF" /* WHITE */,
-                          sx: {
-                            width: "3px",
-                            m: 0,
-                            ml: -2,
-                            mr: 2
-                          }
-                        }
-                      ),
-                      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
-                        Box_default,
-                        {
-                          sx: {
-                            display: "flex",
-                            alignItems: "center"
-                          },
-                          children: [
-                            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Box_default, { className: "material-icons", sx: { fontSize: "18px" }, children: route.iconName }),
-                            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Typography_default, { sx: { pl: 1 }, children: route.name })
-                          ]
-                        }
-                      )
-                    ]
-                  },
-                  index
-                )) })
+                /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(Box_default, { sx: { mx: 1 }, children: [
+                  customRoutes.map((route, index) => {
+                    const currentPath = customBaseRoute + "/" + route.route;
+                    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                      MenuItem_default,
+                      {
+                        currentPath,
+                        route,
+                        isActive: isCurrentPage(currentPath)
+                      },
+                      index
+                    );
+                  }),
+                  standardRoutes.map((route, index) => {
+                    const currentPath = customBaseRoute + "/" + route.route;
+                    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                      MenuItem_default,
+                      {
+                        currentPath,
+                        route,
+                        isActive: isCurrentPage(currentPath)
+                      },
+                      index
+                    );
+                  })
+                ] })
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Box_default, { sx: { flex: 1, p: 4, backgroundColor: "#F0F2F3" /* MAIN */ }, children }),
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Box_default, { sx: { flex: 1, p: 4, backgroundColor: "#F0F2F3" /* MAIN */ }, children }),
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
             Button_default,
             {
               onClick: () => setMode(

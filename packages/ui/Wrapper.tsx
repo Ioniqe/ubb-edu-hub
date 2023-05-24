@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import {
   Box,
   Button,
   CssBaseline,
   Divider,
+  Link,
   PaletteMode,
   ThemeProvider,
   Typography,
@@ -12,16 +13,29 @@ import {
 import { Colors } from "./enums";
 import { Route } from "./types";
 import { useCustomTheme } from "./theme";
+import MenuItem from "./internal-components/MenuItem";
 
 type WrapperProps = {
   title: string;
-  routes: Route[];
+  customBaseRoute: string;
+  customRoutes: Route[];
+  standardRoutes: Route[];
   children: React.ReactNode;
 };
 
-export const Wrapper = ({ title, routes, children }: WrapperProps) => {
+export const Wrapper = ({
+  title,
+  customBaseRoute,
+  customRoutes,
+  standardRoutes,
+  children,
+}: WrapperProps) => {
   const [mode, setMode] = React.useState<PaletteMode>("light");
   const theme = useCustomTheme(mode);
+
+  const { pathname } = window.location;
+
+  const isCurrentPage = useCallback((path) => path === pathname, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -56,42 +70,30 @@ export const Wrapper = ({ title, routes, children }: WrapperProps) => {
             color={Colors.WHITE}
           />
 
-          <Box sx={{ mx: 2 }}>
-            {routes.map((route: Route, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "start",
-                  py: 1,
-                }}
-              >
-                <Divider
-                  flexItem
-                  orientation="vertical"
-                  color={Colors.WHITE}
-                  sx={{
-                    width: "3px",
-                    m: 0,
-                    ml: -2,
-                    mr: 2,
-                  }}
+          <Box sx={{ mx: 1 }}>
+            {customRoutes.map((route: Route, index) => {
+              const currentPath = customBaseRoute + "/" + route.route;
+              return (
+                <MenuItem
+                  key={index}
+                  currentPath={currentPath}
+                  route={route}
+                  isActive={isCurrentPage(currentPath)}
                 />
+              );
+            })}
 
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box className="material-icons" sx={{ fontSize: "18px" }}>
-                    {route.iconName}
-                  </Box>
-                  <Typography sx={{ pl: 1 }}>{route.name}</Typography>
-                </Box>
-              </Box>
-            ))}
+            {standardRoutes.map((route: Route, index) => {
+              const currentPath = customBaseRoute + "/" + route.route;
+              return (
+                <MenuItem
+                  key={index}
+                  currentPath={currentPath}
+                  route={route}
+                  isActive={isCurrentPage(currentPath)}
+                />
+              );
+            })}
           </Box>
         </Box>
 

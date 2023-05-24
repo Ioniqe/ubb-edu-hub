@@ -5,5 +5,3 @@ export * from "./Checklists";
 export * from "./Dashboard";
 export * from "./Roadmaps";
 export * from "./Subjects";
-export * from "./Profile";
-export * from "./Settings";

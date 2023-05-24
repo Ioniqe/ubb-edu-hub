@@ -1,17 +1,21 @@
-import React, { lazy, Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
 import "./index.css";
 import { Wrapper } from "ui";
-import { studentRoutes } from "./constants/studentRoutes";
-const StudentDashboard = lazy(() => import("student/Dashboard"));
+import AppRouter from "./AppRouter";
+import { routes } from "./constants";
+import { BaseRoute } from "./enums";
 
 const App = () => {
   return (
-    <Wrapper title={"Student"} routes={studentRoutes}>
-      <Suspense fallback={"loading"}>
-        <StudentDashboard />
-      </Suspense>
+    <Wrapper
+      title={"Student"}
+      customBaseRoute={`/${BaseRoute.STUDENT}`}
+      customRoutes={[...Object.values(routes[BaseRoute.STUDENT])]}
+      standardRoutes={[...Object.values(routes[BaseRoute.STANDARD])]}
+    >
+      <AppRouter />
     </Wrapper>
   );
 };

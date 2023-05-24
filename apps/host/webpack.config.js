@@ -3,103 +3,112 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const path = require("path");
 const deps = require("./package.json").dependencies;
 
-module.exports = (_, argv) => ({
-  output: {
-    publicPath:
+module.exports = (_, argv) => {
+  const getStudentBundleBasedOnEnv = () => {
+    return `student@${
       argv.mode === "development"
-        ? "http://localhost:3000/"
-        : "https://ubb-edu-hub-host-ioniqe.vercel.app/",
-    path: path.resolve("./dist"),
-  },
+        ? "http://localhost:3001"
+        : "https://ubb-edu-hub-student-ioniqe.vercel.app"
+    }/remoteEntry.js`;
+  };
 
-  resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
-  },
+  return {
+    output: {
+      publicPath:
+        argv.mode === "development"
+          ? "http://localhost:3000/"
+          : "https://ubb-edu-hub-host-ioniqe.vercel.app/",
+      path: path.resolve("./dist"),
+    },
 
-  devServer: {
-    port: 3000,
-    historyApiFallback: true,
-  },
+    resolve: {
+      extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
+    },
 
-  module: {
-    rules: [
-      {
-        test: /\.m?js/,
-        type: "javascript/auto",
-        resolve: {
-          fullySpecified: false,
-        },
-      },
-      {
-        test: /\.(css|s[ac]ss)$/i,
-        use: ["style-loader", "css-loader", "postcss-loader"],
-      },
-      {
-        test: /\.(ts|tsx|js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-        },
-      },
-      {
-        test: /\.tsx?$/,
-        exclude: [
-          path.resolve(__dirname, "node_modules"),
-          path.resolve(__dirname, "cypress"),
-        ],
-        use: {
-          loader: "babel-loader",
-          options: {
-            plugins: ["@babel/plugin-transform-runtime"],
-            presets: [
-              [
-                "@babel/env",
-                {
-                  targets: {
-                    browsers: ["last 2 versions"],
-                  },
-                },
-              ],
-              [
-                "@babel/preset-react",
-                {
-                  runtime: "automatic",
-                },
-              ],
-              "@babel/typescript",
-            ],
+    devServer: {
+      port: 3000,
+      historyApiFallback: true,
+    },
+
+    module: {
+      rules: [
+        {
+          test: /\.m?js/,
+          type: "javascript/auto",
+          resolve: {
+            fullySpecified: false,
           },
         },
-      },
-    ],
-  },
+        {
+          test: /\.(css|s[ac]ss)$/i,
+          use: ["style-loader", "css-loader", "postcss-loader"],
+        },
+        {
+          test: /\.(ts|tsx|js|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader",
+          },
+        },
+        {
+          test: /\.tsx?$/,
+          exclude: [
+            path.resolve(__dirname, "node_modules"),
+            path.resolve(__dirname, "cypress"),
+          ],
+          use: {
+            loader: "babel-loader",
+            options: {
+              plugins: ["@babel/plugin-transform-runtime"],
+              presets: [
+                [
+                  "@babel/env",
+                  {
+                    targets: {
+                      browsers: ["last 2 versions"],
+                    },
+                  },
+                ],
+                [
+                  "@babel/preset-react",
+                  {
+                    runtime: "automatic",
+                  },
+                ],
+                "@babel/typescript",
+              ],
+            },
+          },
+        },
+      ],
+    },
 
-  plugins: [
-    new ModuleFederationPlugin({
-      name: "host",
-      filename: "remoteEntry.js",
-      remotes: {
-        student:
-          "student@https://ubb-edu-hub-student-ioniqe.vercel.app/remoteEntry.js",
-      },
-      exposes: {},
-      shared: {
-        ...deps,
-        ui: {
-          singleton: true,
+    plugins: [
+      new ModuleFederationPlugin({
+        name: "host",
+        filename: "remoteEntry.js",
+        remotes: {
+          student: getStudentBundleBasedOnEnv(),
         },
-        react: {
-          singleton: true,
-          requiredVersion: deps.react,
+        exposes: {},
+        shared: {
+          ...deps,
+          ui: {
+            singleton: true,
+          },
+          react: {
+            singleton: true,
+            requiredVersion: deps.react,
+          },
+          "react-dom": {
+            singleton: true,
+            requiredVersion: deps["react-dom"],
+          },
         },
-        "react-dom": {
-          singleton: true,
-          requiredVersion: deps["react-dom"],
-        },
-      },
-    }),
-    new HtmlWebPackPlugin({
-      template: "./src/index.html",
-    }),
-  ],
-});
+      }),
+      new HtmlWebPackPlugin({
+        template: "./src/index.html",
+      }),
+    ],
+  };
+};
