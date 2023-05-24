@@ -72,7 +72,10 @@ export const Wrapper = ({
 
           <Box sx={{ mx: 1 }}>
             {customRoutes.map((route: Route, index) => {
-              const currentPath = customBaseRoute + "/" + route.route;
+              const currentPath =
+                route.route.length > 0
+                  ? customBaseRoute + "/" + route.route
+                  : customBaseRoute;
               return (
                 <MenuItem
                   key={index}
@@ -83,17 +86,14 @@ export const Wrapper = ({
               );
             })}
 
-            {standardRoutes.map((route: Route, index) => {
-              const currentPath = customBaseRoute + "/" + route.route;
-              return (
-                <MenuItem
-                  key={index}
-                  currentPath={currentPath}
-                  route={route}
-                  isActive={isCurrentPage(currentPath)}
-                />
-              );
-            })}
+            {standardRoutes.map((route: Route, index) => (
+              <MenuItem
+                key={index}
+                currentPath={route.route}
+                route={route}
+                isActive={isCurrentPage(route.route)}
+              />
+            ))}
           </Box>
         </Box>
 

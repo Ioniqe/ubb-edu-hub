@@ -3,7 +3,7 @@ export enum RouteEnums {
   STUDENT_BADGES = "badges",
   STUDENT_CHALLENGES = "challenges",
   STUDENT_CHECKLISTS = "checklists",
-  STUDENT_DASHBOARD = "student",
+  STUDENT_DASHBOARD = "",
   STUDENT_ROADMAPS = "roadmaps",
   STUDENT_SUBJECTS = "subjects",
 

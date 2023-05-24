@@ -2,6 +2,11 @@ import { Route } from "ui/dist";
 import { BaseRoute, RouteEnums } from "../enums";
 
 const studentRoutes: { [key: string]: Route } = {
+  [RouteEnums.STUDENT_DASHBOARD]: {
+    name: "Home",
+    route: "",
+    iconName: "home",
+  },
   [RouteEnums.STUDENT_ASSIGNMENTS]: {
     name: "Assignments",
     route: "assignments",
@@ -19,13 +24,8 @@ const studentRoutes: { [key: string]: Route } = {
   },
   [RouteEnums.STUDENT_CHECKLISTS]: {
     name: "Checklists",
-    route: "checklist",
+    route: "checklists",
     iconName: "checklist",
-  },
-  [RouteEnums.STUDENT_DASHBOARD]: {
-    name: "Home",
-    route: "",
-    iconName: "home",
   },
   [RouteEnums.STUDENT_ROADMAPS]: {
     name: "Roadmaps",
@@ -60,12 +60,12 @@ const authRoutes: { [key: string]: Route } = {
 const baseRoutes: { [key: string]: Route } = {
   [RouteEnums.PROFILE]: {
     name: "Profile",
-    route: "profile",
+    route: "/profile",
     iconName: "person",
   },
   [RouteEnums.SETTINGS]: {
     name: "Settings",
-    route: "settings",
+    route: "/settings",
     iconName: "settings",
   },
 };

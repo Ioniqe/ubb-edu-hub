@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import React, { lazy, Suspense } from "react";
 import Settings from "./pages/Settings";
 import Profile from "./pages/Profile";
-import { RouteEnums } from "./enums";
+import { BaseRoute, RouteEnums } from "./enums";
 
 const StudentAssignments = lazy(() => import("student/Assignments"));
 const StudentBadges = lazy(() => import("student/Badges"));
@@ -20,13 +20,10 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={"/"}
-          element={<Navigate to={RouteEnums.STUDENT_DASHBOARD} />}
-        />
+        <Route path={"/"} element={<Navigate to={BaseRoute.STUDENT} />} />
 
         <Route
-          path={`/${RouteEnums.STUDENT_DASHBOARD}`}
+          path={"/" + BaseRoute.STUDENT}
           element={
             <Suspense fallback={"loading"}>
               <StudentDashboard />

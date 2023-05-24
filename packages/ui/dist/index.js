@@ -8904,7 +8904,7 @@ var Wrapper = ({
                 ),
                 /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(Box_default, { sx: { mx: 1 }, children: [
                   customRoutes.map((route, index) => {
-                    const currentPath = customBaseRoute + "/" + route.route;
+                    const currentPath = route.route.length > 0 ? customBaseRoute + "/" + route.route : customBaseRoute;
                     return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
                       MenuItem_default,
                       {
@@ -8915,18 +8915,15 @@ var Wrapper = ({
                       index
                     );
                   }),
-                  standardRoutes.map((route, index) => {
-                    const currentPath = customBaseRoute + "/" + route.route;
-                    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
-                      MenuItem_default,
-                      {
-                        currentPath,
-                        route,
-                        isActive: isCurrentPage(currentPath)
-                      },
-                      index
-                    );
-                  })
+                  standardRoutes.map((route, index) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+                    MenuItem_default,
+                    {
+                      currentPath: route.route,
+                      route,
+                      isActive: isCurrentPage(route.route)
+                    },
+                    index
+                  ))
                 ] })
               ]
             }
