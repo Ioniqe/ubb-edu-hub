@@ -39,24 +39,6 @@ const studentRoutes: { [key: string]: Route } = {
   },
 };
 
-const authRoutes: { [key: string]: Route } = {
-  [RouteEnums.SIGN_UP]: {
-    name: "",
-    route: "",
-    iconName: "",
-  },
-  [RouteEnums.LOGIN]: {
-    name: "",
-    route: "",
-    iconName: "",
-  },
-  [RouteEnums.LOGOUT]: {
-    name: "",
-    route: "",
-    iconName: "",
-  },
-};
-
 const baseRoutes: { [key: string]: Route } = {
   [RouteEnums.PROFILE]: {
     name: "Profile",
@@ -73,5 +55,4 @@ const baseRoutes: { [key: string]: Route } = {
 export const routes: { [category: string]: { [key: string]: Route } } = {
   [BaseRoute.STUDENT]: studentRoutes,
   [BaseRoute.STANDARD]: baseRoutes,
-  [BaseRoute.AUTH]: authRoutes,
 };
