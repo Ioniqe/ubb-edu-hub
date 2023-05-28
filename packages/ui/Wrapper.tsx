@@ -1,65 +1,98 @@
-import React from "react";
+import React, { useCallback } from "react";
 
-import { Box, Divider, Typography } from "@mui/material";
-import { Colors } from "./enums/colors";
-import { Route } from "./types/route";
+import { Box, Button, Divider, Typography } from "@mui/material";
+import { Colors } from "./enums";
+import { Route } from "./types";
+import MenuItem from "./internal-components/MenuItem";
+import { CustomAppThemeProvider } from "./CustomAppThemeProvider";
+import { useAppTheme } from "./theme";
 
 type WrapperProps = {
   title: string;
-  routes: Route[];
+  customBaseRoute: string;
+  customRoutes: Route[];
+  standardRoutes: Route[];
   children: React.ReactNode;
 };
 
-export const Wrapper = ({ title, routes, children }: WrapperProps) => {
+export const Wrapper = ({
+  title,
+  customBaseRoute,
+  customRoutes,
+  standardRoutes,
+  children,
+}: WrapperProps) => {
+  const { pathname } = window.location;
+  const { theme, switchColorMode } = useAppTheme();
+
+  const isCurrentPage = useCallback((path) => path === pathname, []);
+
   return (
-    <Box
-      sx={{
-        width: "100vw",
-        height: "100vh",
-        display: "flex",
-        flexDirection: "row",
-      }}
-    >
+    <CustomAppThemeProvider>
       <Box
         sx={{
-          width: "250px",
-          height: "auto",
-          flexDirection: "column",
-          alignItems: "start",
-          backgroundColor: Colors.MAIN_BLUE,
-          color: Colors.WHITE,
-          py: 3,
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "row",
         }}
       >
-        <Typography textAlign={"center"}>{`UBB'S EDU HUB`}</Typography>
-        <Typography textAlign={"center"}>{title}</Typography>
-
-        <Divider
+        <Box
           sx={{
-            height: "2px",
-            my: 2,
+            width: "250px",
+            height: "auto",
+            flexDirection: "column",
+            alignItems: "start",
+            backgroundColor: theme.palette.primary.main,
+            color: Colors.WHITE,
+            py: 3,
           }}
-          color={Colors.WHITE}
-        />
+        >
+          <Typography textAlign={"center"}>{`UBB'S EDU HUB`}</Typography>
+          <Typography textAlign={"center"}>{title}</Typography>
 
-        <Box sx={{ px: 2 }}>
-          {routes.map((route: Route, index) => (
-            <Box
-              key={index}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "start",
-              }}
-            >
-              <span className="material-icons">{route.iconName}</span>
-              <Typography sx={{ pl: 2 }}>{route.name}</Typography>
-            </Box>
-          ))}
+          <Divider
+            sx={{
+              height: "2px",
+              my: 2,
+            }}
+            color={Colors.WHITE}
+          />
+
+          <Box sx={{ mx: 1 }}>
+            {customRoutes.map((route: Route, index) => {
+              const currentPath =
+                route.route.length > 0
+                  ? customBaseRoute + "/" + route.route
+                  : customBaseRoute;
+
+              return (
+                <MenuItem
+                  key={index}
+                  currentPath={currentPath}
+                  route={route}
+                  isActive={isCurrentPage(currentPath)}
+                />
+              );
+            })}
+
+            {standardRoutes.map((route: Route, index) => (
+              <MenuItem
+                key={index}
+                currentPath={route.route}
+                route={route}
+                isActive={isCurrentPage(route.route)}
+              />
+            ))}
+          </Box>
         </Box>
-      </Box>
 
-      <Box sx={{ flex: 1, p: 4, backgroundColor: Colors.MAIN }}>{children}</Box>
-    </Box>
+        <Box sx={{ flex: 1, p: 4, backgroundColor: Colors.MAIN }}>
+          {children}
+        </Box>
+
+        <Button onClick={switchColorMode}>Change theme</Button>
+      </Box>
+    </CustomAppThemeProvider>
   );
 };

@@ -78,9 +78,14 @@ module.exports = (_, argv) => ({
     new ModuleFederationPlugin({
       name: "student",
       filename: "remoteEntry.js",
-      remotes: {},
       exposes: {
-        "./Dashboard": "./src/Dashboard",
+        "./Assignments": "./src/pages/Assignments",
+        "./Badges": "./src/pages/Badges",
+        "./Challenges": "./src/pages/Challenges",
+        "./Checklists": "./src/pages/Checklists",
+        "./Dashboard": "./src/pages/Dashboard",
+        "./Roadmaps": "./src/pages/Roadmaps",
+        "./Subjects": "./src/pages/Subjects",
       },
       shared: {
         ...deps,

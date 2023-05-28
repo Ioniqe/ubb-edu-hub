@@ -1,6 +1,6 @@
-import { Colors } from "../../enums/colors";
-
 // TODO
+import { Colors } from "../../enums";
+
 export const FilledInput = {
   styleOverrides: {
     root: {

@@ -1,17 +1,11 @@
-import React, { lazy, Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
 import "./index.css";
-import { Wrapper } from "ui";
-import { studentRoutes } from "./constants/studentRoutes";
-const StudentDashboard = lazy(() => import("student/Dashboard"));
+import AppRouter from "./routers/AppRouter";
 
-const App = () => (
-  <Wrapper title={"Host"} routes={studentRoutes}>
-    <Suspense fallback={"loading"}>
-      <StudentDashboard />
-    </Suspense>
-  </Wrapper>
-);
+const App = () => {
+  return <AppRouter />;
+};
 
 ReactDOM.render(<App />, document.getElementById("app"));
