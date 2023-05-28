@@ -7,7 +7,6 @@ import Login from "../pages/Login";
 import Logout from "../pages/Logout";
 import Signup from "../pages/Signup";
 import { renderStudentRoutes } from "./student-routes";
-
 // TODO add fallback for 404
 // TODO add fallback for 500
 // TODO add protectedRoute

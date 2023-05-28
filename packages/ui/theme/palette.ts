@@ -5,10 +5,6 @@ declare module "@mui/material/styles/createPalette" {
   interface Palette extends Palette {
     highlight: { primary: string };
   }
-
-  interface PaletteOptions extends PaletteOptions {
-    highlight?: { primary: string };
-  }
 }
 
 export const getPaletteConfig = (mode: PaletteMode) => ({
