@@ -1,4 +1,6 @@
 import React from 'react';
+import * as zustand from 'zustand';
+import { Theme, PaletteMode } from '@mui/material';
 
 type Route = {
     name: string;
@@ -25,7 +27,15 @@ declare enum Colors {
     ACCENT_YELLOW = "#FFC37B",
     ACCENT_BLUE = "#5C97C4",
     ACCENT_SALMON = "#F47976",
-    RED_TEST = "#670a07"
+    RED_TEST = "#670a07",
+    RED_TEST_LIGHT = "#9f4b49"
 }
 
-export { Colors, Route, Wrapper };
+type ThemeStore = {
+    theme: Theme;
+    colorMode: PaletteMode;
+    switchColorMode: () => void;
+};
+declare const useAppTheme: zustand.UseBoundStore<zustand.StoreApi<ThemeStore>>;
+
+export { Colors, Route, Wrapper, useAppTheme };

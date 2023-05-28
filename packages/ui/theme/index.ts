@@ -1,2 +1,2 @@
 // Create a theme instance.
-export * from "./useCustomTheme";
+export * from "./useAppTheme";

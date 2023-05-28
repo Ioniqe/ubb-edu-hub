@@ -1,6 +1,16 @@
 import { PaletteMode } from "@mui/material";
 import { Colors } from "../enums";
 
+declare module "@mui/material/styles/createPalette" {
+  interface Palette extends Palette {
+    highlight: { primary: string };
+  }
+
+  interface PaletteOptions extends PaletteOptions {
+    highlight?: { primary: string };
+  }
+}
+
 export const getPaletteConfig = (mode: PaletteMode) => ({
   ...(mode === "light"
     ? {
@@ -12,6 +22,7 @@ export const getPaletteConfig = (mode: PaletteMode) => ({
           paper: Colors.MAIN_LIGHT,
         },
         text: { primary: Colors.TEXT },
+        highlight: { primary: Colors.MAIN_BLUE_LIGHT },
       }
     : {
         // dark theme
@@ -23,5 +34,6 @@ export const getPaletteConfig = (mode: PaletteMode) => ({
           paper: Colors.RED_TEST,
         },
         text: { primary: Colors.RED_TEST },
+        highlight: { primary: Colors.RED_TEST_LIGHT },
       }),
 });

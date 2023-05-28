@@ -1,4 +1,4 @@
-import { Route } from "ui/dist";
+import { Route } from "ui";
 import { BaseRoute, RouteEnums } from "../enums";
 
 const studentRoutes: { [key: string]: Route } = {

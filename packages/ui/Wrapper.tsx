@@ -1,19 +1,11 @@
 import React, { useCallback } from "react";
 
-import {
-  Box,
-  Button,
-  CssBaseline,
-  Divider,
-  Link,
-  PaletteMode,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Divider, Typography } from "@mui/material";
 import { Colors } from "./enums";
 import { Route } from "./types";
-import { useCustomTheme } from "./theme";
 import MenuItem from "./internal-components/MenuItem";
+import { CustomAppThemeProvider } from "./CustomAppThemeProvider";
+import { useAppTheme } from "./theme";
 
 type WrapperProps = {
   title: string;
@@ -30,16 +22,13 @@ export const Wrapper = ({
   standardRoutes,
   children,
 }: WrapperProps) => {
-  const [mode, setMode] = React.useState<PaletteMode>("light");
-  const theme = useCustomTheme(mode);
-
   const { pathname } = window.location;
+  const { theme, switchColorMode } = useAppTheme();
 
   const isCurrentPage = useCallback((path) => path === pathname, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <CustomAppThemeProvider>
       <Box
         sx={{
           width: "100vw",
@@ -76,6 +65,7 @@ export const Wrapper = ({
                 route.route.length > 0
                   ? customBaseRoute + "/" + route.route
                   : customBaseRoute;
+
               return (
                 <MenuItem
                   key={index}
@@ -101,16 +91,8 @@ export const Wrapper = ({
           {children}
         </Box>
 
-        <Button
-          onClick={() =>
-            setMode((prevMode: PaletteMode) =>
-              prevMode === "light" ? "dark" : "light"
-            )
-          }
-        >
-          Change theme
-        </Button>
+        <Button onClick={switchColorMode}>Change theme</Button>
       </Box>
-    </ThemeProvider>
+    </CustomAppThemeProvider>
   );
 };

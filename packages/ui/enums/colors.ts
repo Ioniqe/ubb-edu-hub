@@ -11,4 +11,5 @@ export enum Colors {
   ACCENT_SALMON = "#F47976",
 
   RED_TEST = "#670a07",
+  RED_TEST_LIGHT = "#9f4b49",
 }

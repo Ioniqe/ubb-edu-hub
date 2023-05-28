@@ -1387,12 +1387,13 @@ var require_hoist_non_react_statics_cjs = __commonJS({
 var ui_exports = {};
 __export(ui_exports, {
   Colors: () => Colors,
-  Wrapper: () => Wrapper
+  Wrapper: () => Wrapper,
+  useAppTheme: () => useAppTheme
 });
 module.exports = __toCommonJS(ui_exports);
 
 // Wrapper.tsx
-var import_react12 = __toESM(require("react"));
+var import_react11 = require("react");
 
 // ../../node_modules/.pnpm/@mui+material@5.4.2_@emotion+react@11.7.1_@emotion+styled@11.6.0_react-dom@17.0.2_react@17.0.2/node_modules/@mui/material/colors/common.js
 var common = {
@@ -6211,7 +6212,7 @@ function getAutoHeightDuration(height2) {
 function createTransitions(inputTransitions) {
   const mergedEasing = (0, import_extends19.default)({}, easing, inputTransitions.easing);
   const mergedDuration = (0, import_extends19.default)({}, duration, inputTransitions.duration);
-  const create = (props = ["all"], options = {}) => {
+  const create2 = (props = ["all"], options = {}) => {
     const {
       duration: durationOption = mergedDuration.standard,
       easing: easingOption = mergedEasing.easeInOut,
@@ -6240,7 +6241,7 @@ function createTransitions(inputTransitions) {
   };
   return (0, import_extends19.default)({
     getAutoHeightDuration,
-    create
+    create: create2
   }, inputTransitions, {
     easing: mergedEasing,
     duration: mergedDuration
@@ -8599,11 +8600,12 @@ var Colors = /* @__PURE__ */ ((Colors2) => {
   Colors2["ACCENT_BLUE"] = "#5C97C4";
   Colors2["ACCENT_SALMON"] = "#F47976";
   Colors2["RED_TEST"] = "#670a07";
+  Colors2["RED_TEST_LIGHT"] = "#9f4b49";
   return Colors2;
 })(Colors || {});
 
-// theme/useCustomTheme.ts
-var import_react11 = require("react");
+// theme/useAppTheme.ts
+var import_zustand = require("zustand");
 
 // theme/typography.ts
 var { breakpoints } = createTheme_default2();
@@ -8769,7 +8771,8 @@ var getPaletteConfig = (mode) => __spreadValues({}, mode === "light" ? {
     default: "#F0F2F3" /* MAIN */,
     paper: "#F7F7F7" /* MAIN_LIGHT */
   },
-  text: { primary: "#8F9296" /* TEXT */ }
+  text: { primary: "#8F9296" /* TEXT */ },
+  highlight: { primary: "#30599f" /* MAIN_BLUE_LIGHT */ }
 } : {
   // dark theme
   // palette values for colorblind students (initially 'dark' theme)
@@ -8779,81 +8782,105 @@ var getPaletteConfig = (mode) => __spreadValues({}, mode === "light" ? {
     default: "#670a07" /* RED_TEST */,
     paper: "#670a07" /* RED_TEST */
   },
-  text: { primary: "#670a07" /* RED_TEST */ }
+  text: { primary: "#670a07" /* RED_TEST */ },
+  highlight: { primary: "#9f4b49" /* RED_TEST_LIGHT */ }
 });
 
 // theme/useCustomTheme.ts
-var useCustomTheme = (mode) => {
-  return (0, import_react11.useMemo)(
-    () => createTheme_default2({
-      palette: __spreadValues({}, getPaletteConfig(mode)),
-      typography: TypographyConfig,
-      components
-    }),
-    [mode]
-  );
-};
+var useCustomTheme = (mode) => createTheme_default2({
+  palette: __spreadValues({}, getPaletteConfig(mode)),
+  typography: TypographyConfig,
+  components
+});
+
+// theme/useAppTheme.ts
+var useAppTheme = (0, import_zustand.create)((set, get) => ({
+  theme: useCustomTheme("light"),
+  colorMode: "light",
+  switchColorMode: () => {
+    const currentColorMode = get().colorMode === "light" ? "dark" : "light";
+    set({
+      colorMode: currentColorMode,
+      theme: useCustomTheme(currentColorMode)
+    });
+  }
+}));
 
 // internal-components/MenuItem.tsx
 var import_jsx_runtime18 = require("react/jsx-runtime");
-var MenuItem = ({ isActive, currentPath, route }) => /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
-  Box_default,
-  {
-    sx: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "start",
-      py: 0.5
-    },
-    children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
-        Divider_default,
-        {
-          flexItem: true,
-          orientation: "vertical",
-          color: isActive ? "#FFFFFF" /* WHITE */ : "transparent",
-          sx: {
-            width: "3px",
-            mr: 0,
-            ml: -1,
-            "&:hover": {
-              color: isActive ? "transparent" : "#FFFFFF" /* WHITE */
+var MenuItem = ({ isActive, currentPath, route }) => {
+  const { theme } = useAppTheme();
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+    Box_default,
+    {
+      sx: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "start",
+        py: 0.5
+      },
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+          Divider_default,
+          {
+            flexItem: true,
+            orientation: "vertical",
+            color: isActive ? "#FFFFFF" /* WHITE */ : "transparent",
+            sx: {
+              width: "3px",
+              mr: 0,
+              ml: -1,
+              "&:hover": {
+                color: isActive ? "transparent" : "#FFFFFF" /* WHITE */
+              }
             }
           }
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
-        Link_default,
-        {
-          href: currentPath,
-          color: "#FFFFFF" /* WHITE */,
-          underline: "none",
-          width: "100%",
-          sx: {
-            display: "flex",
-            alignItems: "center",
-            px: 2,
-            py: 0.5,
-            borderTopRightRadius: "8px",
-            borderBottomRightRadius: "8px",
-            transition: "0.2s linear",
-            "&:hover": {
-              backgroundColor: "#30599f" /* MAIN_BLUE_LIGHT */
-            }
-          },
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Box_default, { className: "material-icons", sx: { fontSize: "18px" }, children: route.iconName }),
-            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Typography_default, { sx: { pl: 1 }, children: route.name })
-          ]
-        }
-      )
-    ]
-  }
-);
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
+          Link_default,
+          {
+            href: currentPath,
+            color: "#FFFFFF" /* WHITE */,
+            underline: "none",
+            width: "100%",
+            sx: {
+              display: "flex",
+              alignItems: "center",
+              px: 2,
+              py: 0.5,
+              borderTopRightRadius: "8px",
+              borderBottomRightRadius: "8px",
+              transition: "0.2s linear",
+              "&:hover": {
+                backgroundColor: theme.palette.highlight.primary
+              }
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Box_default, { className: "material-icons", sx: { fontSize: "18px" }, children: route.iconName }),
+              /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Typography_default, { sx: { pl: 1 }, children: route.name })
+            ]
+          }
+        )
+      ]
+    }
+  );
+};
 var MenuItem_default = MenuItem;
 
-// Wrapper.tsx
+// CustomAppThemeProvider.tsx
 var import_jsx_runtime19 = require("react/jsx-runtime");
+var CustomAppThemeProvider = ({
+  children
+}) => {
+  const { theme } = useAppTheme();
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(ThemeProvider_default2, { theme, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(CssBaseline_default, {}),
+    children
+  ] });
+};
+
+// Wrapper.tsx
+var import_jsx_runtime20 = require("react/jsx-runtime");
 var Wrapper = ({
   title,
   customBaseRoute,
@@ -8861,92 +8888,81 @@ var Wrapper = ({
   standardRoutes,
   children
 }) => {
-  const [mode, setMode] = import_react12.default.useState("light");
-  const theme = useCustomTheme(mode);
   const { pathname } = window.location;
-  const isCurrentPage = (0, import_react12.useCallback)((path) => path === pathname, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(ThemeProvider_default2, { theme, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(CssBaseline_default, {}),
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
-      Box_default,
-      {
-        sx: {
-          width: "100vw",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "row"
-        },
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
-            Box_default,
-            {
-              sx: {
-                width: "250px",
-                height: "auto",
-                flexDirection: "column",
-                alignItems: "start",
-                backgroundColor: theme.palette.primary.main,
-                color: "#FFFFFF" /* WHITE */,
-                py: 3
-              },
-              children: [
-                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Typography_default, { textAlign: "center", children: `UBB'S EDU HUB` }),
-                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Typography_default, { textAlign: "center", children: title }),
-                /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
-                  Divider_default,
-                  {
-                    sx: {
-                      height: "2px",
-                      my: 2
-                    },
-                    color: "#FFFFFF" /* WHITE */
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(Box_default, { sx: { mx: 1 }, children: [
-                  customRoutes.map((route, index) => {
-                    const currentPath = route.route.length > 0 ? customBaseRoute + "/" + route.route : customBaseRoute;
-                    return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
-                      MenuItem_default,
-                      {
-                        currentPath,
-                        route,
-                        isActive: isCurrentPage(currentPath)
-                      },
-                      index
-                    );
-                  }),
-                  standardRoutes.map((route, index) => /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+  const { theme, switchColorMode } = useAppTheme();
+  const isCurrentPage = (0, import_react11.useCallback)((path) => path === pathname, []);
+  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(CustomAppThemeProvider, { children: /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+    Box_default,
+    {
+      sx: {
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "row"
+      },
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+          Box_default,
+          {
+            sx: {
+              width: "250px",
+              height: "auto",
+              flexDirection: "column",
+              alignItems: "start",
+              backgroundColor: theme.palette.primary.main,
+              color: "#FFFFFF" /* WHITE */,
+              py: 3
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Typography_default, { textAlign: "center", children: `UBB'S EDU HUB` }),
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Typography_default, { textAlign: "center", children: title }),
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                Divider_default,
+                {
+                  sx: {
+                    height: "2px",
+                    my: 2
+                  },
+                  color: "#FFFFFF" /* WHITE */
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(Box_default, { sx: { mx: 1 }, children: [
+                customRoutes.map((route, index) => {
+                  const currentPath = route.route.length > 0 ? customBaseRoute + "/" + route.route : customBaseRoute;
+                  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
                     MenuItem_default,
                     {
-                      currentPath: route.route,
+                      currentPath,
                       route,
-                      isActive: isCurrentPage(route.route)
+                      isActive: isCurrentPage(currentPath)
                     },
                     index
-                  ))
-                ] })
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(Box_default, { sx: { flex: 1, p: 4, backgroundColor: "#F0F2F3" /* MAIN */ }, children }),
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
-            Button_default,
-            {
-              onClick: () => setMode(
-                (prevMode) => prevMode === "light" ? "dark" : "light"
-              ),
-              children: "Change theme"
-            }
-          )
-        ]
-      }
-    )
-  ] });
+                  );
+                }),
+                standardRoutes.map((route, index) => /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                  MenuItem_default,
+                  {
+                    currentPath: route.route,
+                    route,
+                    isActive: isCurrentPage(route.route)
+                  },
+                  index
+                ))
+              ] })
+            ]
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Box_default, { sx: { flex: 1, p: 4, backgroundColor: "#F0F2F3" /* MAIN */ }, children }),
+        /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(Button_default, { onClick: switchColorMode, children: "Change theme" })
+      ]
+    }
+  ) });
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   Colors,
-  Wrapper
+  Wrapper,
+  useAppTheme
 });
 /*! Bundled license information:
 
