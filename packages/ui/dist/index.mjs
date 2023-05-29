@@ -8573,22 +8573,6 @@ process.env.NODE_ENV !== "production" ? Link.propTypes = {
 } : void 0;
 var Link_default = Link;
 
-// enums/colors.ts
-var Colors = /* @__PURE__ */ ((Colors2) => {
-  Colors2["MAIN_BLUE"] = "#162949";
-  Colors2["MAIN_BLUE_LIGHT"] = "#30599f";
-  Colors2["MAIN"] = "#F0F2F3";
-  Colors2["MAIN_LIGHT"] = "#F7F7F7";
-  Colors2["WHITE"] = "#FFFFFF";
-  Colors2["TEXT"] = "#8F9296";
-  Colors2["ACCENT_YELLOW"] = "#FFC37B";
-  Colors2["ACCENT_BLUE"] = "#5C97C4";
-  Colors2["ACCENT_SALMON"] = "#F47976";
-  Colors2["RED_TEST"] = "#670a07";
-  Colors2["RED_TEST_LIGHT"] = "#9f4b49";
-  return Colors2;
-})(Colors || {});
-
 // theme/useAppTheme.ts
 import { create } from "zustand";
 
@@ -8667,14 +8651,24 @@ var Button3 = {
       //   backgroundColor: Colors.GREY_300,
       // },
     },
-    contained: {
-      // color: Colors.WHITE,
+    contained: ({ theme }) => ({
+      color: theme.palette.text.secondary,
+      backgroundColor: theme.palette.primary.main
       // "&:disabled": {
       //   border: "1px solid #BDBDBD",
       //   color: Colors.TEXT_LIGHT_2,
       //   backgroundColor: Colors.GREY_300,
       // },
-    }
+    }),
+    outlined: ({ theme }) => ({
+      color: theme.palette.primary.main,
+      backgroundColor: theme.palette.text.secondary
+      // "&:disabled": {
+      //   border: "1px solid #BDBDBD",
+      //   color: Colors.TEXT_LIGHT_2,
+      //   backgroundColor: Colors.GREY_300,
+      // },
+    })
   }
 };
 
@@ -8688,6 +8682,31 @@ var TextField = {
     }
   }
 };
+
+// enums/colors.ts
+var Colors = /* @__PURE__ */ ((Colors2) => {
+  Colors2["MAIN_BLUE"] = "#162949";
+  Colors2["MAIN_BLUE_LIGHT"] = "#30599f";
+  Colors2["MAIN"] = "#F0F2F3";
+  Colors2["MAIN_LIGHT"] = "#F7F7F7";
+  Colors2["WHITE"] = "#FFFFFF";
+  Colors2["TEXT"] = "#8F9296";
+  Colors2["ERROR"] = "#F24141";
+  Colors2["RED_TEST"] = "#670a07";
+  Colors2["RED_TEST_LIGHT"] = "#9f4b49";
+  Colors2["MAIN_BLUE_CB"] = "#212C4A";
+  Colors2["MAIN_BLUE_LIGHT_CB"] = "#3A599D";
+  Colors2["MAIN_CB"] = "#F5F0F2";
+  Colors2["MAIN_LIGHT_CB"] = "#FBF5FA";
+  Colors2["TEXT_CB"] = "#929094";
+  Colors2["ERROR_CB"] = "#8F8356";
+  Colors2["ACCENT_PURPLE"] = "#CE77F2";
+  Colors2["ACCENT_SALMON"] = "#F47976";
+  Colors2["ACCENT_BLUE"] = "#5C97C4";
+  Colors2["ACCENT_BLUE_LIGHT"] = "#8DD1E1";
+  Colors2["ACCENT_YELLOW"] = "#FFC37B";
+  return Colors2;
+})(Colors || {});
 
 // theme/components/filled-input.ts
 var FilledInput = {
@@ -8756,19 +8775,24 @@ var getPaletteConfig = (mode) => __spreadValues({}, mode === "light" ? {
     default: "#F0F2F3" /* MAIN */,
     paper: "#F7F7F7" /* MAIN_LIGHT */
   },
-  text: { primary: "#8F9296" /* TEXT */ },
-  highlight: { primary: "#30599f" /* MAIN_BLUE_LIGHT */ }
+  text: { primary: "#8F9296" /* TEXT */, secondary: "#FFFFFF" /* WHITE */ },
+  highlight: { primary: "#30599f" /* MAIN_BLUE_LIGHT */ },
+  error: {
+    main: "#F24141" /* ERROR */
+  }
 } : {
-  // dark theme
   // palette values for colorblind students (initially 'dark' theme)
-  primary: { main: "#670a07" /* RED_TEST */ },
-  secondary: { main: "#670a07" /* RED_TEST */ },
+  primary: { main: "#212C4A" /* MAIN_BLUE_CB */ },
+  secondary: { main: "#FBF5FA" /* MAIN_LIGHT_CB */ },
   background: {
-    default: "#670a07" /* RED_TEST */,
-    paper: "#670a07" /* RED_TEST */
+    default: "#F5F0F2" /* MAIN_CB */,
+    paper: "#FBF5FA" /* MAIN_LIGHT_CB */
   },
-  text: { primary: "#670a07" /* RED_TEST */ },
-  highlight: { primary: "#9f4b49" /* RED_TEST_LIGHT */ }
+  text: { primary: "#929094" /* TEXT_CB */, secondary: "#FFFFFF" /* WHITE */ },
+  highlight: { primary: "#3A599D" /* MAIN_BLUE_LIGHT_CB */ },
+  error: {
+    main: "#8F8356" /* ERROR_CB */
+  }
 });
 
 // theme/useCustomTheme.ts
@@ -8810,13 +8834,13 @@ var MenuItem = ({ isActive, currentPath, route }) => {
           {
             flexItem: true,
             orientation: "vertical",
-            color: isActive ? "#FFFFFF" /* WHITE */ : "transparent",
+            color: isActive ? theme.palette.text.secondary : "transparent",
             sx: {
               width: "3px",
               mr: 0,
               ml: -1,
               "&:hover": {
-                color: isActive ? "transparent" : "#FFFFFF" /* WHITE */
+                color: isActive ? "transparent" : theme.palette.text.secondary
               }
             }
           }
@@ -8825,7 +8849,7 @@ var MenuItem = ({ isActive, currentPath, route }) => {
           Link_default,
           {
             href: currentPath,
-            color: "#FFFFFF" /* WHITE */,
+            color: theme.palette.text.secondary,
             underline: "none",
             width: "100%",
             sx: {
@@ -8895,7 +8919,7 @@ var Wrapper = ({
               flexDirection: "column",
               alignItems: "start",
               backgroundColor: theme.palette.primary.main,
-              color: "#FFFFFF" /* WHITE */,
+              color: theme.palette.text.secondary,
               py: 3
             },
             children: [
@@ -8908,7 +8932,7 @@ var Wrapper = ({
                     height: "2px",
                     my: 2
                   },
-                  color: "#FFFFFF" /* WHITE */
+                  color: theme.palette.text.secondary
                 }
               ),
               /* @__PURE__ */ jsxs3(Box_default, { sx: { mx: 1 }, children: [
@@ -8937,8 +8961,18 @@ var Wrapper = ({
             ]
           }
         ),
-        /* @__PURE__ */ jsx3(Box_default, { sx: { flex: 1, p: 4, backgroundColor: "#F0F2F3" /* MAIN */ }, children }),
-        /* @__PURE__ */ jsx3(Button_default, { onClick: switchColorMode, children: "Change theme" })
+        /* @__PURE__ */ jsx3(
+          Box_default,
+          {
+            sx: {
+              flex: 1,
+              p: 4,
+              backgroundColor: theme.palette.background.default
+            },
+            children
+          }
+        ),
+        /* @__PURE__ */ jsx3(Button_default, { variant: "contained", onClick: switchColorMode, children: "Change theme" })
       ]
     }
   ) });

@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import React from "react";
-import { BaseRoute, RouteEnums } from "../enums";
+import { RouteEnums } from "../enums";
 import Profile from "../pages/Profile";
 import Settings from "../pages/Settings";
 import Login from "../pages/Login";

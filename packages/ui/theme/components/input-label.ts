@@ -1,4 +1,4 @@
-import { Colors } from "../../enums/colors";
+import { Colors } from "../../enums";
 
 // TODO
 export const InputLabel = {
