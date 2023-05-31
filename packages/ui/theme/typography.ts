@@ -8,8 +8,8 @@ export const TypographyConfig = {
   fontStyle: "normal",
   h1: {
     fontWeight: 700,
-    fontSize: "32px",
-    lineHeight: "48px",
+    fontSize: "56px",
+    lineHeight: "56px",
     [breakpoints.down("md")]: {
       fontSize: "24px",
       fontWeight: 400,
@@ -17,8 +17,8 @@ export const TypographyConfig = {
     },
   },
   h2: {
-    fontSize: "24px",
-    lineHeight: "36px",
+    fontSize: "32px",
+    lineHeight: "32px",
     fontWeight: 600,
     [breakpoints.down("md")]: {
       fontSize: "18px",
