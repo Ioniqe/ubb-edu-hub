@@ -2,6 +2,8 @@ import { PaletteMode } from "@mui/material";
 import { Colors } from "../enums";
 
 declare module "@mui/material/styles/createPalette" {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   interface Palette extends Palette {
     highlight: { primary: string };
   }
@@ -17,19 +19,24 @@ export const getPaletteConfig = (mode: PaletteMode) => ({
           default: Colors.MAIN,
           paper: Colors.MAIN_LIGHT,
         },
-        text: { primary: Colors.TEXT },
+        text: { primary: Colors.TEXT, secondary: Colors.WHITE },
         highlight: { primary: Colors.MAIN_BLUE_LIGHT },
+        error: {
+          main: Colors.ERROR,
+        },
       }
     : {
-        // dark theme
         // palette values for colorblind students (initially 'dark' theme)
-        primary: { main: Colors.RED_TEST },
-        secondary: { main: Colors.RED_TEST },
+        primary: { main: Colors.MAIN_BLUE_CB },
+        secondary: { main: Colors.MAIN_LIGHT_CB },
         background: {
-          default: Colors.RED_TEST,
-          paper: Colors.RED_TEST,
+          default: Colors.MAIN_CB,
+          paper: Colors.MAIN_LIGHT_CB,
         },
-        text: { primary: Colors.RED_TEST },
-        highlight: { primary: Colors.RED_TEST_LIGHT },
+        text: { primary: Colors.TEXT_CB, secondary: Colors.WHITE },
+        highlight: { primary: Colors.MAIN_BLUE_LIGHT_CB },
+        error: {
+          main: Colors.ERROR_CB,
+        },
       }),
 });

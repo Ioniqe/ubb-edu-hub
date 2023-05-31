@@ -1,0 +1,17 @@
+{
+  "extends": "index.js",
+  "compilerOptions": {
+    "target": "es2016",
+    "jsx": "react-jsx",
+
+    "module": "commonjs",
+
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"],
+  "exclude": ["dist", "build", "node_modules"]
+}

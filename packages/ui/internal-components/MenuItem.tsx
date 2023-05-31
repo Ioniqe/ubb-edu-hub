@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Divider, Link, Typography } from "@mui/material";
-import { Colors } from "../enums";
 import { Route } from "../types";
 import { useAppTheme } from "../theme";
 
@@ -25,20 +24,20 @@ const MenuItem = ({ isActive, currentPath, route }: MenuItemProps) => {
       <Divider
         flexItem
         orientation="vertical"
-        color={isActive ? Colors.WHITE : "transparent"}
+        color={isActive ? theme.palette.text.secondary : "transparent"}
         sx={{
           width: "3px",
           mr: 0,
           ml: -1,
           "&:hover": {
-            color: isActive ? "transparent" : Colors.WHITE,
+            color: isActive ? "transparent" : theme.palette.text.secondary,
           },
         }}
       />
 
       <Link
         href={currentPath}
-        color={Colors.WHITE}
+        color={theme.palette.text.secondary}
         underline={"none"}
         width={"100%"}
         sx={{

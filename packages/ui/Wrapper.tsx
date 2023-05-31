@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 
 import { Box, Button, Divider, Typography } from "@mui/material";
-import { Colors } from "./enums";
 import { Route } from "./types";
 import MenuItem from "./internal-components/MenuItem";
 import { CustomAppThemeProvider } from "./CustomAppThemeProvider";
@@ -44,7 +43,7 @@ export const Wrapper = ({
             flexDirection: "column",
             alignItems: "start",
             backgroundColor: theme.palette.primary.main,
-            color: Colors.WHITE,
+            color: theme.palette.text.secondary,
             py: 3,
           }}
         >
@@ -56,7 +55,7 @@ export const Wrapper = ({
               height: "2px",
               my: 2,
             }}
-            color={Colors.WHITE}
+            color={theme.palette.text.secondary}
           />
 
           <Box sx={{ mx: 1 }}>
@@ -87,11 +86,19 @@ export const Wrapper = ({
           </Box>
         </Box>
 
-        <Box sx={{ flex: 1, p: 4, backgroundColor: Colors.MAIN }}>
+        <Box
+          sx={{
+            flex: 1,
+            p: 4,
+            backgroundColor: theme.palette.background.default,
+          }}
+        >
           {children}
         </Box>
 
-        <Button onClick={switchColorMode}>Change theme</Button>
+        <Button variant={"contained"} onClick={switchColorMode}>
+          Change theme
+        </Button>
       </Box>
     </CustomAppThemeProvider>
   );
