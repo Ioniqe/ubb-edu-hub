@@ -1,26 +1,20 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import React from "react";
 import { RouteEnums } from "../enums";
-import Profile from "../pages/Profile";
-import Settings from "../pages/Settings";
-import Login from "../pages/Login";
-import Logout from "../pages/Logout";
-import Signup from "../pages/Signup";
+import { Profile, Settings, NotFound } from "../pages";
 import { renderStudentRoutes } from "./student-routes";
-// TODO add fallback for 404
+import { renderAuthRoutes } from "./auth-routes";
 // TODO add fallback for 500
-// TODO add protectedRoute
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="*" element={<NotFound />} />
+
         <Route path={"/"} element={<Navigate to={RouteEnums.LOGIN} />} />
 
-        <Route path={RouteEnums.LOGIN} element={<Login />} />
-        <Route path={RouteEnums.LOGOUT} element={<Logout />} />
-        <Route path={RouteEnums.SIGN_UP} element={<Signup />} />
-
+        {renderAuthRoutes()}
         {renderStudentRoutes()}
 
         <Route path={RouteEnums.SETTINGS} element={<Settings />} />

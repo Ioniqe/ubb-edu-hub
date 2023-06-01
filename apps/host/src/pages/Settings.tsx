@@ -4,7 +4,7 @@ import { BaseRoute } from "../enums";
 import { routes } from "../constants";
 import { Wrapper } from "ui";
 
-const Settings = () => {
+export const Settings = () => {
   return (
     <Wrapper
       title={"Student"} // verify if student
@@ -16,5 +16,3 @@ const Settings = () => {
     </Wrapper>
   );
 };
-
-export default Settings;

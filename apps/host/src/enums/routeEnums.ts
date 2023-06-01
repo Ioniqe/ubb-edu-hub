@@ -14,11 +14,9 @@ export enum RouteEnums {
 
   //auth
   LOGIN = "login",
-  LOGOUT = "logout",
   SIGN_UP = "sing-up",
 
   //errors
-  PAGE_NOT_FOUND = "page-not-found",
   ERROR = "something-went-wrong", // poate n-ai nevoie de route pt asta
 }
 

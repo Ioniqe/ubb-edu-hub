@@ -4,7 +4,7 @@ import { BaseRoute } from "../enums";
 import { routes } from "../constants";
 import { useAppTheme, Wrapper } from "ui";
 
-const Profile = () => {
+export const Profile = () => {
   const { theme } = useAppTheme();
   return (
     <Wrapper
@@ -17,5 +17,3 @@ const Profile = () => {
     </Wrapper>
   );
 };
-
-export default Profile;
