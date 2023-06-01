@@ -1,6 +1,5 @@
 import { Colors } from "../../enums";
 
-// TODO
 export const InputLabel = {
   styleOverrides: {
     root: {

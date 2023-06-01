@@ -22,7 +22,7 @@ export const Wrapper = ({
   children,
 }: WrapperProps) => {
   const { pathname } = window.location;
-  const { theme, switchColorMode } = useAppTheme();
+  const { theme } = useAppTheme();
 
   const isCurrentPage = useCallback((path) => path === pathname, []);
 
@@ -95,10 +95,6 @@ export const Wrapper = ({
         >
           {children}
         </Box>
-
-        <Button variant={"contained"} onClick={switchColorMode}>
-          Change theme
-        </Button>
       </Box>
     </CustomAppThemeProvider>
   );

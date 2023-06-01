@@ -1,4 +1,3 @@
-// TODO
 import { Theme } from "@mui/material";
 
 export const Button = {
