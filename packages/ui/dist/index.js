@@ -8611,8 +8611,8 @@ var TypographyConfig = {
     lineHeight: "32px",
     fontWeight: 600,
     [breakpoints.down("md")]: {
-      fontSize: "18px",
-      lineHeight: "24px"
+      fontSize: "26px",
+      lineHeight: "26px"
     }
   },
   h3: {

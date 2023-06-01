@@ -33,6 +33,17 @@ module.exports = (_, argv) => {
     module: {
       rules: [
         {
+          test: /\.svg$/,
+          use: [
+            {
+              loader: "svg-url-loader",
+              options: {
+                limit: 10000,
+              },
+            },
+          ],
+        },
+        {
           test: /\.m?js/,
           type: "javascript/auto",
           resolve: {

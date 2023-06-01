@@ -93,6 +93,9 @@ importers:
       style-loader:
         specifier: ^3.3.0
         version: 3.3.2(webpack@5.82.1)
+      svg-url-loader:
+        specifier: ^8.0.0
+        version: 8.0.0(webpack@5.82.1)
       tsconfig:
         specifier: workspace:*
         version: link:../../packages/tsconfig
@@ -169,6 +172,9 @@ importers:
       style-loader:
         specifier: ^3.3.0
         version: 3.3.2(webpack@5.82.1)
+      svg-url-loader:
+        specifier: ^8.0.0
+        version: 8.0.0(webpack@5.82.1)
       tsconfig:
         specifier: workspace:*
         version: link:../../packages/tsconfig
@@ -4150,6 +4156,17 @@ packages:
     dependencies:
       flat-cache: 3.0.4
 
+  /file-loader@6.2.0(webpack@5.82.1):
+    resolution: {integrity: sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
+    dependencies:
+      loader-utils: 2.0.4
+      schema-utils: 3.1.2
+      webpack: 5.82.1(webpack-cli@4.10.0)
+    dev: true
+
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
     engines: {node: '>=8'}
@@ -6320,6 +6337,16 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  /svg-url-loader@8.0.0(webpack@5.82.1):
+    resolution: {integrity: sha512-5doSXvl18hY1fGsRLdhWAU5jgzgxJ06/gc/26cpuDnN0xOz1HmmfhkpL29SSrdIvhtxQ1UwGzmk7wTT/l48mKw==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      webpack: ^5.0.0
+    dependencies:
+      file-loader: 6.2.0(webpack@5.82.1)
+      webpack: 5.82.1(webpack-cli@4.10.0)
+    dev: true
 
   /synckit@0.8.5:
     resolution: {integrity: sha512-L1dapNV6vu2s/4Sputv8xGsCdAVlb5nRDMFU/E27D44l5U6cw1g0dGd45uLc+OXjNMmF4ntiMdCimzcjFKQI8Q==}

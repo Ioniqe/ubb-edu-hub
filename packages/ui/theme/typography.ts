@@ -2,7 +2,6 @@ import { createTheme } from "@mui/material/styles";
 
 const { breakpoints } = createTheme();
 
-// TODO everything in theme folder actually
 export const TypographyConfig = {
   fontFamily: `"Nunito", "sans-serif"`,
   fontStyle: "normal",
@@ -21,8 +20,8 @@ export const TypographyConfig = {
     lineHeight: "32px",
     fontWeight: 600,
     [breakpoints.down("md")]: {
-      fontSize: "18px",
-      lineHeight: "24px",
+      fontSize: "26px",
+      lineHeight: "26px",
     },
   },
   h3: {
