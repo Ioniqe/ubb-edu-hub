@@ -4,6 +4,7 @@ import { useAppTheme } from "ui";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 import { useNavigate } from "react-router-dom";
 import { BaseRoute, RouteEnums } from "../enums";
+import login from "../assets/images/login.svg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ const Login = () => {
     <CustomAppThemeProvider>
       <Box display={"flex"} width={"100vw"} height={"100vh"}>
         <Box
-          display={"flex"}
+          display={{ xs: "none", md: "flex" }}
           flexDirection={"column"}
           alignItems={"center"}
           justifyContent={"space-evenly"}
@@ -46,14 +47,14 @@ const Login = () => {
 
           <Box
             component={"img"}
-            src={"/images/login.png"}
+            src={login}
             alt={"Login Image"}
             width={"70%"}
           />
         </Box>
 
         <Box
-          width={"60%"}
+          width={{ xs: "100%", md: "60%" }}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}
@@ -85,7 +86,6 @@ const Login = () => {
               alignItems={"center"}
               justifyContent={"center"}
               width={"60%"}
-              sx={{ pt: 5 }}
             >
               <TextField
                 label={"Email"}
