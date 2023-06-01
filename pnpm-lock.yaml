@@ -35,9 +35,6 @@ importers:
       '@babel/runtime':
         specifier: ^7.21.5
         version: 7.21.5
-      host:
-        specifier: 'link:'
-        version: 'link:'
       react:
         specifier: ^18.2.0
         version: 18.2.0
