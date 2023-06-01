@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { BaseRoute } from "../enums";
-import { Colors, MultiSelect, useAppTheme } from "ui";
+import { Colors, MultiSelect, SimpleSelect, useAppTheme } from "ui";
 import { useNavigate } from "react-router-dom";
 
 const subjectOptions = [
@@ -15,6 +15,7 @@ export const InitialForm = () => {
   const navigate = useNavigate();
 
   const [subjects, setSubjects] = useState<string[]>([]);
+  const [prefersHardSkills, setPrefersHardSkills] = useState<string>("");
 
   const onSubmit = () => navigate("/" + BaseRoute.STUDENT);
 
@@ -29,15 +30,16 @@ export const InitialForm = () => {
       sx={{
         borderRadius: "16px",
         backgroundColor: theme.palette.background.paper,
-        border: "1px solid" + Colors.ACCENT_YELLOW,
-        p: 5,
+        px: 5,
+        py: 8,
+        overflowY: "scroll",
       }}
     >
       <Box
         display={"flex"}
         flexDirection={"column"}
         alignItems={"center"}
-        sx={{ textAlign: "center" }}
+        sx={{ textAlign: "center", mb: 4 }}
       >
         <Typography variant={"h3"} color={theme.palette.primary.main}>
           {`Let us know what you're looking for`}
@@ -62,12 +64,26 @@ export const InitialForm = () => {
           selectedOptions={subjects}
           setSelectedOptions={setSubjects}
         />
+
+        <SimpleSelect
+          label={"What do you prefer?"}
+          options={["Yes", "No"]}
+          selectedOption={prefersHardSkills}
+          setSelectedOption={setPrefersHardSkills}
+        />
+
+        <SimpleSelect
+          label={"What do you prefer?"}
+          options={["Yes", "No"]}
+          selectedOption={prefersHardSkills}
+          setSelectedOption={setPrefersHardSkills}
+        />
       </Box>
 
       <Button
         onClick={onSubmit}
         variant={"contained"}
-        sx={{ width: "30%" }}
+        sx={{ width: "30%", mt: 4 }}
         disabled={false}
       >
         Submit

@@ -1,10 +1,12 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { BaseRoute } from "../enums";
 import { routes } from "../constants";
-import { Wrapper } from "ui";
+import { useAppTheme, Wrapper } from "ui";
 
 export const Settings = () => {
+  const { switchColorMode } = useAppTheme();
+
   return (
     <Wrapper
       title={"Student"} // verify if student
@@ -13,6 +15,9 @@ export const Settings = () => {
       standardRoutes={[...Object.values(routes[BaseRoute.STANDARD])]}
     >
       <Box>The Settings</Box>
+      <Button variant={"contained"} onClick={switchColorMode}>
+        Change theme
+      </Button>
     </Wrapper>
   );
 };

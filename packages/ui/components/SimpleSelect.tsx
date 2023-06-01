@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FormControl,
   MenuItem,
@@ -6,29 +5,27 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
+import React from "react";
 import { useAppTheme } from "../theme";
 
-type MultiSelectProps = {
+type SelectProps = {
   label: string;
   options: string[];
-  selectedOptions: string[];
-  setSelectedOptions: (option: string[]) => void;
+  selectedOption: string;
+  setSelectedOption: (option: string) => void;
 };
 
-export const MultiSelect = ({
+// TODO make MultipleSelect and SimpleSelect one component
+export const SimpleSelect = ({
   label,
   options,
-  selectedOptions,
-  setSelectedOptions,
-}: MultiSelectProps) => {
+  selectedOption,
+  setSelectedOption,
+}: SelectProps) => {
   const { theme } = useAppTheme();
 
-  const handleChange = (event: SelectChangeEvent<typeof selectedOptions>) => {
-    const {
-      target: { value },
-    } = event;
-
-    setSelectedOptions(typeof value === "string" ? value.split(",") : value);
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelectedOption(event.target.value as string);
   };
 
   return (
@@ -40,7 +37,7 @@ export const MultiSelect = ({
         {label}
       </Typography>
 
-      <Select multiple value={selectedOptions} onChange={handleChange}>
+      <Select value={selectedOption} label="" onChange={handleChange}>
         {options.map((_option) => (
           <MenuItem key={_option} value={_option}>
             {_option}
