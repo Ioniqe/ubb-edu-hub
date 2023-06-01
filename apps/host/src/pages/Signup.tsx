@@ -2,19 +2,23 @@ import React, { useState } from "react";
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import { useAppTheme } from "ui";
 import { useNavigate } from "react-router-dom";
-import { BaseRoute, RouteEnums } from "../enums";
+import { RouteEnums } from "../enums";
+import { InitialForm } from "../components";
 
 export const Signup = () => {
+  const [showForm, setShowForm] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { theme } = useAppTheme();
   const navigate = useNavigate();
 
-  const onRegister = () => navigate("/" + BaseRoute.STUDENT);
+  const onRegister = () => setShowForm(true);
   const onLogin = () => navigate("/" + RouteEnums.LOGIN);
 
-  return (
+  return showForm ? (
+    <InitialForm />
+  ) : (
     <Box
       height={"60%"}
       width={"50%"}

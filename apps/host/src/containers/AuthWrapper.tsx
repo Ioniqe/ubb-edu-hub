@@ -26,6 +26,7 @@ export const AuthWrapper = () => {
           flexDirection={"column"}
           alignItems={"center"}
           justifyContent={"space-evenly"}
+          sx={{ textAlign: "center" }}
         >
           <Typography variant={"h1"} fontWeight={200}>
             Welcome to

@@ -25,7 +25,7 @@ export const TypographyConfig = {
     },
   },
   h3: {
-    fontSize: "20px",
+    fontSize: "26px",
     lineHeight: "30px",
     fontWeight: 400,
   },

@@ -47,4 +47,12 @@ type ThemeStore = {
 };
 declare const useAppTheme: zustand.UseBoundStore<zustand.StoreApi<ThemeStore>>;
 
-export { Colors, Route, Wrapper, useAppTheme };
+type MultiSelectProps = {
+    label: string;
+    options: string[];
+    selectedOptions: string[];
+    setSelectedOptions: (option: string[]) => void;
+};
+declare const MultiSelect: ({ label, options, selectedOptions, setSelectedOptions, }: MultiSelectProps) => JSX.Element;
+
+export { Colors, MultiSelect, Route, Wrapper, useAppTheme };
