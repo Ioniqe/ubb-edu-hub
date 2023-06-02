@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Tooltip, Typography } from "@mui/material";
 import { useAppTheme } from "../theme";
-import "./component-styles.css";
 
 type CardProps = {
   label: string;
@@ -32,42 +31,30 @@ export const Card = ({ label, labelColor, children }: CardProps) => {
         justifyContent={"center"}
         sx={{
           backgroundColor: color,
-          borderRadius: "400px",
+          borderRadius: "20px",
           width: { xs: "50%", md: "70%" },
           height: "40px",
           zIndex: 2,
 
           px: 4,
+          boxShadow: `8px 8px 10px 0px ${color}`,
         }}
       >
         <Tooltip title={label}>
           <Typography
             color={theme.palette.text.secondary}
             variant={"h4"}
-            className={"limit-rows-to-1"}
+            sx={{
+              display: "-webkit-box",
+              WebkitLineClamp: "1",
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
           >
             {label}
           </Typography>
         </Tooltip>
       </Box>
-
-      <Box
-        top={"14px"}
-        left={{ xs: "30%", md: "17%" }}
-        position={"absolute"}
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        sx={{
-          backgroundColor: color,
-          borderRadius: "400px",
-          width: { xs: "50%", md: "70%" },
-          height: "40px",
-          zIndex: 1,
-
-          filter: "blur(0.5rem)",
-        }}
-      />
 
       <Box
         position={"relative"}

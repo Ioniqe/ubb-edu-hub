@@ -18863,13 +18863,34 @@ var InputLabel = {
   }
 };
 
+// theme/components/chip.ts
+var Chip = {
+  styleOverrides: {
+    root: {
+      marginRight: 8,
+      marginTop: 4
+    },
+    filled: ({ theme }) => ({
+      color: theme.palette.text.secondary,
+      backgroundColor: theme.palette.primary.main,
+      "&:hover": {
+        backgroundColor: theme.palette.highlight.primary
+      }
+    }),
+    outlined: ({ theme }) => ({
+      color: theme.palette.primary.main
+    })
+  }
+};
+
 // theme/components/index.ts
 var components = {
   MuiButton: Button,
   MuiTextField: TextField,
   MuiFilledInput: FilledInput3,
-  MuiInputLabel: InputLabel
+  MuiInputLabel: InputLabel,
   // MuiSelect: Select,
+  MuiChip: Chip
 };
 
 // theme/palette.ts
@@ -19177,40 +19198,27 @@ var Card = ({ label, labelColor, children }) => {
             justifyContent: "center",
             sx: {
               backgroundColor: color2,
-              borderRadius: "400px",
+              borderRadius: "20px",
               width: { xs: "50%", md: "70%" },
               height: "40px",
               zIndex: 2,
-              px: 4
+              px: 4,
+              boxShadow: `8px 8px 10px 0px ${color2}`
             },
             children: /* @__PURE__ */ jsx6(Tooltip_default, { title: label, children: /* @__PURE__ */ jsx6(
               Typography_default,
               {
                 color: theme.palette.text.secondary,
                 variant: "h4",
-                className: "limit-rows-to-1",
+                sx: {
+                  display: "-webkit-box",
+                  WebkitLineClamp: "1",
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden"
+                },
                 children: label
               }
             ) })
-          }
-        ),
-        /* @__PURE__ */ jsx6(
-          Box_default,
-          {
-            top: "14px",
-            left: { xs: "30%", md: "17%" },
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            sx: {
-              backgroundColor: color2,
-              borderRadius: "400px",
-              width: { xs: "50%", md: "70%" },
-              height: "40px",
-              zIndex: 1,
-              filter: "blur(0.5rem)"
-            }
           }
         ),
         /* @__PURE__ */ jsx6(
