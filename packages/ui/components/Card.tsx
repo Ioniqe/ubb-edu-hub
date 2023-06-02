@@ -1,16 +1,16 @@
 import React from "react";
 import { Box, Tooltip, Typography } from "@mui/material";
 import { useAppTheme } from "../theme";
-import { Colors } from "../enums";
-
 type CardProps = {
   label: string;
+  labelColor: string | null;
   children: React.ReactNode;
 };
 
-export const Card = ({ label, children }: CardProps) => {
+export const Card = ({ label, labelColor, children }: CardProps) => {
   const { theme } = useAppTheme();
-  const color = Colors.ACCENT_YELLOW; // TODO get color from server
+
+  const color = labelColor ?? theme.palette.primary.main;
 
   return (
     <Box
@@ -19,8 +19,9 @@ export const Card = ({ label, children }: CardProps) => {
       flexDirection={"column"}
       alignItems={"center"}
       height={"fit-content"}
-      width={"fit-content"}
-      m={1}
+      width={{ xs: "100%", sm: "50%", lg: "33%", xl: "25%" }}
+      p={1}
+      mb={5}
     >
       <Box
         position={"absolute"}
@@ -30,8 +31,8 @@ export const Card = ({ label, children }: CardProps) => {
         sx={{
           backgroundColor: color,
           borderRadius: "400px",
-          width: "250px",
-          height: "50px",
+          width: { xs: "50%", md: "70%" },
+          height: "40px",
           zIndex: 2,
 
           px: 4,
@@ -52,9 +53,10 @@ export const Card = ({ label, children }: CardProps) => {
           </Typography>
         </Tooltip>
       </Box>
+
       <Box
-        top={"7px"}
-        left={"35px"}
+        top={"14px"}
+        left={{ xs: "30%", md: "17%" }}
         position={"absolute"}
         display={"flex"}
         alignItems={"center"}
@@ -62,8 +64,8 @@ export const Card = ({ label, children }: CardProps) => {
         sx={{
           backgroundColor: color,
           borderRadius: "400px",
-          width: "250px",
-          height: "50px",
+          width: { xs: "50%", md: "70%" },
+          height: "40px",
           zIndex: 1,
 
           filter: "blur(0.5rem)",
@@ -73,7 +75,6 @@ export const Card = ({ label, children }: CardProps) => {
       <Box
         position={"relative"}
         top={"25px"}
-        width={"300px"}
         height={"400px"}
         sx={{
           backgroundColor: theme.palette.text.secondary,

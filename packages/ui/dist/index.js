@@ -19171,9 +19171,9 @@ var SimpleSelect = ({
 
 // components/Card.tsx
 var import_jsx_runtime60 = require("react/jsx-runtime");
-var Card = ({ label, children }) => {
+var Card = ({ label, labelColor, children }) => {
   const { theme } = useAppTheme();
-  const color2 = "#FFC37B" /* ACCENT_YELLOW */;
+  const color2 = labelColor != null ? labelColor : theme.palette.primary.main;
   return /* @__PURE__ */ (0, import_jsx_runtime60.jsxs)(
     Box_default,
     {
@@ -19182,8 +19182,9 @@ var Card = ({ label, children }) => {
       flexDirection: "column",
       alignItems: "center",
       height: "fit-content",
-      width: "fit-content",
-      m: 1,
+      width: { xs: "100%", sm: "50%", lg: "33%", xl: "25%" },
+      p: 1,
+      mb: 5,
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
           Box_default,
@@ -19195,8 +19196,8 @@ var Card = ({ label, children }) => {
             sx: {
               backgroundColor: color2,
               borderRadius: "400px",
-              width: "250px",
-              height: "50px",
+              width: { xs: "50%", md: "70%" },
+              height: "40px",
               zIndex: 2,
               px: 4
             },
@@ -19219,8 +19220,8 @@ var Card = ({ label, children }) => {
         /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
           Box_default,
           {
-            top: "7px",
-            left: "35px",
+            top: "14px",
+            left: { xs: "30%", md: "17%" },
             position: "absolute",
             display: "flex",
             alignItems: "center",
@@ -19228,8 +19229,8 @@ var Card = ({ label, children }) => {
             sx: {
               backgroundColor: color2,
               borderRadius: "400px",
-              width: "250px",
-              height: "50px",
+              width: { xs: "50%", md: "70%" },
+              height: "40px",
               zIndex: 1,
               filter: "blur(0.5rem)"
             }
@@ -19240,7 +19241,6 @@ var Card = ({ label, children }) => {
           {
             position: "relative",
             top: "25px",
-            width: "300px",
             height: "400px",
             sx: {
               backgroundColor: theme.palette.text.secondary,

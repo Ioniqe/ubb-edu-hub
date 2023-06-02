@@ -65,8 +65,9 @@ declare const SimpleSelect: ({ label, options, selectedOption, setSelectedOption
 
 type CardProps = {
     label: string;
+    labelColor: string | null;
     children: React.ReactNode;
 };
-declare const Card: ({ label, children }: CardProps) => JSX.Element;
+declare const Card: ({ label, labelColor, children }: CardProps) => JSX.Element;
 
 export { Card, Colors, MultiSelect, Route, SimpleSelect, Wrapper, useAppTheme };
