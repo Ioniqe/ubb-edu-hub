@@ -90,7 +90,6 @@ export const ChallengesTabContent = ({
                     mb: 3,
 
                     "&:hover": {
-                      // filter: "blur(4px)",
                       backgroundColor: interest.color,
                       color: theme.palette.text.secondary,
                       boxShadow: `0px 0px 16px 0px ${interest.color}`,
