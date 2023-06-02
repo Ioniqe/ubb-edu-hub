@@ -1,9 +1,9 @@
-import React from "react";
-import { Box } from "@mui/material";
-import { Tabs } from "../components";
+import React, { SyntheticEvent, useState } from "react";
+import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { Topic } from "../types";
 import { Colors } from "ui";
-import { Filter, mappedFilters } from "../enums";
+import { Filter } from "../enums";
+import { ChallengesTabContent } from "../components";
 
 const Challenges = () => {
   const interests: Topic[] = [
@@ -19,12 +19,28 @@ const Challenges = () => {
     Filter.NOT_COMPLETED,
   ];
 
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event: SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
-    <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
-      <Tabs
-        topics={interests}
-        filters={filters.map((filter) => mappedFilters[filter])}
-      />
+    <Box
+      display={"flex"}
+      flexDirection={"row"}
+      flexWrap={"wrap"}
+      width={"100%"}
+    >
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }} width={"100%"}>
+        <MuiTabs value={value} onChange={handleChange}>
+          {interests.map((topic: Topic, index: number) => (
+            <Tab label={topic.name} value={index} key={index} />
+          ))}
+        </MuiTabs>
+      </Box>
+
+      <ChallengesTabContent interest={interests[value]} filters={filters} />
     </Box>
   );
 };

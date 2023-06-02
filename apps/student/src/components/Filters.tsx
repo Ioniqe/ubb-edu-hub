@@ -1,6 +1,42 @@
-import React from "react";
-import { Box } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Chip } from "@mui/material";
 
-export const Filters = () => {
-  return <Box></Box>;
+type FiltersProps = {
+  filters: string[];
+};
+
+export const Filters = ({ filters }: FiltersProps) => {
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+
+  const isFilterSelected = (filter: string) => selectedFilter === filter;
+
+  const handleChipClick = (filter: string) => {
+    if (isFilterSelected(filter)) {
+      setSelectedFilter(null);
+      return;
+    }
+    setSelectedFilter(filter);
+  };
+
+  return (
+    <Box
+      width={"100%"}
+      height={"100%"}
+      display={"flex"}
+      px={1}
+      py={2}
+      sx={{ flexWrap: "wrap" }}
+    >
+      {[...filters].map((filter: string, index: number) => (
+        <Chip
+          key={index}
+          size={"small"}
+          label={filter}
+          variant={isFilterSelected(filter) ? "filled" : "outlined"}
+          onClick={() => handleChipClick(filter)}
+          sx={{ mr: 1, mt: 0.5 }}
+        />
+      ))}
+    </Box>
+  );
 };
