@@ -21,7 +21,7 @@ export const AssignmentsTabContent = ({
       <Filters filters={filters} />
 
       <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
-        {[...Array(4)]
+        {[...Array(13)]
           .map((u, i) => i)
           .map((_, index) => (
             <Card label={interest.name} labelColor={interest.color} key={index}>
