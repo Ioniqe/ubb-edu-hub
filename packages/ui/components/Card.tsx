@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Tooltip, Typography } from "@mui/material";
 import { useAppTheme } from "../theme";
+import "./component-styles.css";
+
 type CardProps = {
   label: string;
   labelColor: string | null;
@@ -42,12 +44,7 @@ export const Card = ({ label, labelColor, children }: CardProps) => {
           <Typography
             color={theme.palette.text.secondary}
             variant={"h4"}
-            sx={{
-              display: "-webkit-box",
-              "-webkit-line-clamp": "1",
-              "-webkit-box-orient": "vertical",
-              overflow: "hidden",
-            }}
+            className={"limit-rows-to-1"}
           >
             {label}
           </Typography>

@@ -19206,12 +19206,7 @@ var Card = ({ label, labelColor, children }) => {
               {
                 color: theme.palette.text.secondary,
                 variant: "h4",
-                sx: {
-                  display: "-webkit-box",
-                  "-webkit-line-clamp": "1",
-                  "-webkit-box-orient": "vertical",
-                  overflow: "hidden"
-                },
+                className: "limit-rows-to-1",
                 children: label
               }
             ) })
