@@ -1728,6 +1728,7 @@ var require_react_is3 = __commonJS({
 // index.tsx
 var ui_exports = {};
 __export(ui_exports, {
+  Board: () => Board,
   Card: () => Card,
   Colors: () => Colors,
   MultiSelect: () => MultiSelect,
@@ -19272,8 +19273,80 @@ var Card = ({ label, labelColor, children }) => {
     }
   );
 };
+
+// components/Board.tsx
+var import_react13 = require("react");
+var import_jsx_runtime61 = require("react/jsx-runtime");
+var Board = ({ label, labelColor, children }) => {
+  var _a;
+  const [containerHeight, setContainerHeight] = (0, import_react13.useState)(null);
+  const containerRef = (0, import_react13.useRef)(null);
+  const { theme } = useAppTheme();
+  const color2 = (0, import_react13.useMemo)(
+    () => labelColor != null ? labelColor : theme.palette.primary.main,
+    [labelColor, theme]
+  );
+  (0, import_react13.useEffect)(
+    () => {
+      var _a2, _b;
+      return setContainerHeight((_b = (_a2 = containerRef.current) == null ? void 0 : _a2.offsetHeight) != null ? _b : null);
+    },
+    [containerRef]
+  );
+  console.log(containerHeight);
+  return /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(
+    Box_default,
+    {
+      width: "100%",
+      height: "fit-content",
+      position: "relative",
+      sx: {
+        backgroundColor: theme.palette.text.secondary,
+        borderRadius: "16px"
+      },
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+          Box_default,
+          {
+            ref: containerRef,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "32px",
+            position: "absolute",
+            left: 0,
+            sx: {
+              backgroundColor: color2,
+              borderBottomLeftRadius: "16px",
+              borderTopLeftRadius: "16px"
+            },
+            children: label && /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Tooltip_default, { title: label, placement: "left", children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Box_default, { sx: { transform: "rotate(270deg)" }, children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
+              Typography_default,
+              {
+                color: theme.palette.text.secondary,
+                variant: "h4",
+                sx: {
+                  display: "-webkit-box",
+                  WebkitLineClamp: "1",
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  width: (_a = `calc(${containerHeight}px - 24px)`) != null ? _a : "100%",
+                  textAlign: "center"
+                },
+                children: label
+              }
+            ) }) })
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Box_default, { width: "100%", height: "fit-content", p: 2, pl: 6, children })
+      ]
+    }
+  );
+};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  Board,
   Card,
   Colors,
   MultiSelect,
