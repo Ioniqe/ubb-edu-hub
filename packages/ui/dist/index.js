@@ -18901,8 +18901,8 @@ var Chip = {
   }
 };
 
-// theme/components/tabs.ts
-var Tabs = {
+// theme/components/tab.ts
+var Tab = {
   styleOverrides: {
     root: ({ theme }) => ({
       color: theme.palette.text.primary,
@@ -18921,7 +18921,7 @@ var components = {
   MuiInputLabel: InputLabel,
   // MuiSelect: Select,
   MuiChip: Chip,
-  MuiTab: Tabs
+  MuiTab: Tab
 };
 
 // theme/palette.ts

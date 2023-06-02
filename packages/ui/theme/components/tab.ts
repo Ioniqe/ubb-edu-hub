@@ -1,6 +1,6 @@
 import { Theme } from "@mui/material";
 
-export const Tabs = {
+export const Tab = {
   styleOverrides: {
     root: ({ theme }: { theme: Theme }) => ({
       color: theme.palette.text.primary,

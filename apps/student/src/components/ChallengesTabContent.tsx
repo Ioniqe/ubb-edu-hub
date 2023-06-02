@@ -87,7 +87,7 @@ export const ChallengesTabContent = ({
                     borderRadius: "20px",
                     width: "70%",
                     mt: 1,
-                    mb: 3,
+                    mb: 2,
 
                     "&:hover": {
                       backgroundColor: interest.color,

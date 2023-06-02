@@ -6,7 +6,7 @@ import { FilledInput } from "./filled-input";
 import { InputLabel } from "./input-label";
 // import { Select } from "./select";
 import { Chip } from "./chip";
-import { Tabs } from "./tabs";
+import { Tab } from "./tab";
 
 export const components: Components<Theme> = {
   MuiButton: Button,
@@ -15,5 +15,5 @@ export const components: Components<Theme> = {
   MuiInputLabel: InputLabel,
   // MuiSelect: Select,
   MuiChip: Chip,
-  MuiTab: Tabs,
+  MuiTab: Tab,
 };
