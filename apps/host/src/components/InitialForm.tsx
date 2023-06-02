@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { BaseRoute } from "../enums";
-import { Colors, MultiSelect, SimpleSelect, useAppTheme } from "ui";
+import { MultiSelect, SimpleSelect, useAppTheme } from "ui";
 import { useNavigate } from "react-router-dom";
 
 const subjectOptions = [

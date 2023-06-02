@@ -55,4 +55,18 @@ type MultiSelectProps = {
 };
 declare const MultiSelect: ({ label, options, selectedOptions, setSelectedOptions, }: MultiSelectProps) => JSX.Element;
 
-export { Colors, MultiSelect, Route, Wrapper, useAppTheme };
+type SelectProps = {
+    label: string;
+    options: string[];
+    selectedOption: string;
+    setSelectedOption: (option: string) => void;
+};
+declare const SimpleSelect: ({ label, options, selectedOption, setSelectedOption, }: SelectProps) => JSX.Element;
+
+type CardProps = {
+    label: string;
+    children: React.ReactNode;
+};
+declare const Card: ({ label, children }: CardProps) => JSX.Element;
+
+export { Card, Colors, MultiSelect, Route, SimpleSelect, Wrapper, useAppTheme };
