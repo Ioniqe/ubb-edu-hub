@@ -4,6 +4,7 @@ import { Topic } from "../types";
 import { Colors } from "ui";
 import { Filter, mappedFilters } from "../enums";
 import { ChallengesTabContent } from "../components";
+import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 
 const Challenges = () => {
   const interests: Topic[] = [
@@ -14,7 +15,6 @@ const Challenges = () => {
 
   const filters: Filter[] = [
     Filter.ALL,
-    Filter.COMING_UP,
     Filter.COMPLETED,
     Filter.NOT_COMPLETED,
   ];
@@ -26,25 +26,27 @@ const Challenges = () => {
   };
 
   return (
-    <Box
-      display={"flex"}
-      flexDirection={"row"}
-      flexWrap={"wrap"}
-      width={"100%"}
-    >
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }} width={"100%"}>
-        <MuiTabs value={value} onChange={handleChange}>
-          {interests.map((topic: Topic, index: number) => (
-            <Tab label={topic.name} value={index} key={index} />
-          ))}
-        </MuiTabs>
-      </Box>
+    <CustomAppThemeProvider>
+      <Box
+        display={"flex"}
+        flexDirection={"row"}
+        flexWrap={"wrap"}
+        width={"100%"}
+      >
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }} width={"100%"}>
+          <MuiTabs value={value} onChange={handleChange}>
+            {interests.map((topic: Topic, index: number) => (
+              <Tab label={topic.name} value={index} key={index} />
+            ))}
+          </MuiTabs>
+        </Box>
 
-      <ChallengesTabContent
-        interest={interests[value]}
-        filters={filters.map((filter) => mappedFilters[filter])}
-      />
-    </Box>
+        <ChallengesTabContent
+          interest={interests[value]}
+          filters={filters.map((filter) => mappedFilters[filter])}
+        />
+      </Box>
+    </CustomAppThemeProvider>
   );
 };
 

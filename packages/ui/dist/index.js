@@ -18901,6 +18901,18 @@ var Chip = {
   }
 };
 
+// theme/components/tabs.ts
+var Tabs = {
+  styleOverrides: {
+    root: ({ theme }) => ({
+      color: theme.palette.text.primary,
+      "&.Mui-selected": {
+        color: theme.palette.primary.main
+      }
+    })
+  }
+};
+
 // theme/components/index.ts
 var components = {
   MuiButton: Button,
@@ -18908,7 +18920,8 @@ var components = {
   MuiFilledInput: FilledInput3,
   MuiInputLabel: InputLabel,
   // MuiSelect: Select,
-  MuiChip: Chip
+  MuiChip: Chip,
+  MuiTab: Tabs
 };
 
 // theme/palette.ts
@@ -19223,7 +19236,7 @@ var Card = ({ label, labelColor, children }) => {
               px: 4,
               boxShadow: `8px 8px 10px 0px ${color2}`
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Tooltip_default, { title: label, children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
+            children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Tooltip_default, { title: label, placement: "top", children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
               Typography_default,
               {
                 color: theme.palette.text.secondary,
