@@ -2,6 +2,7 @@ import { Route } from "react-router-dom";
 import React, { lazy, Suspense } from "react";
 import { BaseRoute, RouteEnums } from "../enums";
 import ProtectedRoute from "../components/ProtectedRoute";
+import { CircularProgress } from "@mui/material";
 
 const StudentAssignments = lazy(() => import("student/Assignments"));
 const StudentBadges = lazy(() => import("student/Badges"));
@@ -16,7 +17,7 @@ export const renderStudentRoutes = () => (
     <Route
       path={RouteEnums.STUDENT_DASHBOARD}
       element={
-        <Suspense fallback={"loading"}>
+        <Suspense fallback={<CircularProgress />}>
           <StudentDashboard />
         </Suspense>
       }
@@ -25,7 +26,7 @@ export const renderStudentRoutes = () => (
     <Route
       path={RouteEnums.STUDENT_ASSIGNMENTS}
       element={
-        <Suspense fallback={"loading"}>
+        <Suspense fallback={<CircularProgress />}>
           <StudentAssignments />
         </Suspense>
       }
@@ -34,7 +35,7 @@ export const renderStudentRoutes = () => (
     <Route
       path={RouteEnums.STUDENT_BADGES}
       element={
-        <Suspense fallback={"loading"}>
+        <Suspense fallback={<CircularProgress />}>
           <StudentBadges />
         </Suspense>
       }
@@ -43,7 +44,7 @@ export const renderStudentRoutes = () => (
     <Route
       path={RouteEnums.STUDENT_CHALLENGES}
       element={
-        <Suspense fallback={"loading"}>
+        <Suspense fallback={<CircularProgress />}>
           <StudentChallenges />
         </Suspense>
       }
@@ -52,7 +53,7 @@ export const renderStudentRoutes = () => (
     <Route
       path={RouteEnums.STUDENT_CHECKLISTS}
       element={
-        <Suspense fallback={"loading"}>
+        <Suspense fallback={<CircularProgress />}>
           <StudentChecklists />
         </Suspense>
       }
@@ -61,7 +62,7 @@ export const renderStudentRoutes = () => (
     <Route
       path={RouteEnums.STUDENT_ROADMAPS}
       element={
-        <Suspense fallback={"loading"}>
+        <Suspense fallback={<CircularProgress />}>
           <StudentRoadmaps />
         </Suspense>
       }
@@ -70,7 +71,7 @@ export const renderStudentRoutes = () => (
     <Route
       path={RouteEnums.STUDENT_SUBJECTS}
       element={
-        <Suspense fallback={"loading"}>
+        <Suspense fallback={<CircularProgress />}>
           <StudentSubjects />
         </Suspense>
       }
