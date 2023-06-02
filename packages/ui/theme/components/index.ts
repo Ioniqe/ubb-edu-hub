@@ -4,7 +4,8 @@ import { Button } from "./button";
 import { TextField } from "./text-field";
 import { FilledInput } from "./filled-input";
 import { InputLabel } from "./input-label";
-import { Select } from "./select";
+// import { Select } from "./select";
+import { Chip } from "./chip";
 
 export const components: Components<Theme> = {
   MuiButton: Button,
@@ -12,4 +13,5 @@ export const components: Components<Theme> = {
   MuiFilledInput: FilledInput,
   MuiInputLabel: InputLabel,
   // MuiSelect: Select,
+  MuiChip: Chip,
 };

@@ -18863,13 +18863,34 @@ var InputLabel = {
   }
 };
 
+// theme/components/chip.ts
+var Chip = {
+  styleOverrides: {
+    root: {
+      marginRight: 8,
+      marginTop: 4
+    },
+    filled: ({ theme }) => ({
+      color: theme.palette.text.secondary,
+      backgroundColor: theme.palette.primary.main,
+      "&:hover": {
+        backgroundColor: theme.palette.highlight.primary
+      }
+    }),
+    outlined: ({ theme }) => ({
+      color: theme.palette.primary.main
+    })
+  }
+};
+
 // theme/components/index.ts
 var components = {
   MuiButton: Button,
   MuiTextField: TextField,
   MuiFilledInput: FilledInput3,
-  MuiInputLabel: InputLabel
+  MuiInputLabel: InputLabel,
   // MuiSelect: Select,
+  MuiChip: Chip
 };
 
 // theme/palette.ts

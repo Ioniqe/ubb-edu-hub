@@ -2,7 +2,7 @@ import React, { SyntheticEvent, useState } from "react";
 import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { Topic } from "../types";
 import { Colors } from "ui";
-import { Filter } from "../enums";
+import { Filter, mappedFilters } from "../enums";
 import { ChallengesTabContent } from "../components";
 
 const Challenges = () => {
@@ -40,7 +40,10 @@ const Challenges = () => {
         </MuiTabs>
       </Box>
 
-      <ChallengesTabContent interest={interests[value]} filters={filters} />
+      <ChallengesTabContent
+        interest={interests[value]}
+        filters={filters.map((filter) => mappedFilters[filter])}
+      />
     </Box>
   );
 };
