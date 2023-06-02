@@ -31,12 +31,13 @@ export const Card = ({ label, labelColor, children }: CardProps) => {
         justifyContent={"center"}
         sx={{
           backgroundColor: color,
-          borderRadius: "400px",
+          borderRadius: "20px",
           width: { xs: "50%", md: "70%" },
           height: "40px",
           zIndex: 2,
 
           px: 4,
+          boxShadow: `8px 8px 10px 0px ${color}`,
         }}
       >
         <Tooltip title={label}>
@@ -54,24 +55,6 @@ export const Card = ({ label, labelColor, children }: CardProps) => {
           </Typography>
         </Tooltip>
       </Box>
-
-      <Box
-        top={"14px"}
-        left={{ xs: "30%", md: "17%" }}
-        position={"absolute"}
-        display={"flex"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        sx={{
-          backgroundColor: color,
-          borderRadius: "400px",
-          width: { xs: "50%", md: "70%" },
-          height: "40px",
-          zIndex: 1,
-
-          filter: "blur(0.5rem)",
-        }}
-      />
 
       <Box
         position={"relative"}

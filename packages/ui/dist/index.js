@@ -19216,11 +19216,12 @@ var Card = ({ label, labelColor, children }) => {
             justifyContent: "center",
             sx: {
               backgroundColor: color2,
-              borderRadius: "400px",
+              borderRadius: "20px",
               width: { xs: "50%", md: "70%" },
               height: "40px",
               zIndex: 2,
-              px: 4
+              px: 4,
+              boxShadow: `8px 8px 10px 0px ${color2}`
             },
             children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Tooltip_default, { title: label, children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
               Typography_default,
@@ -19236,25 +19237,6 @@ var Card = ({ label, labelColor, children }) => {
                 children: label
               }
             ) })
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
-          Box_default,
-          {
-            top: "14px",
-            left: { xs: "30%", md: "17%" },
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            sx: {
-              backgroundColor: color2,
-              borderRadius: "400px",
-              width: { xs: "50%", md: "70%" },
-              height: "40px",
-              zIndex: 1,
-              filter: "blur(0.5rem)"
-            }
           }
         ),
         /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(
