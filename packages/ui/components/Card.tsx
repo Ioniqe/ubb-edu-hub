@@ -40,7 +40,7 @@ export const Card = ({ label, labelColor, children }: CardProps) => {
           boxShadow: `8px 8px 10px 0px ${color}`,
         }}
       >
-        <Tooltip title={label}>
+        <Tooltip title={label} placement={"top"}>
           <Typography
             color={theme.palette.text.secondary}
             variant={"h4"}

@@ -4,16 +4,16 @@ import { Topic } from "../types";
 import { Filters } from "./Filters";
 import { Card, useAppTheme } from "ui";
 
-type ChallengesTabContentProps = {
+type AssignmentsTabContentProps = {
   interest: Topic;
   filters: string[];
 };
 
-export const ChallengesTabContent = ({
+export const AssignmentsTabContent = ({
   interest,
   filters,
-}: ChallengesTabContentProps) => {
-  // TODO fetch array of challenges details for given interest
+}: AssignmentsTabContentProps) => {
+  // TODO fetch array of assignments details for given interest
   const { theme } = useAppTheme();
 
   return (
@@ -21,7 +21,7 @@ export const ChallengesTabContent = ({
       <Filters filters={filters} />
 
       <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
-        {[...Array(4)]
+        {[...Array(13)]
           .map((u, i) => i)
           .map((_, index) => (
             <Card label={interest.name} labelColor={interest.color} key={index}>
@@ -33,39 +33,6 @@ export const ChallengesTabContent = ({
                 alignItems={"center"}
               >
                 <Box flex={"auto"} height={"100%"} sx={{ overflowY: "scroll" }}>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>{" "}
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>{" "}
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>{" "}
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
                   <Typography variant={"caption"}>
                     Hello there traveler, I seek to find the sword of Saruman
                   </Typography>
