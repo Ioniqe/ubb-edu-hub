@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import { Route } from "./types";
 import MenuItem from "./internal-components/MenuItem";
 import { CustomAppThemeProvider } from "./CustomAppThemeProvider";
@@ -87,13 +87,26 @@ export const Wrapper = ({
         </Box>
 
         <Box
+          height={"100%"}
           sx={{
             flex: 1,
             p: 4,
             backgroundColor: theme.palette.background.default,
+            overflowY: "scroll",
           }}
         >
-          {children}
+          <Box
+            width={"100%"}
+            minHeight={"100%"}
+            height={"fit-content"}
+            sx={{
+              borderRadius: "18px",
+              backgroundColor: theme.palette.background.paper,
+              p: 4,
+            }}
+          >
+            {children}
+          </Box>
         </Box>
       </Box>
     </CustomAppThemeProvider>

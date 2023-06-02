@@ -6,7 +6,7 @@ import { RouteEnums } from "../enums";
 import { InitialForm } from "../components";
 
 export const Signup = () => {
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(false); //TODO
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

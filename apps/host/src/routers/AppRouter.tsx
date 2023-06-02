@@ -2,8 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import React from "react";
 import { RouteEnums } from "../enums";
 import { Profile, Settings, NotFound } from "../pages";
-import { renderStudentRoutes } from "./student-routes";
-import { renderAuthRoutes } from "./auth-routes";
+import { renderAuthRoutes } from "./authRoutes";
+import { renderStudentRoutes } from "./studentRoutes";
 // TODO add fallback for 500
 
 const AppRouter = () => {
