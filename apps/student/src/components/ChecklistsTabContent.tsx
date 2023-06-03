@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { Topic } from "../types";
 import { Board, useAppTheme } from "ui";
@@ -12,6 +12,8 @@ export const ChecklistsTabContent = ({
 }: ChecklistsTabContentProps) => {
   // TODO fetch checklists about interest
   const { theme } = useAppTheme();
+
+  const [checklist, setChecklist] = useState([...Array(13)]);
 
   const color = useMemo(
     () => interest.color ?? theme.palette.primary.main,
@@ -27,33 +29,16 @@ export const ChecklistsTabContent = ({
       flex={"auto"}
       pb={4}
     >
-      <Board label={interest.name} labelColor={interest.color}>
-        <Typography variant={"h1"}>
-          EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
-          Macarens EEE Macarens EEE Macarens
-        </Typography>
-      </Board>
-
-      <Board label={interest.name} labelColor={interest.color}>
-        <Typography variant={"h1"}>
-          EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
-          Macarens EEE Macarens EEE Macarens
-        </Typography>
-      </Board>
-
-      <Board label={interest.name} labelColor={interest.color}>
-        <Typography variant={"h1"}>
-          EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
-          Macarens EEE Macarens EEE Macarens
-        </Typography>
-      </Board>
-
-      <Board label={interest.name} labelColor={interest.color}>
-        <Typography variant={"h1"}>
-          EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
-          Macarens EEE Macarens EEE Macarens
-        </Typography>
-      </Board>
+      {checklist
+        .map((u, i) => i)
+        .map((_, index) => (
+          <Board label={interest.name} labelColor={interest.color} key={index}>
+            <Typography variant={"h3"}>
+              EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE Macarens
+              EEE Macarens EEE Macarens EEE Macarens
+            </Typography>
+          </Board>
+        ))}
 
       <IconButton
         sx={{
