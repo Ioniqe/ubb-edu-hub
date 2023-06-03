@@ -9,17 +9,22 @@ type ThemeStore = {
   switchColorMode: () => void;
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-export const useAppTheme = create<ThemeStore>((set, get) => ({
-  theme: useCustomTheme("light"),
-  colorMode: "light",
+export const useAppTheme = create<ThemeStore>((set) => {
+  const currColor = (sessionStorage.getItem("theme") ?? "light") as PaletteMode;
+  return {
+    theme: useCustomTheme(currColor),
+    colorMode: currColor,
 
-  switchColorMode: () => {
-    const currentColorMode = get().colorMode === "light" ? "dark" : "light";
-    set({
-      colorMode: currentColorMode,
-      theme: useCustomTheme(currentColorMode),
-    });
-  },
-}));
+    switchColorMode: () => {
+      const color = sessionStorage.getItem("theme") ?? "light";
+      const currentColorMode = color === "light" ? "dark" : "light";
+
+      sessionStorage.setItem("theme", currentColorMode);
+
+      set({
+        colorMode: currentColorMode,
+        theme: useCustomTheme(currentColorMode),
+      });
+    },
+  };
+});

@@ -18961,17 +18961,24 @@ var useCustomTheme = (mode) => createTheme_default2({
 });
 
 // theme/useAppTheme.ts
-var useAppTheme = (0, import_zustand.create)((set, get) => ({
-  theme: useCustomTheme("light"),
-  colorMode: "light",
-  switchColorMode: () => {
-    const currentColorMode = get().colorMode === "light" ? "dark" : "light";
-    set({
-      colorMode: currentColorMode,
-      theme: useCustomTheme(currentColorMode)
-    });
-  }
-}));
+var useAppTheme = (0, import_zustand.create)((set) => {
+  var _a;
+  const currColor = (_a = sessionStorage.getItem("theme")) != null ? _a : "light";
+  return {
+    theme: useCustomTheme(currColor),
+    colorMode: currColor,
+    switchColorMode: () => {
+      var _a2;
+      const color2 = (_a2 = sessionStorage.getItem("theme")) != null ? _a2 : "light";
+      const currentColorMode = color2 === "light" ? "dark" : "light";
+      sessionStorage.setItem("theme", currentColorMode);
+      set({
+        colorMode: currentColorMode,
+        theme: useCustomTheme(currentColorMode)
+      });
+    }
+  };
+});
 
 // internal-components/MenuItem.tsx
 var import_jsx_runtime55 = require("react/jsx-runtime");
