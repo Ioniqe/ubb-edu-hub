@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 import { PaletteMode, Theme } from "@mui/material";
 import { useCustomTheme } from "./useCustomTheme";
 

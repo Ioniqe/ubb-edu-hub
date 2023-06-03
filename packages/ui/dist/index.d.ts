@@ -1,5 +1,4 @@
 import React from 'react';
-import * as zustand_middleware from 'zustand/middleware';
 import * as zustand from 'zustand';
 import { Theme, PaletteMode } from '@mui/material';
 
@@ -46,17 +45,7 @@ type ThemeStore = {
     colorMode: PaletteMode;
     switchColorMode: () => void;
 };
-declare const useAppTheme: zustand.UseBoundStore<Omit<zustand.StoreApi<ThemeStore>, "persist"> & {
-    persist: {
-        setOptions: (options: Partial<zustand_middleware.PersistOptions<ThemeStore, ThemeStore>>) => void;
-        clearStorage: () => void;
-        rehydrate: () => void | Promise<void>;
-        hasHydrated: () => boolean;
-        onHydrate: (fn: (state: ThemeStore) => void) => () => void;
-        onFinishHydration: (fn: (state: ThemeStore) => void) => () => void;
-        getOptions: () => Partial<zustand_middleware.PersistOptions<ThemeStore, ThemeStore>>;
-    };
-}>;
+declare const useAppTheme: zustand.UseBoundStore<zustand.StoreApi<ThemeStore>>;
 
 type MultiSelectProps = {
     label: string;

@@ -19,9 +19,9 @@ export const Signup = () => {
   const onRegister = async () => {
     try {
       await register(email, password);
+
       // TODO post to back with email
       setError(null);
-
       setShowForm(true);
     } catch (e) {
       console.log(e);

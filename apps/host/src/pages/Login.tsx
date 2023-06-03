@@ -32,7 +32,6 @@ export const Login = () => {
       // TODO fetch user type
       navigate("/" + BaseRoute.STUDENT);
     } catch (e) {
-      console.log(e);
       setError(e as string);
     }
   };
