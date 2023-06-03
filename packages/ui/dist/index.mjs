@@ -18746,16 +18746,15 @@ var TypographyConfig = {
 // theme/components/button.ts
 var Button = {
   styleOverrides: {
-    root: {
+    root: ({ theme }) => ({
       height: 44,
       minWidth: 150,
       borderRadius: 8,
-      fontWeight: 600
-      // "&:disabled": {
-      //   color: Colors.TEXT_DISABLED,
-      //   backgroundColor: Colors.GREY_300,
-      // },
-    },
+      fontWeight: 600,
+      "&:disabled": {
+        backgroundColor: theme.palette.background.default
+      }
+    }),
     contained: ({ theme }) => ({
       color: theme.palette.text.secondary,
       backgroundColor: theme.palette.primary.main

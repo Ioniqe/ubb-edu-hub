@@ -2,7 +2,7 @@ import React, { SyntheticEvent, useState } from "react";
 import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 import { Topic } from "../types";
-import { ChecklistsTabContent } from "../components";
+import { ChecklistTabContent } from "../components";
 import { Colors, useAppTheme } from "ui";
 
 const Checklists = () => {
@@ -40,7 +40,7 @@ const Checklists = () => {
           </MuiTabs>
         </Box>
 
-        <ChecklistsTabContent interest={interests[value]} />
+        <ChecklistTabContent interest={interests[value]} />
       </Box>
     </CustomAppThemeProvider>
   );
