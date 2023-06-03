@@ -2,17 +2,16 @@ import { Theme } from "@mui/material";
 
 export const Button = {
   styleOverrides: {
-    root: {
+    root: ({ theme }: { theme: Theme }) => ({
       height: 44,
       minWidth: 150,
       borderRadius: 8,
       fontWeight: 600,
 
-      // "&:disabled": {
-      //   color: Colors.TEXT_DISABLED,
-      //   backgroundColor: Colors.GREY_300,
-      // },
-    },
+      "&:disabled": {
+        backgroundColor: theme.palette.background.default,
+      },
+    }),
     contained: ({ theme }: { theme: Theme }) => ({
       color: theme.palette.text.secondary,
       backgroundColor: theme.palette.primary.main,
