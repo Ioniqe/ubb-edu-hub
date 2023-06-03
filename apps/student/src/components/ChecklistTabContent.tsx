@@ -1,5 +1,12 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Topic } from "../types";
 import { Board, useAppTheme } from "ui";
 
@@ -13,7 +20,7 @@ export const ChecklistTabContent = ({
   // TODO fetch checklists about interest
   const { theme } = useAppTheme();
 
-  const [checklist, setChecklist] = useState([...Array(1)]);
+  const [checklist, setChecklist] = useState([...Array(14)]);
   const [addingNewChecklist, setAddingNewChecklist] = useState(false);
   const [newChecklistTitle, setNewChecklistTitle] = useState("");
   const [newChecklistDetails, setNewChecklistDetails] = useState("");
@@ -30,6 +37,10 @@ export const ChecklistTabContent = ({
     setNewChecklistTitle("");
     setNewChecklistDetails("");
     setAddingNewChecklist(false);
+  }, []);
+
+  const handleCheckboxChange = useCallback((item) => {
+    // TODO request
   }, []);
 
   return (
@@ -55,16 +66,33 @@ export const ChecklistTabContent = ({
               labelColor={interest.color}
               key={index}
             >
-              <Typography variant={"h3"}>
-                EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE Macarens
-                EEE Macarens EEE Macarens EEE Macarens
-              </Typography>
+              <Box
+                width={"100%"}
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+              >
+                <Typography variant={"h3"}>
+                  EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
+                  Macarens EEE Macarens EEE Macarens EEE Macarens
+                </Typography>
+
+                <Checkbox
+                  onChange={() => handleCheckboxChange(_)}
+                  sx={{
+                    color,
+                    "&.Mui-checked": {
+                      color,
+                    },
+                  }}
+                />
+              </Box>
             </Board>
           ))}
       </Box>
 
       {addingNewChecklist ? (
-        <Board label={interest.name} labelColor={interest.color}>
+        <Board labelColor={interest.color}>
           <Box
             width={"100%"}
             height={"100%"}
@@ -127,6 +155,8 @@ export const ChecklistTabContent = ({
           onClick={() => setAddingNewChecklist(true)}
           sx={{
             flex: 0,
+            mt: 2,
+            mb: 3,
             display: "flex",
             alignSelf: "flex-end",
             width: "56px",
