@@ -19127,19 +19127,18 @@ var Wrapper = ({
             sx: {
               flex: 1,
               p: 4,
-              backgroundColor: theme.palette.background.default,
-              overflowY: "scroll"
+              backgroundColor: theme.palette.background.default
             },
             children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
               Box_default,
               {
                 width: "100%",
-                minHeight: "100%",
-                height: "fit-content",
+                height: "100%",
                 sx: {
                   borderRadius: "18px",
                   backgroundColor: theme.palette.background.paper,
-                  p: 4
+                  p: 4,
+                  overflowY: "scroll"
                 },
                 children
               }
@@ -19293,16 +19292,15 @@ var Board = ({ label, labelColor, children }) => {
     },
     [containerRef]
   );
-  console.log(containerHeight);
   return /* @__PURE__ */ (0, import_jsx_runtime61.jsxs)(
     Box_default,
     {
-      width: "100%",
       height: "fit-content",
       position: "relative",
       sx: {
         backgroundColor: theme.palette.text.secondary,
-        borderRadius: "16px"
+        borderRadius: "16px",
+        m: 2
       },
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
@@ -19339,7 +19337,7 @@ var Board = ({ label, labelColor, children }) => {
             ) }) })
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Box_default, { width: "100%", height: "fit-content", p: 2, pl: 6, children })
+        /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Box_default, { height: "fit-content", p: 2, pl: 6, children })
       ]
     }
   );

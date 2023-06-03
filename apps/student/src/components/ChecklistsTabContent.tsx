@@ -1,7 +1,7 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import React, { useMemo } from "react";
+import { Box, IconButton, Typography } from "@mui/material";
 import { Topic } from "../types";
-import { Board } from "ui";
+import { Board, useAppTheme } from "ui";
 
 type ChecklistsTabContentProps = {
   interest: Topic;
@@ -10,16 +10,75 @@ type ChecklistsTabContentProps = {
 export const ChecklistsTabContent = ({
   interest,
 }: ChecklistsTabContentProps) => {
-  // TODO fetch cehcklists about interest
+  // TODO fetch checklists about interest
+  const { theme } = useAppTheme();
+
+  const color = useMemo(
+    () => interest.color ?? theme.palette.primary.main,
+    [interest.color, theme]
+  );
 
   return (
-    <Box width={"100%"} height={"100%"}>
+    <Box
+      display={"flex"}
+      flexDirection={"column"}
+      width={"100%"}
+      height={"fit-content"}
+      flex={"auto"}
+      pb={4}
+    >
       <Board label={interest.name} labelColor={interest.color}>
         <Typography variant={"h1"}>
           EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
           Macarens EEE Macarens EEE Macarens
         </Typography>
       </Board>
+
+      <Board label={interest.name} labelColor={interest.color}>
+        <Typography variant={"h1"}>
+          EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
+          Macarens EEE Macarens EEE Macarens
+        </Typography>
+      </Board>
+
+      <Board label={interest.name} labelColor={interest.color}>
+        <Typography variant={"h1"}>
+          EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
+          Macarens EEE Macarens EEE Macarens
+        </Typography>
+      </Board>
+
+      <Board label={interest.name} labelColor={interest.color}>
+        <Typography variant={"h1"}>
+          EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
+          Macarens EEE Macarens EEE Macarens
+        </Typography>
+      </Board>
+
+      <IconButton
+        sx={{
+          display: "flex",
+          alignSelf: "flex-end",
+          width: "56px",
+          height: "56px",
+          borderRadius: "50%",
+          transition: "0.1s linear",
+          backgroundColor: color,
+
+          "&:hover": {
+            backgroundColor: color,
+            color: theme.palette.text.secondary,
+            boxShadow: `0px 0px 16px 0px ${color}`,
+          },
+        }}
+      >
+        <Box
+          className="material-icons"
+          sx={{ fontSize: "40px", color: theme.palette.text.secondary }}
+        >
+          add
+        </Box>
+      </IconButton>
     </Box>
   );
 };

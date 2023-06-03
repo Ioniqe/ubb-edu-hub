@@ -92,17 +92,16 @@ export const Wrapper = ({
             flex: 1,
             p: 4,
             backgroundColor: theme.palette.background.default,
-            overflowY: "scroll",
           }}
         >
           <Box
             width={"100%"}
-            minHeight={"100%"}
-            height={"fit-content"}
+            height={"100%"}
             sx={{
               borderRadius: "18px",
               backgroundColor: theme.palette.background.paper,
               p: 4,
+              overflowY: "scroll",
             }}
           >
             {children}

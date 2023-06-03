@@ -25,16 +25,14 @@ export const Board = ({ label, labelColor, children }: BoardProps) => {
     [containerRef]
   );
 
-  console.log(containerHeight);
-
   return (
     <Box
-      width={"100%"}
       height={"fit-content"}
       position={"relative"}
       sx={{
         backgroundColor: theme.palette.text.secondary,
         borderRadius: "16px",
+        m: 2,
       }}
     >
       <Box
@@ -75,7 +73,7 @@ export const Board = ({ label, labelColor, children }: BoardProps) => {
         )}
       </Box>
 
-      <Box width={"100%"} height={"fit-content"} p={2} pl={6}>
+      <Box height={"fit-content"} p={2} pl={6}>
         {children}
       </Box>
     </Box>

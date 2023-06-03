@@ -3,9 +3,11 @@ import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 import { Topic } from "../types";
 import { ChecklistsTabContent } from "../components";
-import { Colors } from "ui";
+import { Colors, useAppTheme } from "ui";
 
 const Checklists = () => {
+  const { theme } = useAppTheme();
+
   const interests: Topic[] = [
     { name: "Artificial Intelligence", color: Colors.ACCENT_YELLOW },
     { name: "Leadership", color: Colors.ACCENT_SALMON },
@@ -22,13 +24,14 @@ const Checklists = () => {
     <CustomAppThemeProvider>
       <Box
         display={"flex"}
-        flexDirection={"row"}
-        flexWrap={"wrap"}
+        flexDirection={"column"}
         width={"100%"}
+        height={"100%"}
       >
         <Box
-          sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}
+          sx={{ borderBottom: 1, borderColor: "divider", mb: 2, flex: 0 }}
           width={"100%"}
+          height={"20%"}
         >
           <MuiTabs value={value} onChange={handleChange}>
             {interests.map((topic: Topic, index: number) => (

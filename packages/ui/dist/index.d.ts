@@ -70,4 +70,11 @@ type CardProps = {
 };
 declare const Card: ({ label, labelColor, children }: CardProps) => JSX.Element;
 
-export { Card, Colors, MultiSelect, Route, SimpleSelect, Wrapper, useAppTheme };
+type BoardProps = {
+    labelColor: string | null;
+    children: React.ReactNode;
+    label?: string;
+};
+declare const Board: ({ label, labelColor, children }: BoardProps) => JSX.Element;
+
+export { Board, Card, Colors, MultiSelect, Route, SimpleSelect, Wrapper, useAppTheme };
