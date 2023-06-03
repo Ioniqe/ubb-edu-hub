@@ -1,17 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { BaseRoute, RouteEnums } from "../enums";
 import { useAppTheme } from "ui";
+import useAuthStore from "../hooks/useAuth";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const { theme } = useAppTheme();
+  const { user, login } = useAuthStore();
   const navigate = useNavigate();
 
-  const onLogin = () => navigate("/" + BaseRoute.STUDENT);
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+
+    // TODO fetch user type
+    navigate("/" + BaseRoute.STUDENT);
+  }, [user]);
+
+  const onLogin = async () => {
+    try {
+      await login(email, password);
+      // TODO post to back with email
+      setError(null);
+
+      // TODO fetch user type
+      navigate("/" + BaseRoute.STUDENT);
+    } catch (e) {
+      console.log(e);
+      setError(e as string);
+    }
+  };
+
   const onRegister = () => navigate("/" + RouteEnums.SIGN_UP);
 
   return (
@@ -56,6 +81,10 @@ export const Login = () => {
           value={password}
           type={"password"}
         />
+
+        <Typography variant={"h4"} color={theme.palette.error.main}>
+          {error}
+        </Typography>
       </Box>
 
       <Box
