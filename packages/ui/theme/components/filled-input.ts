@@ -1,25 +1,23 @@
-// TODO
-import { Colors } from "../../enums";
+import { Theme } from "@mui/material";
 
 export const FilledInput = {
   styleOverrides: {
-    root: {
-      backgroundColor: Colors.MAIN_LIGHT,
-      color: Colors.TEXT,
+    root: ({ theme }: { theme: Theme }) => ({
+      backgroundColor: theme.palette.background.default,
+      color: `${theme.palette.primary.main} !important`,
       borderRadius: "8px !important",
-      border: `1.5px solid ${Colors.TEXT}`,
+
       "&.Mui-focused": {
-        backgroundColor: `${Colors.MAIN_BLUE} !important`,
-        color: Colors.TEXT,
+        borderColor: theme.palette.primary.main,
       },
       "&.Mui-error": {
-        border: `1px solid ${Colors.RED_TEST}`,
-        backgroundColor: `${Colors.WHITE} !important`,
-        color: Colors.TEXT,
+        borderColor: `1.5px solid ${theme.palette.error.main}`,
+        backgroundColor: `${theme.palette.text.secondary} !important`,
+        color: theme.palette.error.main,
       },
       "&.Mui-disabled": {
-        backgroundColor: `${Colors.MAIN_LIGHT} !important`,
-        borderColor: Colors.MAIN_LIGHT,
+        backgroundColor: `${theme.palette.background.default} !important`,
+        borderColor: theme.palette.secondary.main,
       },
       "&.MuiFilledInput-underline:before": {
         borderBottom: "none",
@@ -30,6 +28,6 @@ export const FilledInput = {
       "&.MuiFilledInput-underline:after": {
         borderBottom: "none",
       },
-    },
+    }),
   },
 };

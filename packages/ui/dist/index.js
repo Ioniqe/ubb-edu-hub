@@ -18806,6 +18806,38 @@ var TextField = {
   }
 };
 
+// theme/components/filled-input.ts
+var FilledInput3 = {
+  styleOverrides: {
+    root: ({ theme }) => ({
+      backgroundColor: theme.palette.background.default,
+      color: `${theme.palette.primary.main} !important`,
+      borderRadius: "8px !important",
+      "&.Mui-focused": {
+        borderColor: theme.palette.primary.main
+      },
+      "&.Mui-error": {
+        borderColor: `1.5px solid ${theme.palette.error.main}`,
+        backgroundColor: `${theme.palette.text.secondary} !important`,
+        color: theme.palette.error.main
+      },
+      "&.Mui-disabled": {
+        backgroundColor: `${theme.palette.background.default} !important`,
+        borderColor: theme.palette.secondary.main
+      },
+      "&.MuiFilledInput-underline:before": {
+        borderBottom: "none"
+      },
+      "&.MuiFilledInput-underline:hover:before": {
+        borderBottom: "none"
+      },
+      "&.MuiFilledInput-underline:after": {
+        borderBottom: "none"
+      }
+    })
+  }
+};
+
 // enums/colors.ts
 var Colors = /* @__PURE__ */ ((Colors2) => {
   Colors2["MAIN_BLUE"] = "#162949";
@@ -18830,40 +18862,6 @@ var Colors = /* @__PURE__ */ ((Colors2) => {
   Colors2["ACCENT_YELLOW"] = "#FFC37B";
   return Colors2;
 })(Colors || {});
-
-// theme/components/filled-input.ts
-var FilledInput3 = {
-  styleOverrides: {
-    root: {
-      backgroundColor: "#F7F7F7" /* MAIN_LIGHT */,
-      color: "#8F9296" /* TEXT */,
-      borderRadius: "8px !important",
-      border: `1.5px solid ${"#8F9296" /* TEXT */}`,
-      "&.Mui-focused": {
-        backgroundColor: `${"#162949" /* MAIN_BLUE */} !important`,
-        color: "#8F9296" /* TEXT */
-      },
-      "&.Mui-error": {
-        border: `1px solid ${"#670a07" /* RED_TEST */}`,
-        backgroundColor: `${"#FFFFFF" /* WHITE */} !important`,
-        color: "#8F9296" /* TEXT */
-      },
-      "&.Mui-disabled": {
-        backgroundColor: `${"#F7F7F7" /* MAIN_LIGHT */} !important`,
-        borderColor: "#F7F7F7" /* MAIN_LIGHT */
-      },
-      "&.MuiFilledInput-underline:before": {
-        borderBottom: "none"
-      },
-      "&.MuiFilledInput-underline:hover:before": {
-        borderBottom: "none"
-      },
-      "&.MuiFilledInput-underline:after": {
-        borderBottom: "none"
-      }
-    }
-  }
-};
 
 // theme/components/input-label.ts
 var InputLabel = {
