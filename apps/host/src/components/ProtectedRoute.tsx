@@ -3,10 +3,14 @@ import { BaseRoute } from "../enums";
 import { routes } from "../constants";
 import React from "react";
 import { Wrapper } from "ui";
+import useAuthStore from "../hooks/useAuth";
 
 const ProtectedRoute = () => {
-  let auth = true;
-  return auth ? (
+  const { user } = useAuthStore();
+  // TODO redirect the page the user wanted to go to prior login
+
+  console.log(user);
+  return user ? (
     <Wrapper
       title={"Student"}
       customBaseRoute={`/${BaseRoute.STUDENT}`}

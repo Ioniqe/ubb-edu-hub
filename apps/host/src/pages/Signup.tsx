@@ -4,16 +4,31 @@ import { useAppTheme } from "ui";
 import { useNavigate } from "react-router-dom";
 import { RouteEnums } from "../enums";
 import { InitialForm } from "../components";
+import useAuthStore from "../hooks/useAuth";
 
 export const Signup = () => {
+  const { register } = useAuthStore();
+  const { theme } = useAppTheme();
+  const navigate = useNavigate();
+
+  const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false); //TODO
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { theme } = useAppTheme();
-  const navigate = useNavigate();
+  const onRegister = async () => {
+    try {
+      await register(email, password);
 
-  const onRegister = () => setShowForm(true);
+      // TODO post to back with email
+      setError(null);
+      setShowForm(true);
+    } catch (e) {
+      console.log(e);
+      setError(e as string);
+    }
+  };
+
   const onLogin = () => navigate("/" + RouteEnums.LOGIN);
 
   return showForm ? (
@@ -60,6 +75,10 @@ export const Signup = () => {
           value={password}
           type={"password"}
         />
+
+        <Typography variant={"h4"} color={theme.palette.error.main}>
+          {error}
+        </Typography>
       </Box>
 
       <Box
