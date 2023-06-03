@@ -3,7 +3,7 @@ export enum Colors {
   MAIN_BLUE = "#162949",
   MAIN_BLUE_LIGHT = "#30599f", //
   MAIN = "#F0F2F3", //background
-  MAIN_LIGHT = "#F7F7F7", // reactangles on background
+  MAIN_LIGHT = "#F7F7F7", // rectangles on background
   WHITE = "#FFFFFF",
   TEXT = "#8F9296",
   ERROR = "#F24141",
@@ -15,7 +15,7 @@ export enum Colors {
   MAIN_BLUE_CB = "#212C4A",
   MAIN_BLUE_LIGHT_CB = "#3A599D", //
   MAIN_CB = "#F5F0F2", //background
-  MAIN_LIGHT_CB = "#FBF5FA", // reactangles on background
+  MAIN_LIGHT_CB = "#FBF5FA", // rectangles on background
   TEXT_CB = "#929094",
   ERROR_CB = "#8F8356",
 

@@ -43,6 +43,65 @@ export const ChecklistTabContent = ({
     // TODO request
   }, []);
 
+  const newItem = (
+    <Board labelColor={interest.color}>
+      <Box
+        width={"100%"}
+        height={"100%"}
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <Box
+          width={"100%"}
+          height={"100%"}
+          display={"flex"}
+          flexDirection={"column"}
+          alignItems={"start"}
+          justifyContent={"space-between"}
+        >
+          <TextField
+            variant={"standard"}
+            label={"Title"}
+            onChange={(e) => setNewChecklistTitle(e.target.value)}
+            value={newChecklistTitle}
+          />
+
+          <TextField
+            variant={"standard"}
+            label={"Details"}
+            multiline
+            onChange={(e) => setNewChecklistDetails(e.target.value)}
+            value={newChecklistDetails}
+          />
+        </Box>
+
+        <Button
+          disabled={!newChecklistDetails.length || !newChecklistTitle.length}
+          sx={{
+            mr: 2,
+            ml: 7,
+            mt: 2,
+            minWidth: "100px",
+            height: "40px",
+            backgroundColor: color,
+            color: theme.palette.text.secondary,
+            borderRadius: "16px",
+
+            "&:hover": {
+              backgroundColor: color,
+              color: theme.palette.text.secondary,
+              boxShadow: `0px 0px 8px 0px ${color}`,
+            },
+          }}
+          onClick={handleAdd}
+        >
+          Add
+        </Button>
+      </Box>
+    </Board>
+  );
+
   return (
     <Box
       display={"flex"}
@@ -61,11 +120,7 @@ export const ChecklistTabContent = ({
         {checklist
           .map((u, i) => i)
           .map((_, index) => (
-            <Board
-              label={interest.name}
-              labelColor={interest.color}
-              key={index}
-            >
+            <Board labelColor={interest.color} key={index}>
               <Box
                 width={"100%"}
                 display={"flex"}
@@ -92,64 +147,7 @@ export const ChecklistTabContent = ({
       </Box>
 
       {addingNewChecklist ? (
-        <Board labelColor={interest.color}>
-          <Box
-            width={"100%"}
-            height={"100%"}
-            display={"flex"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-          >
-            <Box
-              width={"100%"}
-              height={"100%"}
-              display={"flex"}
-              flexDirection={"column"}
-              alignItems={"start"}
-              justifyContent={"space-between"}
-            >
-              <TextField
-                variant={"standard"}
-                label={"Title"}
-                onChange={(e) => setNewChecklistTitle(e.target.value)}
-                value={newChecklistTitle}
-              />
-
-              <TextField
-                variant={"standard"}
-                label={"Details"}
-                multiline
-                onChange={(e) => setNewChecklistDetails(e.target.value)}
-                value={newChecklistDetails}
-              />
-            </Box>
-
-            <Button
-              disabled={
-                !newChecklistDetails.length || !newChecklistTitle.length
-              }
-              sx={{
-                mr: 2,
-                ml: 7,
-                mt: 2,
-                minWidth: "100px",
-                height: "40px",
-                backgroundColor: color,
-                color: theme.palette.text.secondary,
-                borderRadius: "16px",
-
-                "&:hover": {
-                  backgroundColor: color,
-                  color: theme.palette.text.secondary,
-                  boxShadow: `0px 0px 8px 0px ${color}`,
-                },
-              }}
-              onClick={handleAdd}
-            >
-              Add
-            </Button>
-          </Box>
-        </Board>
+        newItem
       ) : (
         <IconButton
           onClick={() => setAddingNewChecklist(true)}

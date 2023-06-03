@@ -9,7 +9,6 @@ const ProtectedRoute = () => {
   const { user } = useAuthStore();
   // TODO redirect the page the user wanted to go to prior login
 
-  console.log(user);
   return user ? (
     <Wrapper
       title={"Student"}
