@@ -32,12 +32,12 @@ export const Card = ({ label, labelColor, children }: CardProps) => {
         sx={{
           backgroundColor: color,
           borderRadius: "20px",
-          width: { xs: "50%", md: "70%" },
+          width: { xs: "50%", md: "70%", lg: "50%" },
           height: "40px",
           zIndex: 2,
 
           px: 4,
-          boxShadow: `8px 8px 10px 0px ${color}`,
+          boxShadow: `8px 8px 24px 0px ${color}`,
         }}
       >
         <Tooltip title={label} placement={"top"}>
