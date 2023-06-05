@@ -12,7 +12,7 @@ export const Signup = () => {
   const navigate = useNavigate();
 
   const [error, setError] = useState<string | null>(null);
-  const [showForm, setShowForm] = useState(false); //TODO
+  const [showForm, setShowForm] = useState(true); //TODO
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

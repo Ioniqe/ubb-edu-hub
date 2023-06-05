@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { BaseRoute } from "../enums";
 import { MultiSelect, SimpleSelect, useAppTheme } from "ui";
 import { useNavigate } from "react-router-dom";
+import { useDropzone } from "react-dropzone";
 
 const subjectOptions = [
   "Artificial Intelligence",
@@ -14,8 +15,22 @@ export const InitialForm = () => {
   const { theme } = useAppTheme();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false); // TODO
   const [subjects, setSubjects] = useState<string[]>([]);
   const [prefersHardSkills, setPrefersHardSkills] = useState<string>("");
+  const [file, setFile] = useState<File>();
+
+  const onDropAccepted = useCallback((files: File[]) => {
+    setFile(files[0]);
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    maxFiles: 1,
+    minSize: 0,
+    onDropAccepted,
+    onDropRejected: (e) => console.log("error", e),
+    accept: { "image/jpeg": [], "image/png": [], "application/pdf": [] },
+  });
 
   const onSubmit = () => navigate("/" + BaseRoute.STUDENT);
 
@@ -78,6 +93,45 @@ export const InitialForm = () => {
           selectedOption={prefersHardSkills}
           setSelectedOption={setPrefersHardSkills}
         />
+      </Box>
+
+      <Box width={"100%"} mt={1}>
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          width={"100%"}
+          height={"60px"}
+          sx={{
+            borderRadius: "8px",
+            border: `1.5px dashed ${theme.palette.primary.main}`,
+
+            "&:hover": {
+              cursor: "pointer",
+            },
+          }}
+          {...getRootProps()}
+        >
+          <Typography
+            sx={{ typography: "body" }}
+            color={theme.palette.primary.main}
+          >
+            Upload your letter of intent
+          </Typography>
+
+          <input
+            aria-label="File Upload Input"
+            disabled={loading}
+            {...getInputProps()}
+          />
+        </Box>
+
+        <Typography
+          sx={{ typography: "body", mt: 1, textAlign: "end" }}
+          color={theme.palette.primary.main}
+        >
+          {file ? `File name: ${file?.name}` : "no file uploaded yet"}
+        </Typography>
       </Box>
 
       <Button
