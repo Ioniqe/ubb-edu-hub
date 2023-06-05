@@ -10,18 +10,37 @@ import {
 import { storage } from "../firebase";
 import { Badge, FirebaseImage } from "../types";
 import { useAppTheme } from "ui";
+import unknownBadge from "../assets/images/unknown-badge.png";
 
 const mockedAcquiredBadges = [
   {
-    name: "marathoner.png",
+    name: "Marathoner Marathoner Marathoner Marathoner Marathoner",
+    filename: "marathoner.png",
     description: "EE macarenamacaren",
   },
   {
-    name: "finish_1.png",
+    name: "Hello",
+    filename: "finish_1.png",
     description: "EE macarvdsvbhds vudsi vudhis v hcudis ena",
   },
   {
-    name: "ee.png",
+    name: "Helloeee",
+    filename: "finish_1.png",
+    description: "EE macarvdsvbhds vudsi vudhis v hcudis ena",
+  },
+  {
+    name: "Hello There",
+    filename: "finish_1.png",
+    description: "EE macarvdsvbhds vudsi vudhis v hcudis ena",
+  },
+  {
+    name: "Hello",
+    filename: "finish_2.png",
+    description: "EE macarvdsvbhds vudsi vudhis v hcudis ena",
+  },
+  {
+    name: "ee Macarenaa",
+    filename: "ee.png",
     description: "Hello",
   },
 ];
@@ -31,7 +50,7 @@ const Badges = () => {
   const { theme } = useAppTheme();
 
   const [loading, setLoading] = useState(true);
-  const [firebaseBadges, setFirebaseBadges] = useState<FirebaseImage[]>([]);
+  const [firebaseImages, setFirebaseImages] = useState<FirebaseImage[]>([]);
   const [acquiredBadges, setAcquiredBadges] = useState<Badge[]>([]);
 
   useEffect(() => {
@@ -43,7 +62,7 @@ const Badges = () => {
             url,
           };
 
-          setFirebaseBadges((prev: FirebaseImage[]) => [...prev, newImage]);
+          setFirebaseImages((prev: FirebaseImage[]) => [...prev, newImage]);
         });
       });
     });
@@ -58,26 +77,21 @@ const Badges = () => {
       return [];
     }
 
-    return firebaseBadges.map((image: FirebaseImage) => {
-      const acquiredBadge: Badge | undefined = acquiredBadges.find(
-        (badge: Badge) => image.name === badge.name
+    return acquiredBadges.map((badge: Badge) => {
+      const foundImage: FirebaseImage | undefined = firebaseImages.find(
+        (image: FirebaseImage) => image.name === badge.filename
       );
 
-      if (!acquiredBadge) {
-        return {
-          ...image,
-          description: "",
-          url: image.url,
-        };
+      if (!foundImage) {
+        return badge;
       }
 
       return {
-        ...acquiredBadge,
-        url: image.url,
-        acquired: true,
+        ...badge,
+        url: foundImage.url,
       };
     });
-  }, [firebaseBadges, acquiredBadges, loading]);
+  }, [firebaseImages, acquiredBadges, loading]);
 
   return (
     <CustomAppThemeProvider>
@@ -103,26 +117,41 @@ const Badges = () => {
               width={"fit-content"}
               height={"fit-content"}
               maxWidth={"150px"}
-              sx={{ overflow: "hidden" }}
+              sx={{ overflow: "hidden", m: 3 }}
             >
               <Box
                 component={"img"}
                 alt={badge.name}
-                src={badge.url}
+                src={badge.url ?? unknownBadge}
                 width={"136px"}
                 height={"136px"}
                 sx={{
-                  m: 2,
                   mb: 1,
-                  opacity: badge.acquired ? 1 : 0.2,
                 }}
               />
 
-              <Tooltip title={badge.description} placement={"bottom"}>
+              <Tooltip title={badge.name} placement={"top"}>
                 <Typography
                   variant={"h4"}
                   color={theme.palette.primary.main}
                   fontWeight={700}
+                  sx={{
+                    textAlign: "center",
+                    display: "-webkit-box",
+                    WebkitLineClamp: "2",
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {badge.name}
+                </Typography>
+              </Tooltip>
+
+              <Tooltip title={badge.description} placement={"bottom"}>
+                <Typography
+                  variant={"subtitle1"}
+                  color={theme.palette.primary.main}
+                  fontWeight={600}
                   mb={1}
                   sx={{
                     textAlign: "center",
