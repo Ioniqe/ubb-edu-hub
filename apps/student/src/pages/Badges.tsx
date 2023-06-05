@@ -138,7 +138,7 @@ const Badges = () => {
                   sx={{
                     textAlign: "center",
                     display: "-webkit-box",
-                    WebkitLineClamp: "2",
+                    WebkitLineClamp: "1",
                     WebkitBoxOrient: "vertical",
                     overflow: "hidden",
                   }}
