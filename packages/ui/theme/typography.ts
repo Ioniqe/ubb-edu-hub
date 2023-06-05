@@ -35,14 +35,14 @@ export const TypographyConfig = {
     fontWeight: 400,
   },
   subtitle1: {
-    fontSize: "16px",
+    fontSize: "24px",
     lineHeight: "24px",
     fontWeight: 300,
   },
   body: {
     fontWeight: 300,
     fontSize: "16px",
-    lineHeight: "24px",
+    lineHeight: "16px",
   },
   caption: {
     fontWeight: 200,

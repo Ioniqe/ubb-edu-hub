@@ -29,7 +29,11 @@ export const WelcomeMessage = () => {
         >
           Welcome back, <strong>{name}</strong>!
         </Typography>
-        <Typography variant={"subtitle1"} color={theme.palette.text.primary}>
+
+        <Typography
+          sx={{ typography: "body" }}
+          color={theme.palette.text.primary}
+        >
           {`Here is your progress on this semester's tasks!`}
         </Typography>
       </Box>

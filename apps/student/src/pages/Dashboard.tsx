@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useAppTheme } from "ui";
-import { WelcomeMessage } from "../components/homepage";
+import { Focus, WelcomeMessage } from "../components/homepage";
 
 const Dashboard = () => {
   const { theme } = useAppTheme();
@@ -38,17 +38,39 @@ const Dashboard = () => {
         </Box>
 
         <Box
+          display={"flex"}
           width={"100%"}
           height={"100%"}
+          justifyContent={"space-between"}
           flex={3}
-          sx={{
-            borderRadius: "18px",
-            backgroundColor: theme.palette.background.paper,
-            p: 4,
-            my: 2,
-          }}
         >
-          <Typography variant={"h1"}>Hello</Typography>
+          <Box
+            display={"flex"}
+            flex={2}
+            sx={{
+              borderRadius: "18px",
+              backgroundColor: theme.palette.background.paper,
+              p: 4,
+              my: 2,
+              mr: 1,
+            }}
+          >
+            <Focus />
+          </Box>
+
+          <Box
+            display={"flex"}
+            flex={1}
+            sx={{
+              borderRadius: "18px",
+              backgroundColor: theme.palette.background.paper,
+              p: 4,
+              my: 2,
+              ml: 1,
+            }}
+          >
+            <Typography variant={"h4"}>Hello</Typography>
+          </Box>
         </Box>
 
         <Box

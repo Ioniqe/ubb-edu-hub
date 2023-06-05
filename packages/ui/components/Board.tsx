@@ -32,7 +32,7 @@ export const Board = ({ label, labelColor, children }: BoardProps) => {
       sx={{
         backgroundColor: theme.palette.text.secondary,
         borderRadius: "16px",
-        m: 2,
+        m: 1,
       }}
     >
       <Box
@@ -73,7 +73,7 @@ export const Board = ({ label, labelColor, children }: BoardProps) => {
         )}
       </Box>
 
-      <Box height={"fit-content"} p={2} pl={6}>
+      <Box height={"fit-content"} p={1} pl={6}>
         {children}
       </Box>
     </Box>
