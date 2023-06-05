@@ -93,14 +93,30 @@ const Dashboard = () => {
         height={"100%"}
         width={"100%"}
         flex={1}
-        sx={{
-          borderRadius: "18px",
-          backgroundColor: theme.palette.background.paper,
-          p: 2,
-          m: 2,
-          mr: 0,
-        }}
-      ></Box>
+        sx={{ m: 2, mr: 0 }}
+      >
+        <Box
+          flex={1}
+          sx={{
+            borderRadius: "18px",
+            backgroundColor: theme.palette.background.paper,
+            p: 2,
+            mb: 2,
+          }}
+        >
+          <Typography variant={"caption"}>Profile</Typography>
+        </Box>
+        <Box
+          flex={18}
+          sx={{
+            borderRadius: "18px",
+            backgroundColor: theme.palette.background.paper,
+            p: 2,
+          }}
+        >
+          <Typography variant={"caption"}>calendar and events</Typography>
+        </Box>
+      </Box>
     </Box>
   );
 };
