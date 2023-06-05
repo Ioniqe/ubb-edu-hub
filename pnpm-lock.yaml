@@ -120,6 +120,9 @@ importers:
       '@babel/runtime':
         specifier: ^7.21.5
         version: 7.21.5
+      firebase:
+        specifier: ^9.22.1
+        version: 9.22.1
       react:
         specifier: ^18.2.0
         version: 18.2.0
