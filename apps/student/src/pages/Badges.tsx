@@ -95,79 +95,90 @@ const Badges = () => {
 
   return (
     <CustomAppThemeProvider>
-      {loading ? (
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          width={"100%"}
-          height={"100%"}
-        >
-          <CircularProgress />
-        </Box>
-      ) : (
-        <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
-          {badges.map((badge: Badge, index) => (
-            <Box
-              key={index}
-              display={"flex"}
-              flexDirection={"column"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              width={"fit-content"}
-              height={"fit-content"}
-              maxWidth={"150px"}
-              sx={{ overflow: "hidden", m: 3 }}
-            >
+      <Box
+        width={"100%"}
+        height={"100%"}
+        sx={{
+          borderRadius: "18px",
+          backgroundColor: theme.palette.background.paper,
+          p: 4,
+          overflowY: "scroll",
+        }}
+      >
+        {loading ? (
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            width={"100%"}
+            height={"100%"}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
+            {badges.map((badge: Badge, index) => (
               <Box
-                component={"img"}
-                alt={badge.name}
-                src={badge.url ?? unknownBadge}
-                width={"136px"}
-                height={"136px"}
-                sx={{
-                  mb: 1,
-                }}
-              />
-
-              <Tooltip title={badge.name} placement={"top"}>
-                <Typography
-                  variant={"h4"}
-                  color={theme.palette.primary.main}
-                  fontWeight={700}
+                key={index}
+                display={"flex"}
+                flexDirection={"column"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                width={"fit-content"}
+                height={"fit-content"}
+                maxWidth={"150px"}
+                sx={{ overflow: "hidden", m: 3 }}
+              >
+                <Box
+                  component={"img"}
+                  alt={badge.name}
+                  src={badge.url ?? unknownBadge}
+                  width={"136px"}
+                  height={"136px"}
                   sx={{
-                    textAlign: "center",
-                    display: "-webkit-box",
-                    WebkitLineClamp: "1",
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
+                    mb: 1,
                   }}
-                >
-                  {badge.name}
-                </Typography>
-              </Tooltip>
+                />
 
-              <Tooltip title={badge.description} placement={"bottom"}>
-                <Typography
-                  variant={"subtitle1"}
-                  color={theme.palette.primary.main}
-                  fontWeight={600}
-                  mb={1}
-                  sx={{
-                    textAlign: "center",
-                    display: "-webkit-box",
-                    WebkitLineClamp: "2",
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                  }}
-                >
-                  {badge.description}
-                </Typography>
-              </Tooltip>
-            </Box>
-          ))}
-        </Box>
-      )}
+                <Tooltip title={badge.name} placement={"top"}>
+                  <Typography
+                    variant={"h4"}
+                    color={theme.palette.primary.main}
+                    fontWeight={700}
+                    sx={{
+                      textAlign: "center",
+                      display: "-webkit-box",
+                      WebkitLineClamp: "1",
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {badge.name}
+                  </Typography>
+                </Tooltip>
+
+                <Tooltip title={badge.description} placement={"bottom"}>
+                  <Typography
+                    variant={"subtitle1"}
+                    color={theme.palette.primary.main}
+                    fontWeight={600}
+                    mb={1}
+                    sx={{
+                      textAlign: "center",
+                      display: "-webkit-box",
+                      WebkitLineClamp: "2",
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {badge.description}
+                  </Typography>
+                </Tooltip>
+              </Box>
+            ))}
+          </Box>
+        )}
+      </Box>
     </CustomAppThemeProvider>
   );
 };

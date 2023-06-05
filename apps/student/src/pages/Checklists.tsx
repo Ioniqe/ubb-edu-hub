@@ -23,24 +23,35 @@ const Checklists = () => {
   return (
     <CustomAppThemeProvider>
       <Box
-        display={"flex"}
-        flexDirection={"column"}
         width={"100%"}
         height={"100%"}
+        sx={{
+          borderRadius: "18px",
+          backgroundColor: theme.palette.background.paper,
+          p: 4,
+          overflowY: "scroll",
+        }}
       >
         <Box
-          sx={{ borderBottom: 1, borderColor: "divider", mb: 2, flex: 0 }}
+          display={"flex"}
+          flexDirection={"column"}
           width={"100%"}
-          height={"20%"}
+          height={"100%"}
         >
-          <MuiTabs value={value} onChange={handleChange}>
-            {interests.map((topic: Topic, index: number) => (
-              <Tab label={topic.name} value={index} key={index} />
-            ))}
-          </MuiTabs>
-        </Box>
+          <Box
+            sx={{ borderBottom: 1, borderColor: "divider", mb: 2, flex: 0 }}
+            width={"100%"}
+            height={"20%"}
+          >
+            <MuiTabs value={value} onChange={handleChange}>
+              {interests.map((topic: Topic, index: number) => (
+                <Tab label={topic.name} value={index} key={index} />
+              ))}
+            </MuiTabs>
+          </Box>
 
-        <ChecklistTabContent interest={interests[value]} />
+          <ChecklistTabContent interest={interests[value]} />
+        </Box>
       </Box>
     </CustomAppThemeProvider>
   );

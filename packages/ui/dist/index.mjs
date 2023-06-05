@@ -19114,20 +19114,7 @@ var Wrapper = ({
               p: 4,
               backgroundColor: theme.palette.background.default
             },
-            children: /* @__PURE__ */ jsx3(
-              Box_default,
-              {
-                width: "100%",
-                height: "100%",
-                sx: {
-                  borderRadius: "18px",
-                  backgroundColor: theme.palette.background.paper,
-                  p: 4,
-                  overflowY: "scroll"
-                },
-                children
-              }
-            )
+            children
           }
         )
       ]
