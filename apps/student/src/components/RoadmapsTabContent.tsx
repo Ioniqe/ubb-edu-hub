@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
-import { Board, useAppTheme } from "ui";
 import { Topic } from "../types";
+import Graph from "./Graph";
 
 type RoadmapsTabContentProps = {
   skill: Topic;
@@ -9,21 +9,47 @@ type RoadmapsTabContentProps = {
 
 export const RoadmapsTabContent = ({ skill }: RoadmapsTabContentProps) => {
   // TODO fetch progress details for given interest
-  const { theme } = useAppTheme();
-
   const ref = useRef<HTMLDivElement>(null);
 
-  const [height, setHeight] = useState("500px");
+  const [height, setHeight] = useState(500);
+  const [width, setWidth] = useState(500);
 
   useEffect(() => {
-    setHeight(`${ref.current?.clientHeight ?? 500}px`);
+    setHeight(ref.current?.clientHeight ?? 500);
+    setWidth(ref.current?.clientWidth ?? 500);
   }, []);
 
   return (
     <Box width={"100%"} height={"100%"} ref={ref}>
-      <Board labelColor={skill.color} label={skill.name}></Board>
+      <Graph width={width} height={height} />
     </Box>
   );
+};
+
+const data = {
+  status: "success",
+  results: [
+    {
+      nodes: [
+        {
+          id: "JavaScript / TypeScript",
+          fillColor: "#fa6502",
+        },
+      ],
+      links: [
+        {
+          source: "Erase a character",
+          target: "JavaScript / TypeScript",
+          value: "How would you erase a character from a string?",
+        },
+        {
+          source: "Palindrome",
+          target: "JavaScript / TypeScript",
+          value: "Write code that will perform a palindrome check.",
+        },
+      ],
+    },
+  ],
 };
 
 const mockedRoadmaps = {
