@@ -19215,11 +19215,11 @@ var Card = ({ label, labelColor, children }) => {
             sx: {
               backgroundColor: color2,
               borderRadius: "20px",
-              width: { xs: "50%", md: "70%" },
+              width: { xs: "50%", md: "70%", lg: "50%" },
               height: "40px",
               zIndex: 2,
               px: 4,
-              boxShadow: `8px 8px 10px 0px ${color2}`
+              boxShadow: `8px 8px 24px 0px ${color2}`
             },
             children: /* @__PURE__ */ jsx6(Tooltip_default, { title: label, placement: "top", children: /* @__PURE__ */ jsx6(
               Typography_default,
