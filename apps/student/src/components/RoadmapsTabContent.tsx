@@ -15,7 +15,7 @@ export const RoadmapsTabContent = ({ skill }: RoadmapsTabContentProps) => {
   const [width, setWidth] = useState(500);
 
   useEffect(() => {
-    setHeight(ref.current?.clientHeight ?? 500);
+    setHeight(ref.current?.clientHeight ?? 460 + 40);
     setWidth(ref.current?.clientWidth ?? 500);
   }, []);
 
