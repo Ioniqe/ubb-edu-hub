@@ -101,30 +101,29 @@ const Dashboard = () => {
         flexDirection={"column"}
         height={"100%"}
         width={"100%"}
+        justifyContent={"space-between"}
         flex={1}
         sx={{ m: 2, mr: 0 }}
       >
         <Box
-          flex={1}
+          height={"8%"}
           sx={{
             borderRadius: "18px",
             backgroundColor: theme.palette.background.paper,
             p: 2,
-            mb: 2,
           }}
         >
           <Profile />
         </Box>
+
         <Box
-          flex={18}
+          height={"90%"}
           sx={{
             borderRadius: "18px",
             backgroundColor: theme.palette.background.paper,
             p: 2,
           }}
         >
-          <Typography variant={"h1"}>Hello</Typography>
-
           <UpcomingEvents />
         </Box>
       </Box>
