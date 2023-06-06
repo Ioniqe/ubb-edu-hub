@@ -26,14 +26,14 @@ const Subsection = ({ subsectionTitle, topics }: SubsectionProps) => {
       <Box
         display={"flex"}
         width={"100%"}
-        height={"100px"}
+        height={"70px"}
         flexDirection={"column"}
         sx={{ overflowY: "scroll" }}
       >
         {topics.map((_topic: TopicQuickView, index: number) => (
           <Board
             key={index}
-            labelColor={_topic.topic.color ?? theme.palette.primary.main}
+            labelColor={_topic.color ?? theme.palette.primary.main}
           >
             <Box
               display={"flex"}
@@ -46,7 +46,7 @@ const Subsection = ({ subsectionTitle, topics }: SubsectionProps) => {
                 sx={{ typography: "body" }}
                 color={theme.palette.primary.main}
               >
-                {_topic.topic.name}
+                {_topic.name}
               </Typography>
               <Typography variant={"caption"}>{_topic.title}</Typography>
             </Box>
@@ -65,41 +65,31 @@ export const Focus = () => {
   const challenges: TopicQuickView[] = [
     {
       title: "Software engineering challenge",
-      topic: {
-        name: "Software engineering",
-        color: Colors.ACCENT_SALMON,
-      },
+      name: "Software engineering",
+      color: Colors.ACCENT_SALMON,
     },
     {
       title: "Artificial Intelligence challenge",
-      topic: {
-        name: "Artificial Intelligence",
-        color: Colors.ACCENT_YELLOW,
-      },
+      name: "Artificial Intelligence",
+      color: Colors.ACCENT_YELLOW,
     },
     {
       title: "Artificial Intelligence challenge 2",
-      topic: {
-        name: "Artificial Intelligence",
-        color: Colors.ACCENT_YELLOW,
-      },
+      name: "Artificial Intelligence",
+      color: Colors.ACCENT_YELLOW,
     },
   ];
 
   const assignments: TopicQuickView[] = [
     {
       title: "Software Quality assignment",
-      topic: {
-        name: "Software engineering",
-        color: null,
-      },
+      name: "Software engineering",
+      color: null,
     },
     {
       title: "CMES assignment 2",
-      topic: {
-        name: "CMES",
-        color: null,
-      },
+      name: "CMES",
+      color: null,
     },
   ];
 

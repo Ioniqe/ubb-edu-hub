@@ -1,10 +1,19 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useAppTheme } from "ui";
-import { Focus, WelcomeMessage } from "../components/homepage";
+import {
+  Focus,
+  Profile,
+  UpcomingEvents,
+  WelcomeMessage,
+} from "../components/homepage";
 
 const Dashboard = () => {
   const { theme } = useAppTheme();
+
+  // TODO fetch necessary data INCLUDING name and email and other profile stuff (based on UID)
+  // console.log(JSON.parse(sessionStorage.getItem("token")).state.user.uid);
+
   return (
     <Box
       width={"100%"}
@@ -104,7 +113,7 @@ const Dashboard = () => {
             mb: 2,
           }}
         >
-          <Typography variant={"caption"}>Profile</Typography>
+          <Profile />
         </Box>
         <Box
           flex={18}
@@ -114,7 +123,9 @@ const Dashboard = () => {
             p: 2,
           }}
         >
-          <Typography variant={"caption"}>calendar and events</Typography>
+          <Typography variant={"h1"}>Hello</Typography>
+
+          <UpcomingEvents />
         </Box>
       </Box>
     </Box>

@@ -14,6 +14,8 @@ export const Login = () => {
   const { user, login } = useAuthStore();
   const navigate = useNavigate();
 
+  // TODO might need to clear session storage
+
   useEffect(() => {
     if (!user) {
       return;
