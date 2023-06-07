@@ -19,7 +19,7 @@ const Connector = ({ color }: { color: string }) => {
         [`&.${stepConnectorClasses.alternativeLabel}`]: {
           top: "25%",
           left: "calc(-50% + 28px)",
-          right: "calc(50% + 13px)",
+          right: "calc(50% + 12px)",
         },
         [`& .${stepConnectorClasses.line}`]: {
           borderColor: color,
@@ -203,7 +203,7 @@ export const SkillsProgress = () => {
         color={theme.palette.primary.main}
         pb={2}
       >
-        Your focus this semester
+        Your progress on the chosen skills
       </Typography>
 
       {skills.map(({ skill, steps }: OverviewSkillsProgress, index: number) => (
