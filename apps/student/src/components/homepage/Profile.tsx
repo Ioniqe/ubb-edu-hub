@@ -25,11 +25,7 @@ export const Profile = () => {
         flexDirection={"column"}
         justifyContent={"space-between"}
       >
-        <Typography
-          variant={"subtitle1"}
-          fontSize={"1.2rem"}
-          color={theme.palette.primary.main}
-        >
+        <Typography variant={"subtitle1"} color={theme.palette.primary.main}>
           {fullName}
         </Typography>
 

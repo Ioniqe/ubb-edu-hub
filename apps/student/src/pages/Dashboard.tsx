@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { useAppTheme } from "ui";
 import {
   Focus,
+  OverallProgress,
   Profile,
   UpcomingEvents,
   WelcomeMessage,
@@ -60,7 +61,7 @@ const Dashboard = () => {
             sx={{
               borderRadius: "18px",
               backgroundColor: theme.palette.background.paper,
-              p: 4,
+              p: 2,
               my: 2,
               mr: 1,
             }}
@@ -71,15 +72,24 @@ const Dashboard = () => {
           <Box
             display={"flex"}
             flex={1}
+            flexDirection={"column"}
             sx={{
               borderRadius: "18px",
               backgroundColor: theme.palette.background.paper,
-              p: 4,
+              p: 2,
               my: 2,
               ml: 1,
             }}
           >
-            <Typography variant={"h4"}>Hello</Typography>
+            <Typography
+              variant={"subtitle1"}
+              color={theme.palette.primary.main}
+              pb={2}
+            >
+              Your overall progress this semester
+            </Typography>
+
+            <OverallProgress />
           </Box>
         </Box>
 
@@ -90,7 +100,7 @@ const Dashboard = () => {
           sx={{
             borderRadius: "18px",
             backgroundColor: theme.palette.background.paper,
-            p: 4,
+            p: 2,
             overflowY: "scroll",
           }}
         >

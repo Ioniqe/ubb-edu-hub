@@ -101,11 +101,7 @@ export const Focus = () => {
       flexDirection={"column"}
       justifyContent={"start"}
     >
-      <Typography
-        variant={"subtitle1"}
-        fontSize={"1.2rem"}
-        color={theme.palette.primary.main}
-      >
+      <Typography variant={"subtitle1"} color={theme.palette.primary.main}>
         Your focus this semester
       </Typography>
 

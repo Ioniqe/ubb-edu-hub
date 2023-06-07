@@ -129,7 +129,6 @@ export const UpcomingEvents = () => {
 
       <Typography
         variant={"subtitle1"}
-        fontSize={"1.2rem"}
         color={theme.palette.primary.main}
         sx={{ pb: 2 }}
       >

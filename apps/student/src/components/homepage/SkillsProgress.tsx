@@ -200,7 +200,6 @@ export const SkillsProgress = () => {
     >
       <Typography
         variant={"subtitle1"}
-        fontSize={"1.2rem"}
         color={theme.palette.primary.main}
         pb={2}
       >
