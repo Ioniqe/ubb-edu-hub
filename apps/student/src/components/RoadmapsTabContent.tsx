@@ -8,14 +8,14 @@ type RoadmapsTabContentProps = {
 };
 
 export const RoadmapsTabContent = ({ skill }: RoadmapsTabContentProps) => {
-  // TODO fetch progress details for given interest
+  // TODO fetch progress details for given interest + progress overall!!
   const ref = useRef<HTMLDivElement>(null);
 
   const [height, setHeight] = useState(500);
   const [width, setWidth] = useState(500);
 
   useEffect(() => {
-    setHeight(ref.current?.clientHeight ?? 460 + 40);
+    setHeight((ref.current?.clientHeight ?? 460) + 40);
     setWidth(ref.current?.clientWidth ?? 500);
   }, []);
 

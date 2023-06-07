@@ -18735,14 +18735,14 @@ var TypographyConfig = {
     fontWeight: 400
   },
   subtitle1: {
-    fontSize: "16px",
+    fontSize: "24px",
     lineHeight: "24px",
     fontWeight: 300
   },
   body: {
     fontWeight: 300,
     fontSize: "16px",
-    lineHeight: "24px"
+    lineHeight: "16px"
   },
   caption: {
     fontWeight: 200,
@@ -19133,20 +19133,7 @@ var Wrapper = ({
               p: 4,
               backgroundColor: theme.palette.background.default
             },
-            children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(
-              Box_default,
-              {
-                width: "100%",
-                height: "100%",
-                sx: {
-                  borderRadius: "18px",
-                  backgroundColor: theme.palette.background.paper,
-                  p: 4,
-                  overflowY: "scroll"
-                },
-                children
-              }
-            )
+            children
           }
         )
       ]
@@ -19304,7 +19291,7 @@ var Board = ({ label, labelColor, children }) => {
       sx: {
         backgroundColor: theme.palette.text.secondary,
         borderRadius: "16px",
-        m: 2
+        m: 1
       },
       children: [
         /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(
@@ -19341,7 +19328,7 @@ var Board = ({ label, labelColor, children }) => {
             ) }) })
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Box_default, { height: "fit-content", p: 2, pl: 6, children })
+        /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Box_default, { height: "fit-content", p: 1, pl: 6, children })
       ]
     }
   );

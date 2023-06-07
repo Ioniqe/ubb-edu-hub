@@ -29,6 +29,7 @@
     "postcss": "^8.2.1",
     "postcss-loader": "^4.1.0",
     "style-loader": "^3.3.0",
+    "svg-url-loader": "^8.0.0",
     "tsconfig": "workspace:*",
     "typescript": "^4.5.2",
     "webpack": "^5.57.1",
@@ -37,11 +38,14 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.21.5",
+    "date-fns": "^2.30.0",
     "firebase": "^9.22.1",
     "react": "^18.2.0",
+    "react-day-picker": "^8.7.1",
     "react-dom": "^18.2.0",
     "react-force-graph": "^1.43.0",
     "react-sizeme": "^3.0.2",
+    "recharts": "^2.6.2",
     "ui": "workspace:*"
   }
 }

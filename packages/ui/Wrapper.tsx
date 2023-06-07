@@ -94,18 +94,7 @@ export const Wrapper = ({
             backgroundColor: theme.palette.background.default,
           }}
         >
-          <Box
-            width={"100%"}
-            height={"100%"}
-            sx={{
-              borderRadius: "18px",
-              backgroundColor: theme.palette.background.paper,
-              p: 4,
-              overflowY: "scroll",
-            }}
-          >
-            {children}
-          </Box>
+          {children}
         </Box>
       </Box>
     </CustomAppThemeProvider>
