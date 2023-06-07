@@ -7,6 +7,7 @@ import {
   UpcomingEvents,
   WelcomeMessage,
 } from "../components/homepage";
+import { SkillsProgress } from "../components/homepage/SkillsProgress";
 
 const Dashboard = () => {
   const { theme } = useAppTheme();
@@ -90,9 +91,10 @@ const Dashboard = () => {
             borderRadius: "18px",
             backgroundColor: theme.palette.background.paper,
             p: 4,
+            overflowY: "scroll",
           }}
         >
-          <Typography variant={"h1"}>Hello</Typography>
+          <SkillsProgress />
         </Box>
       </Box>
 

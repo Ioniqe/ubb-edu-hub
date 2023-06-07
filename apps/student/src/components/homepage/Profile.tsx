@@ -14,10 +14,11 @@ export const Profile = () => {
   return (
     <Box
       display={"flex"}
-      justifyContent={"space-around"}
+      justifyContent={"space-between"}
       alignItems={"center"}
       width={"100%"}
       height={"100%"}
+      px={4}
     >
       <Box
         display={"flex"}
