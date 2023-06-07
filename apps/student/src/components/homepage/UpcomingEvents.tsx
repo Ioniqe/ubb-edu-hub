@@ -136,13 +136,7 @@ export const UpcomingEvents = () => {
         Upcoming Events
       </Typography>
 
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        width={"100%"}
-        sx={{ overflowY: "scroll" }}
-        flexGrow={"auto"}
-      >
+      <Box display={"flex"} flexDirection={"column"} width={"100%"}>
         {upcomingEvents.map((event, index) => (
           <Board key={index} labelColor={null} label={event.type}>
             <Box

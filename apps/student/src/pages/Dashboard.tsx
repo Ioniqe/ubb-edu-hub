@@ -124,6 +124,7 @@ const Dashboard = () => {
             borderRadius: "18px",
             backgroundColor: theme.palette.background.paper,
             p: 2,
+            overflowY: "scroll",
           }}
         >
           <UpcomingEvents />
