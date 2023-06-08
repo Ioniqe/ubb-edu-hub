@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { ForceGraph3D } from "react-force-graph";
 import SpriteText from "three-spritetext";
 import { useAppTheme } from "ui";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 type GraphProps = {
   width: number;
@@ -80,7 +80,15 @@ const data = {
 
 const Graph = ({ width, height }: GraphProps) => {
   const { theme } = useAppTheme();
+  const fgRef = useRef();
+
   const [fixedNodes, setFixedNodes] = useState(false);
+
+  const overallProgress = useMemo(() => {
+    const completed = data.nodes.filter(({ completed }) => completed).length;
+    const total = data.nodes.length;
+    return Math.floor(((completed + 1) / total) * 100);
+  }, [data.nodes]);
 
   return (
     <Box width={"fit-content"} height={"fit-content"}>
@@ -88,11 +96,15 @@ const Graph = ({ width, height }: GraphProps) => {
         {fixedNodes ? "Free node movement" : "Fixed node movement"}
       </Button>
 
+      <Typography variant={"h4"}>
+        Overall Progress: {overallProgress}%
+      </Typography>
+
       <ForceGraph3D
+        ref={fgRef}
         graphData={data}
         linkDirectionalArrowLength={3.5}
         linkDirectionalArrowRelPos={1}
-        // linkCurvature={0.25}
         width={width ?? 300}
         height={height ?? 200}
         nodeLabel={() => ""} // TODO
@@ -136,6 +148,14 @@ const Graph = ({ width, height }: GraphProps) => {
           node.fy = node.y;
           node.fz = node.z;
         }}
+        onEngineStop={() => {
+          if (!fgRef.current) {
+            return;
+          }
+
+          (fgRef.current as any).zoomToFit(400);
+        }}
+        cooldownTicks={100}
       />
     </Box>
   );
