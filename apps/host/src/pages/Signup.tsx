@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import { useAppTheme } from "ui";
 import { useNavigate } from "react-router-dom";
 import { RouteEnums } from "../enums";
-import { InitialForm } from "../components";
+import { FormResults, InitialForm } from "../components";
 import useAuthStore from "../hooks/useAuth";
+
+//TODO move
+enum AuthStep {
+  REGISTER = "REGISTER",
+  FORM = "FORM",
+  RESULTS = "RESULTS",
+}
 
 export const Signup = () => {
   const { register } = useAuthStore();
@@ -12,9 +19,12 @@ export const Signup = () => {
   const navigate = useNavigate();
 
   const [error, setError] = useState<string | null>(null);
-  const [showForm, setShowForm] = useState(true); //TODO
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [currentAuthStep, setCurrentAuthStep] = useState<AuthStep>(
+    AuthStep.REGISTER
+  );
 
   const onRegister = async () => {
     try {
@@ -22,7 +32,7 @@ export const Signup = () => {
 
       // TODO post to back with email
       setError(null);
-      setShowForm(true);
+      setCurrentAuthStep(AuthStep.FORM);
     } catch (e) {
       console.log(e);
       setError(e as string);
@@ -31,81 +41,103 @@ export const Signup = () => {
 
   const onLogin = () => navigate("/" + RouteEnums.LOGIN);
 
-  return showForm ? (
-    <InitialForm />
-  ) : (
-    <Box
-      height={"60%"}
-      width={"50%"}
-      display={"flex"}
-      flexDirection={"column"}
-      alignItems={"center"}
-      justifyContent={"space-evenly"}
-      sx={{
-        borderRadius: "16px",
-        backgroundColor: theme.palette.background.paper,
-      }}
-    >
-      <Typography
-        variant={"h2"}
-        color={theme.palette.primary.main}
-        fontWeight={300}
-      >
-        Register
-      </Typography>
+  const gotoNextStep = useCallback(() => {
+    switch (currentAuthStep) {
+      case AuthStep.REGISTER:
+        return setCurrentAuthStep(AuthStep.FORM);
+      case AuthStep.FORM:
+        return setCurrentAuthStep(AuthStep.RESULTS);
+      default:
+        return undefined;
+    }
+  }, [currentAuthStep, setCurrentAuthStep]);
 
+  const currentContent = useMemo(() => {
+    switch (currentAuthStep) {
+      case AuthStep.FORM:
+        return <InitialForm gotoNextStep={gotoNextStep} />;
+      case AuthStep.RESULTS:
+        return <FormResults />;
+      default:
+        return undefined;
+    }
+  }, [currentAuthStep, gotoNextStep]);
+
+  return (
+    currentContent ?? (
       <Box
+        height={"60%"}
+        width={"50%"}
         display={"flex"}
         flexDirection={"column"}
         alignItems={"center"}
-        justifyContent={"center"}
-        width={"60%"}
+        justifyContent={"space-evenly"}
+        sx={{
+          borderRadius: "16px",
+          backgroundColor: theme.palette.background.paper,
+        }}
       >
-        <TextField
-          label={"Email"}
-          variant={"filled"}
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-
-        <TextField
-          label={"Password"}
-          variant={"filled"}
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          type={"password"}
-        />
-
-        <Typography variant={"h4"} color={theme.palette.error.main}>
-          {error}
-        </Typography>
-      </Box>
-
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        alignItems={"end"}
-        sx={{ width: "60%" }}
-      >
-        <Button
-          onClick={onRegister}
-          variant={"contained"}
-          sx={{ width: "100%" }}
-          disabled={!email.length || !password.length}
+        <Typography
+          variant={"h2"}
+          color={theme.palette.primary.main}
+          fontWeight={300}
         >
           Register
-        </Button>
+        </Typography>
 
-        <Link
-          component="button"
-          variant="body2"
-          onClick={onLogin}
-          color={theme.palette.primary.main}
-          sx={{ mt: 2 }}
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          width={"60%"}
         >
-          Already have an account? Log in
-        </Link>
+          <TextField
+            label={"Email"}
+            variant={"filled"}
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+
+          <TextField
+            label={"Password"}
+            variant={"filled"}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            type={"password"}
+          />
+
+          <Typography variant={"h4"} color={theme.palette.error.main}>
+            {error}
+          </Typography>
+        </Box>
+
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          alignItems={"end"}
+          sx={{ width: "60%" }}
+        >
+          <Button
+            onClick={onRegister}
+            variant={"contained"}
+            sx={{ width: "100%" }}
+            disabled={!email.length || !password.length}
+          >
+            Register
+          </Button>
+
+          <Link
+            component="button"
+            variant="body2"
+            onClick={onLogin}
+            color={theme.palette.primary.main}
+            sx={{ mt: 2 }}
+          >
+            Already have an account? Log in
+          </Link>
+        </Box>
       </Box>
-    </Box>
+    )
   );
 };

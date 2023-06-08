@@ -11,7 +11,11 @@ const subjectOptions = [
   "Mathematics",
 ];
 
-export const InitialForm = () => {
+type InitialFormProps = {
+  gotoNextStep: () => void;
+};
+
+export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
   const { theme } = useAppTheme();
   const navigate = useNavigate();
 
@@ -32,7 +36,11 @@ export const InitialForm = () => {
     accept: { "image/jpeg": [], "image/png": [], "application/pdf": [] },
   });
 
-  const onSubmit = () => navigate("/" + BaseRoute.STUDENT);
+  const onSubmit = useCallback(() => {
+    // TODO POST to back
+
+    gotoNextStep();
+  }, [gotoNextStep]);
 
   return (
     <Box
