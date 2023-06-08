@@ -6,6 +6,6 @@ export type OverviewSkillsProgress = {
 };
 
 export type Step = {
-  description: string;
+  name: string;
   completed: boolean;
 };

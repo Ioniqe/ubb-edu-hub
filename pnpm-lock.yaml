@@ -147,6 +147,9 @@ importers:
       recharts:
         specifier: ^2.6.2
         version: 2.6.2(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
+      three-spritetext:
+        specifier: ^1.8.1
+        version: 1.8.1(three@0.153.0)
       ui:
         specifier: workspace:*
         version: link:../../packages/ui
@@ -7966,6 +7969,15 @@ packages:
       accessor-fn: 1.4.1
       kapsule: 1.14.4
       polished: 4.2.2
+      three: 0.153.0
+    dev: false
+
+  /three-spritetext@1.8.1(three@0.153.0):
+    resolution: {integrity: sha512-pohv5CcdeUtAPLi9KhG0kcDLj3gmzdIFK/QlgsTJe+U07oQFSj+K0DLPQKbNDPWAK+7YzhulkRcjWdVIQ5F7nw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      three: '>=0.86.0'
+    dependencies:
       three: 0.153.0
     dev: false
 

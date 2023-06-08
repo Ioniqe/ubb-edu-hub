@@ -15,6 +15,8 @@ const Roadmaps = () => {
     { name: "Teamwork", color: Colors.ACCENT_BLUE },
   ]; // TODO fetch
 
+  // TODO add overall progress
+
   const [value, setValue] = useState(0);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {

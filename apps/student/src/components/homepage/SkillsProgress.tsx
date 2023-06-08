@@ -40,23 +40,23 @@ export const SkillsProgress = () => {
       },
       steps: [
         {
-          description: "Enroll",
+          name: "Enroll",
           completed: true,
         },
         {
-          description: "Assignment 1",
+          name: "Assignment 1",
           completed: true,
         },
         {
-          description: "Assignment 2",
+          name: "Assignment 2",
           completed: true,
         },
         {
-          description: "Assignment 3",
+          name: "Assignment 3",
           completed: true,
         },
         {
-          description: "ML Exam",
+          name: "ML Exam",
           completed: false,
         },
       ],
@@ -69,15 +69,15 @@ export const SkillsProgress = () => {
       },
       steps: [
         {
-          description: "Enroll",
+          name: "Enroll",
           completed: true,
         },
         {
-          description: "Assignment 1",
+          name: "Assignment 1",
           completed: false,
         },
         {
-          description: "Team Assignment",
+          name: "Team Assignment",
           completed: false,
         },
       ],
@@ -90,19 +90,19 @@ export const SkillsProgress = () => {
       },
       steps: [
         {
-          description: "Enroll",
+          name: "Enroll",
           completed: true,
         },
         {
-          description: "Assignment 1",
+          name: "Assignment 1",
           completed: false,
         },
         {
-          description: "Assignment 2",
+          name: "Assignment 2",
           completed: false,
         },
         {
-          description: "Final Presentation",
+          name: "Final Presentation",
           completed: false,
         },
       ],
@@ -115,19 +115,19 @@ export const SkillsProgress = () => {
       },
       steps: [
         {
-          description: "Enroll",
+          name: "Enroll",
           completed: true,
         },
         {
-          description: "Assignment 1",
+          name: "Assignment 1",
           completed: false,
         },
         {
-          description: "Assignment 2",
+          name: "Assignment 2",
           completed: false,
         },
         {
-          description: "Final Presentation",
+          name: "Final Presentation",
           completed: false,
         },
       ],
@@ -140,19 +140,19 @@ export const SkillsProgress = () => {
       },
       steps: [
         {
-          description: "Enroll",
+          name: "Enroll",
           completed: true,
         },
         {
-          description: "Assignment 1",
+          name: "Assignment 1",
           completed: false,
         },
         {
-          description: "Assignment 2",
+          name: "Assignment 2",
           completed: false,
         },
         {
-          description: "Final Presentation",
+          name: "Final Presentation",
           completed: false,
         },
       ],
@@ -225,7 +225,7 @@ export const SkillsProgress = () => {
             >
               {steps.map((step, _index) => (
                 <Step key={_index}>
-                  <Tooltip title={step.description} placement={"top"}>
+                  <Tooltip title={step.name} placement={"top"}>
                     <StepLabel
                       StepIconComponent={() =>
                         renderNode(
@@ -249,7 +249,7 @@ export const SkillsProgress = () => {
                           textAlign: "center",
                         }}
                       >
-                        {step.description}
+                        {step.name}
                       </Typography>
                     </StepLabel>
                   </Tooltip>
