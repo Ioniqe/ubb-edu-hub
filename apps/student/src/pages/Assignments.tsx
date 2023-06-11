@@ -1,19 +1,27 @@
 import React, { SyntheticEvent, useState } from "react";
 import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { Topic } from "../types";
-import { Colors, useAppTheme } from "ui";
+import { useAppTheme } from "ui";
 import { Filter, mappedFilters } from "../enums";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 import { AssignmentsTabContent } from "../components";
+import api from "ui/util/api";
+import { useQuery } from "@tanstack/react-query";
 
 const Assignments = () => {
   const { theme } = useAppTheme();
 
-  const subjects: Topic[] = [
-    { name: "Artificial Intelligence", color: Colors.ACCENT_PURPLE },
-    { name: "CMES", color: Colors.ACCENT_BLUE_LIGHT },
-    { name: "Mathematics", color: Colors.ACCENT_BLUE },
-  ]; // TODO fetch
+  const skillssQuery = useQuery(
+    ["skills"],
+    () =>
+      api<Topic[]>({
+        url: "skills",
+        method: "GET",
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
 
   const filters: Filter[] = [
     Filter.ALL,
@@ -23,6 +31,10 @@ const Assignments = () => {
   ];
 
   const [value, setValue] = useState(0);
+
+  if (!skillssQuery.data) {
+    return;
+  }
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -48,14 +60,14 @@ const Assignments = () => {
         >
           <Box sx={{ borderBottom: 1, borderColor: "divider" }} width={"100%"}>
             <MuiTabs value={value} onChange={handleChange}>
-              {subjects.map((topic: Topic, index: number) => (
+              {skillssQuery.data.map((topic: Topic, index: number) => (
                 <Tab label={topic.name} value={index} key={index} />
               ))}
             </MuiTabs>
           </Box>
 
           <AssignmentsTabContent
-            interest={subjects[value]}
+            interest={skillssQuery.data[value]}
             filters={filters.map((filter) => mappedFilters[filter])}
           />
         </Box>

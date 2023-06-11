@@ -9,6 +9,9 @@ import {
 } from "@mui/material";
 import { Topic } from "../types";
 import { Board, useAppTheme } from "ui";
+import { useQuery } from "@tanstack/react-query";
+import api from "ui/util/api";
+import { Checklist } from "../types/checklist";
 
 type ChecklistsTabContentProps = {
   interest: Topic;
@@ -20,7 +23,19 @@ export const ChecklistTabContent = ({
   // TODO fetch checklists about interest
   const { theme } = useAppTheme();
 
-  const [checklist, setChecklist] = useState([...Array(14)]);
+  const checklistQuery = useQuery(
+    ["checklists"],
+    () =>
+      api<Checklist[]>({
+        url: "checklists",
+        method: "GET",
+        params: { subject: interest.name },
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
+
   const [addingNewChecklist, setAddingNewChecklist] = useState(false);
   const [newChecklistTitle, setNewChecklistTitle] = useState("");
   const [newChecklistDetails, setNewChecklistDetails] = useState("");
@@ -32,7 +47,7 @@ export const ChecklistTabContent = ({
 
   const handleAdd = useCallback(() => {
     // TODO request
-    setChecklist((_checklist) => [..._checklist, _checklist.length]);
+    // setChecklist((_checklist) => [..._checklist, _checklist.length]);
 
     setNewChecklistTitle("");
     setNewChecklistDetails("");
@@ -102,6 +117,10 @@ export const ChecklistTabContent = ({
     </Board>
   );
 
+  if (!checklistQuery.data) {
+    return null;
+  }
+
   return (
     <Box
       display={"flex"}
@@ -117,7 +136,7 @@ export const ChecklistTabContent = ({
         height={"100%"}
         flex={"auto"}
       >
-        {checklist
+        {checklistQuery.data
           .map((u, i) => i)
           .map((_, index) => (
             <Board labelColor={interest.color} key={index}>

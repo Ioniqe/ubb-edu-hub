@@ -2,22 +2,34 @@ import React, { SyntheticEvent, useState } from "react";
 import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { Topic } from "../types";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
-import { Colors, useAppTheme } from "ui";
+import { useAppTheme } from "ui";
 import { RoadmapsTabContent } from "../components";
+import { useQuery } from "@tanstack/react-query";
+import api from "ui/util/api";
 
 // TODO rename every interest to skill
 const Roadmaps = () => {
   const { theme } = useAppTheme();
+  const [value, setValue] = useState(0);
 
-  const skills: Topic[] = [
-    { name: "Artificial Intelligence", color: Colors.ACCENT_YELLOW },
-    { name: "Leadership", color: Colors.ACCENT_SALMON },
-    { name: "Teamwork", color: Colors.ACCENT_BLUE },
-  ]; // TODO fetch
+  const skillsQuery = useQuery(
+    ["skills"],
+    () =>
+      api<Topic[]>({
+        url: "/skills",
+        method: "GET",
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
+
+  if (!skillsQuery.data) {
+    return;
+  }
+
 
   // TODO add overall progress
-
-  const [value, setValue] = useState(0);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -44,13 +56,13 @@ const Roadmaps = () => {
         >
           <Box sx={{ borderBottom: 1, borderColor: "divider" }} width={"100%"}>
             <MuiTabs value={value} onChange={handleChange}>
-              {skills.map((topic: Topic, index: number) => (
+              {skillsQuery.data.map((topic: Topic, index: number) => (
                 <Tab label={topic.name} value={index} key={index} />
               ))}
             </MuiTabs>
           </Box>
 
-          <RoadmapsTabContent skill={skills[value]} />
+          <RoadmapsTabContent skill={skillsQuery.data[value]} />
         </Box>
       </Box>
     </CustomAppThemeProvider>
