@@ -3,24 +3,14 @@ import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 import { Topic } from "../types";
 import { ChecklistTabContent } from "../components";
-import { Colors, useAppTheme } from "ui";
-import { useQuery } from "@tanstack/react-query";
-import api from "ui/util/api";
+import { useAppTheme } from "ui";
+
+import useSkillsQuery from "../queries/useSkillsQuery";
 
 const Checklists = () => {
   const { theme } = useAppTheme();
 
-  const skillsQuery = useQuery(
-    ["skills"],
-    () =>
-      api<Topic[]>({
-        url: "skills",
-        method: "GET",
-      }),
-    {
-      select: (response) => response.data,
-    }
-  );
+  const skillsQuery = useSkillsQuery();
 
   const [value, setValue] = useState(0);
 

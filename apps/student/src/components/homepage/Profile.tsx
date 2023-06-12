@@ -1,31 +1,16 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useAppTheme } from "ui";
-import { useQuery } from "@tanstack/react-query";
-import { User } from "../../types/user";
-import api from "ui/util/api";
+
+import useUserQuery from "../../queries/userQuery";
 
 export const Profile = () => {
   const { theme } = useAppTheme();
 
-  const userQuery = useQuery(
-    ["userDetails"],
-    () =>
-      api<User>({
-        url: "/users/findById",
-        method: "GET",
-        params: {
-          //TODO: add real id here
-          id: "jRlnEKwxKycPO28ydWSz6DTQqz23",
-        },
-      }),
-    {
-      select: (response) => response.data,
-    }
-  );
+  const userQuery = useUserQuery();
 
   if (!userQuery.data) {
-    return;
+    return null;
   }
 
   return (
@@ -64,9 +49,9 @@ export const Profile = () => {
           ml: 2,
         }}
       >
-        {userQuery.data.firstName[0].toUpperCase() +
+        {userQuery.data.firstName?.[0].toUpperCase() +
           "" +
-          userQuery.data.lastName[0].toUpperCase()}
+          userQuery.data.lastName?.[0].toUpperCase()}
       </Box>
     </Box>
   );

@@ -3,9 +3,10 @@ import { Box, Button, Typography } from "@mui/material";
 import { Topic } from "../types";
 import { Filters } from "./Filters";
 import { Card, useAppTheme } from "ui";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import api from "ui/util/api";
 import { Assignment } from "../types/assignment";
+import useAssigmentsQuery from "../queries/useAssignmentsQuery";
 
 type AssignmentsTabContentProps = {
   interest: Topic;
@@ -16,21 +17,9 @@ export const AssignmentsTabContent = ({
   interest,
   filters,
 }: AssignmentsTabContentProps) => {
-  // TODO fetch array of assignments details for given interest
   const { theme } = useAppTheme();
 
-  const assignmentsQuery = useQuery(
-    ["assignments", interest.name, filters],
-    () =>
-      api<Assignment[]>({
-        url: "/assessments",
-        method: "GET",
-        params: { subject: interest.name, filters: filters },
-      }),
-    {
-      select: (response) => response.data,
-    }
-  );
+  const assignmentsQuery = useAssigmentsQuery(interest, filters);
 
   const completeAssignmentMutation = useMutation(
     ["updateAssignment"],

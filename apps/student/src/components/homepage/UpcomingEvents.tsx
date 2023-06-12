@@ -30,7 +30,7 @@ export const UpcomingEvents = () => {
     [upcomingEventsQuery.data]
   );
   if (!upcomingEventsQuery.data) {
-    return;
+    return null;
   }
 
   return (

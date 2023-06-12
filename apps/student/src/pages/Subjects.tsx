@@ -7,7 +7,6 @@ import { Subject } from "../types/subject";
 import api from "ui/util/api";
 
 const Subjects = () => {
-  // TODO fetch subjects
   const { theme } = useAppTheme();
 
   const subjectsQuery = useQuery(
@@ -46,7 +45,7 @@ const Subjects = () => {
               key={index}
             >
               <Typography variant={"caption"}>
-                {subject.descriptiveLink}
+                <a href={subject.descriptiveLink}>{subject.name}</a>
               </Typography>
             </Card>
           ))}

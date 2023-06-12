@@ -1,19 +1,16 @@
 import React, { SyntheticEvent, useState } from "react";
 import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { Topic } from "../types";
-import { Colors, useAppTheme } from "ui";
+import { useAppTheme } from "ui";
 import { Filter, mappedFilters } from "../enums";
 import { ChallengesTabContent } from "../components";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
+import useSkillsQuery from "../queries/useSkillsQuery";
 
 const Challenges = () => {
   const { theme } = useAppTheme();
 
-  const interests: Topic[] = [
-    { name: "Artificial Intelligence", color: Colors.ACCENT_YELLOW },
-    { name: "Leadership", color: Colors.ACCENT_SALMON },
-    { name: "Teamwork", color: Colors.ACCENT_BLUE },
-  ]; // TODO fetch
+  const skillsQuery = useSkillsQuery();
 
   const filters: Filter[] = [
     Filter.ALL,
@@ -26,6 +23,10 @@ const Challenges = () => {
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  if (!skillsQuery.data) {
+    return null;
+  }
 
   return (
     <CustomAppThemeProvider>
@@ -47,14 +48,14 @@ const Challenges = () => {
         >
           <Box sx={{ borderBottom: 1, borderColor: "divider" }} width={"100%"}>
             <MuiTabs value={value} onChange={handleChange}>
-              {interests.map((topic: Topic, index: number) => (
+              {skillsQuery.data.map((topic: Topic, index: number) => (
                 <Tab label={topic.name} value={index} key={index} />
               ))}
             </MuiTabs>
           </Box>
 
           <ChallengesTabContent
-            interest={interests[value]}
+            interest={skillsQuery.data[value]}
             filters={filters.map((filter) => mappedFilters[filter])}
           />
         </Box>

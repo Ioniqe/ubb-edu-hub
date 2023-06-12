@@ -5,23 +5,12 @@ import { useAppTheme } from "ui";
 import { Filter, mappedFilters } from "../enums";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 import { AssignmentsTabContent } from "../components";
-import api from "ui/util/api";
-import { useQuery } from "@tanstack/react-query";
+import useSkillsQuery from "../queries/useSkillsQuery";
 
 const Assignments = () => {
   const { theme } = useAppTheme();
 
-  const skillssQuery = useQuery(
-    ["skills"],
-    () =>
-      api<Topic[]>({
-        url: "skills",
-        method: "GET",
-      }),
-    {
-      select: (response) => response.data,
-    }
-  );
+  const skillsQuery = useSkillsQuery();
 
   const filters: Filter[] = [
     Filter.ALL,
@@ -32,7 +21,7 @@ const Assignments = () => {
 
   const [value, setValue] = useState(0);
 
-  if (!skillssQuery.data) {
+  if (!skillsQuery.data) {
     return;
   }
 
@@ -60,14 +49,14 @@ const Assignments = () => {
         >
           <Box sx={{ borderBottom: 1, borderColor: "divider" }} width={"100%"}>
             <MuiTabs value={value} onChange={handleChange}>
-              {skillssQuery.data.map((topic: Topic, index: number) => (
+              {skillsQuery.data.map((topic: Topic, index: number) => (
                 <Tab label={topic.name} value={index} key={index} />
               ))}
             </MuiTabs>
           </Box>
 
           <AssignmentsTabContent
-            interest={skillssQuery.data[value]}
+            interest={skillsQuery.data[value]}
             filters={filters.map((filter) => mappedFilters[filter])}
           />
         </Box>

@@ -4,30 +4,19 @@ import { Topic } from "../types";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 import { useAppTheme } from "ui";
 import { RoadmapsTabContent } from "../components";
-import { useQuery } from "@tanstack/react-query";
-import api from "ui/util/api";
+
+import useSkillsQuery from "../queries/useSkillsQuery";
 
 // TODO rename every interest to skill
 const Roadmaps = () => {
   const { theme } = useAppTheme();
   const [value, setValue] = useState(0);
 
-  const skillsQuery = useQuery(
-    ["skills"],
-    () =>
-      api<Topic[]>({
-        url: "/skills",
-        method: "GET",
-      }),
-    {
-      select: (response) => response.data,
-    }
-  );
+  const skillsQuery = useSkillsQuery();
 
   if (!skillsQuery.data) {
     return;
   }
-
 
   // TODO add overall progress
 
