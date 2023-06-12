@@ -3,7 +3,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { Topic } from "../types";
 import { Filters } from "./Filters";
 import { Card, useAppTheme } from "ui";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "ui/util/api";
 import { Assignment } from "../types/assignment";
 
@@ -32,12 +32,29 @@ export const AssignmentsTabContent = ({
     }
   );
 
+  const completeAssignmentMutation = useMutation(
+    ["updateAssignment"],
+    (assignment: Assignment) =>
+      api<Assignment>({
+        url: "/assessments",
+        method: "PATCH",
+        params: { id: assignment.id },
+        data: {
+          completed: true,
+        },
+      }),
+    {
+      onSuccess: () => assignmentsQuery.refetch(),
+    }
+  );
+
   if (!assignmentsQuery.data) {
     return null;
   }
 
-  const completeAssignment = () => {
+  const completeAssignment = (assignment: Assignment) => {
     console.log("completed");
+    completeAssignmentMutation.mutate(assignment);
   };
 
   return (
@@ -60,37 +77,33 @@ export const AssignmentsTabContent = ({
             >
               <Box flex={"auto"} height={"100%"} sx={{ overflowY: "scroll" }}>
                 <Typography variant={"caption"}>
-                  Hello there traveler, I seek to find the sword of Saruman
-                </Typography>
-                <Typography variant={"caption"}>
-                  Hello there traveler, I seek to find the sword of Saruman
-                </Typography>
-                <Typography variant={"caption"}>
-                  Hello there traveler, I seek to find the sword of Saruman
+                  {assignment.description}
                 </Typography>
               </Box>
 
-              <Button
-                onClick={completeAssignment}
-                sx={{
-                  flex: 0,
-                  backgroundColor: interest.color,
-                  color: theme.palette.text.secondary,
-                  transition: "0.1s linear",
-                  borderRadius: "20px",
-                  width: "70%",
-                  mt: 1,
-                  mb: 2,
-
-                  "&:hover": {
+              {!assignment.completed && (
+                <Button
+                  onClick={() => completeAssignment(assignment)}
+                  sx={{
+                    flex: 0,
                     backgroundColor: interest.color,
                     color: theme.palette.text.secondary,
-                    boxShadow: `0px 0px 16px 0px ${interest.color}`,
-                  },
-                }}
-              >
-                Complete
-              </Button>
+                    transition: "0.1s linear",
+                    borderRadius: "20px",
+                    width: "70%",
+                    mt: 1,
+                    mb: 2,
+
+                    "&:hover": {
+                      backgroundColor: interest.color,
+                      color: theme.palette.text.secondary,
+                      boxShadow: `0px 0px 16px 0px ${interest.color}`,
+                    },
+                  }}
+                >
+                  Complete
+                </Button>
+              )}
             </Box>
           </Card>
         ))}

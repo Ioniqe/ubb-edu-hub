@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Topic } from "../types";
 import { Board, useAppTheme } from "ui";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "ui/util/api";
 import { Checklist } from "../types/checklist";
 
@@ -24,15 +24,31 @@ export const ChecklistTabContent = ({
   const { theme } = useAppTheme();
 
   const checklistQuery = useQuery(
-    ["checklists"],
+    ["checklists", { interest }],
     () =>
       api<Checklist[]>({
         url: "checklists",
         method: "GET",
-        params: { subject: interest.name },
+        params: { skillId: interest.id },
       }),
     {
       select: (response) => response.data,
+    }
+  );
+
+  const addChecklistMutation = useMutation(
+    ["newChecklist"],
+    (checklist: Checklist) =>
+      api<Checklist>({
+        url: "checklists",
+        method: "POST",
+        data: {
+          ...checklist,
+          skillId: interest.id,
+        },
+      }),
+    {
+      onSuccess: () => checklistQuery.refetch(),
     }
   );
 
@@ -45,14 +61,18 @@ export const ChecklistTabContent = ({
     [interest.color, theme]
   );
 
-  const handleAdd = useCallback(() => {
+  const handleAdd = () => {
+    console.log("aa");
     // TODO request
-    // setChecklist((_checklist) => [..._checklist, _checklist.length]);
+    addChecklistMutation.mutate({
+      title: newChecklistTitle,
+      description: newChecklistDetails,
+    });
 
     setNewChecklistTitle("");
     setNewChecklistDetails("");
     setAddingNewChecklist(false);
-  }, []);
+  };
 
   const handleCheckboxChange = useCallback((item) => {
     // TODO request
@@ -136,33 +156,30 @@ export const ChecklistTabContent = ({
         height={"100%"}
         flex={"auto"}
       >
-        {checklistQuery.data
-          .map((u, i) => i)
-          .map((_, index) => (
-            <Board labelColor={interest.color} key={index}>
-              <Box
-                width={"100%"}
-                display={"flex"}
-                justifyContent={"space-between"}
-                alignItems={"center"}
-              >
-                <Typography variant={"h3"}>
-                  EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
-                  Macarens EEE Macarens EEE Macarens EEE Macarens
-                </Typography>
+        {checklistQuery.data.map((checklistItem, index) => (
+          <Board labelColor={interest.color} key={index}>
+            <Box
+              width={"100%"}
+              display={"flex"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+            >
+              <Typography variant={"h3"}>
+                {checklistItem.description}
+              </Typography>
 
-                <Checkbox
-                  onChange={() => handleCheckboxChange(_)}
-                  sx={{
+              <Checkbox
+                onChange={() => handleCheckboxChange(_)}
+                sx={{
+                  color,
+                  "&.Mui-checked": {
                     color,
-                    "&.Mui-checked": {
-                      color,
-                    },
-                  }}
-                />
-              </Box>
-            </Board>
-          ))}
+                  },
+                }}
+              />
+            </Box>
+          </Board>
+        ))}
       </Box>
 
       {addingNewChecklist ? (
