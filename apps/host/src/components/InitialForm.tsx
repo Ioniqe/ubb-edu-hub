@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
-import { BaseRoute } from "../enums";
 import { MultiSelect, SimpleSelect, useAppTheme } from "ui";
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
+import api from "ui/util/api";
+import { useMutation } from "@tanstack/react-query";
 
 const subjectOptions = [
   "Artificial Intelligence",
@@ -36,8 +37,20 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
     accept: { "image/jpeg": [], "image/png": [], "application/pdf": [] },
   });
 
+  const uploadFileMutation = useMutation(["uploadFile"], () =>
+    api({
+      url: "/nlp/file",
+      method: "POST",
+      headers: { "Content-Type": "multipart/form-data" },
+      data: {
+        file: file,
+      },
+    })
+  );
+
   const onSubmit = useCallback(() => {
     // TODO POST to back
+    uploadFileMutation.mutate();
 
     gotoNextStep();
   }, [gotoNextStep]);

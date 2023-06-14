@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { RouteEnums } from "../enums";
 import { FormResults, InitialForm } from "../components";
 import useAuthStore from "../hooks/useAuth";
+import api from "ui/util/api";
+import { useMutation } from "@tanstack/react-query";
 
 //TODO move
 enum AuthStep {
@@ -26,11 +28,24 @@ export const Signup = () => {
     AuthStep.REGISTER
   );
 
+  const createUserMutation = useMutation(["createUser"], () =>
+    api({
+      url: "/users/createUser",
+      method: "POST",
+      data: {
+        firstName: "",
+        lastName: "",
+        email,
+      },
+    })
+  );
+
   const onRegister = async () => {
     try {
       await register(email, password);
 
       // TODO post to back with email
+      createUserMutation.mutate();
       setError(null);
       setCurrentAuthStep(AuthStep.FORM);
     } catch (e) {
