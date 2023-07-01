@@ -62,8 +62,6 @@ const Subsection = ({ subsectionTitle, topics }: SubsectionProps) => {
 };
 
 export const Focus = () => {
-  // TODO fetch not completed challenges -> only title + interest + color
-  // TODO fetch assignments that are coming up -> title + subject
   const { theme } = useAppTheme();
 
   const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
@@ -123,14 +121,22 @@ export const Focus = () => {
       <Typography variant={"subtitle1"} color={theme.palette.primary.main}>
         Your focus this semester
       </Typography>
-      {/* Todo: good types here */}
       <Subsection
         subsectionTitle={"Active Challenges"}
-        topics={challengesQuery.data as TopicQuickView[]}
+        topics={challengesQuery.data.map((el) => ({
+          title: "",
+          name: el.name,
+          color: "",
+        }))}
       />
+      {/* Todo: good types here */}
       <Subsection
         subsectionTitle={"Active Assignments"}
-        topics={assignmentsQuery.data as TopicQuickView[]}
+        topics={assignmentsQuery.data.map((el) => ({
+          title: el.description,
+          name: el.title,
+          color: "",
+        }))}
       />
     </Box>
   );

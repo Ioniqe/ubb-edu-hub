@@ -10,7 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import { OverviewSkillsProgress } from "../../types";
-import { Board, Colors, useAppTheme } from "ui";
+import { Board, useAppTheme } from "ui";
+import { useQuery } from "@tanstack/react-query";
+import api from "ui/util/api";
 
 const Connector = ({ color }: { color: string }) => {
   return (
@@ -31,135 +33,24 @@ const Connector = ({ color }: { color: string }) => {
 
 export const SkillsProgress = () => {
   // TODO fetch skills array
-
-  const skills: OverviewSkillsProgress[] = [
-    {
-      skill: {
-        name: "Artificial Intelligence",
-        color: Colors.ACCENT_YELLOW,
-      },
-      steps: [
-        {
-          name: "Enroll",
-          completed: true,
-        },
-        {
-          name: "Assignment 1",
-          completed: true,
-        },
-        {
-          name: "Assignment 2",
-          completed: true,
-        },
-        {
-          name: "Assignment 3",
-          completed: true,
-        },
-        {
-          name: "ML Exam",
-          completed: false,
-        },
-      ],
-    },
-
-    {
-      skill: {
-        name: "Teamwork",
-        color: Colors.ACCENT_SALMON,
-      },
-      steps: [
-        {
-          name: "Enroll",
-          completed: true,
-        },
-        {
-          name: "Assignment 1",
-          completed: false,
-        },
-        {
-          name: "Team Assignment",
-          completed: false,
-        },
-      ],
-    },
-
-    {
-      skill: {
-        name: "Leadership",
-        color: Colors.ACCENT_PURPLE,
-      },
-      steps: [
-        {
-          name: "Enroll",
-          completed: true,
-        },
-        {
-          name: "Assignment 1",
-          completed: false,
-        },
-        {
-          name: "Assignment 2",
-          completed: false,
-        },
-        {
-          name: "Final Presentation",
-          completed: false,
-        },
-      ],
-    },
-
-    {
-      skill: {
-        name: "Leadership",
-        color: Colors.ACCENT_PURPLE,
-      },
-      steps: [
-        {
-          name: "Enroll",
-          completed: true,
-        },
-        {
-          name: "Assignment 1",
-          completed: false,
-        },
-        {
-          name: "Assignment 2",
-          completed: false,
-        },
-        {
-          name: "Final Presentation",
-          completed: false,
-        },
-      ],
-    },
-
-    {
-      skill: {
-        name: "Leadership",
-        color: Colors.ACCENT_PURPLE,
-      },
-      steps: [
-        {
-          name: "Enroll",
-          completed: true,
-        },
-        {
-          name: "Assignment 1",
-          completed: false,
-        },
-        {
-          name: "Assignment 2",
-          completed: false,
-        },
-        {
-          name: "Final Presentation",
-          completed: false,
-        },
-      ],
-    },
-  ];
-
   const { theme } = useAppTheme();
+  const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
+    .user.uid;
+  const skillsQuery = useQuery(
+    ["skillsDetailed", { firebaseId }],
+    () =>
+      api<OverviewSkillsProgress[]>({
+        url: "/skills",
+        method: "GET",
+        params: {
+          userId: firebaseId,
+          detailed: true,
+        },
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
 
   const renderNode = (
     nodeIndex: number,
@@ -191,6 +82,10 @@ export const SkillsProgress = () => {
     );
   };
 
+  if (!skillsQuery.data) {
+    return null;
+  }
+
   return (
     <Box
       display={"flex"}
@@ -206,59 +101,64 @@ export const SkillsProgress = () => {
         Your progress on the chosen skills
       </Typography>
 
-      {skills.map(({ skill, steps }: OverviewSkillsProgress, index: number) => (
-        <Board label={skill.name} labelColor={skill.color} key={index}>
-          <Box
-            display={"flex"}
-            width={"100%"}
-            height={"100%"}
-            flexDirection={"column"}
-            justifyContent={"start"}
-            p={2}
-          >
-            <Stepper
-              alternativeLabel
-              activeStep={1}
-              connector={
-                <Connector color={skill.color ?? theme.palette.primary.main} />
-              }
+      {(skillsQuery.data || []).map(
+        (
+          { name, color, SkillOnStep: steps }: OverviewSkillsProgress,
+          index: number
+        ) => (
+          <Board label={name} labelColor={color} key={index}>
+            <Box
+              display={"flex"}
+              width={"100%"}
+              height={"100%"}
+              flexDirection={"column"}
+              justifyContent={"start"}
+              p={2}
             >
-              {steps.map((step, _index) => (
-                <Step key={_index}>
-                  <Tooltip title={step.name} placement={"top"}>
-                    <StepLabel
-                      StepIconComponent={() =>
-                        renderNode(
-                          _index,
-                          steps.length,
-                          step.completed,
-                          skill.color
-                        )
-                      }
-                    >
-                      <Typography
-                        color={theme.palette.primary.main}
-                        variant={"caption"}
-                        fontWeight={400}
-                        sx={{
-                          display: "-webkit-box",
-                          WebkitLineClamp: "1",
-                          WebkitBoxOrient: "vertical",
-                          overflow: "hidden",
-
-                          textAlign: "center",
-                        }}
+              <Stepper
+                alternativeLabel
+                activeStep={1}
+                connector={
+                  <Connector color={color ?? theme.palette.primary.main} />
+                }
+              >
+                {(steps || []).map((step, _index) => (
+                  <Step key={_index}>
+                    <Tooltip title={step.name} placement={"top"}>
+                      <StepLabel
+                        StepIconComponent={() =>
+                          renderNode(
+                            _index,
+                            steps?.length || 0,
+                            step.completed,
+                            color
+                          )
+                        }
                       >
-                        {step.name}
-                      </Typography>
-                    </StepLabel>
-                  </Tooltip>
-                </Step>
-              ))}
-            </Stepper>
-          </Box>
-        </Board>
-      ))}
+                        <Typography
+                          color={theme.palette.primary.main}
+                          variant={"caption"}
+                          fontWeight={400}
+                          sx={{
+                            display: "-webkit-box",
+                            WebkitLineClamp: "1",
+                            WebkitBoxOrient: "vertical",
+                            overflow: "hidden",
+
+                            textAlign: "center",
+                          }}
+                        >
+                          {step.name}
+                        </Typography>
+                      </StepLabel>
+                    </Tooltip>
+                  </Step>
+                ))}
+              </Stepper>
+            </Box>
+          </Board>
+        )
+      )}
     </Box>
   );
 };

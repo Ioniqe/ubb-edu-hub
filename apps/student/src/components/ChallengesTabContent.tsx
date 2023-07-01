@@ -14,7 +14,6 @@ export const ChallengesTabContent = ({
   interest,
   filters,
 }: ChallengesTabContentProps) => {
-  // TODO fetch array of challenges details for given interest
   const { theme } = useAppTheme();
 
   const challengesQuery = useChallengesQuery(interest);
