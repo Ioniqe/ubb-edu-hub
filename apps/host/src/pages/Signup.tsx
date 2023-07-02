@@ -36,6 +36,8 @@ export const Signup = () => {
         firstName: "",
         lastName: "",
         email,
+        firebaseId: JSON.parse(sessionStorage.getItem("token") || "").state.user
+          .uid,
       },
     })
   );
@@ -44,7 +46,6 @@ export const Signup = () => {
     try {
       await register(email, password);
 
-      // TODO post to back with email
       createUserMutation.mutate();
       setError(null);
       setCurrentAuthStep(AuthStep.FORM);

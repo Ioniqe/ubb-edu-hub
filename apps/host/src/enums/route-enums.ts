@@ -14,7 +14,7 @@ export enum RouteEnums {
 
   //auth
   LOGIN = "login",
-  SIGN_UP = "sing-up",
+  SIGN_UP = "sign-up",
 
   //errors
   ERROR = "something-went-wrong", // poate n-ai nevoie de route pt asta

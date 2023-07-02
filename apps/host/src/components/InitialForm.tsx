@@ -4,16 +4,21 @@ import { MultiSelect, SimpleSelect, useAppTheme } from "ui";
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import api from "ui/util/api";
-import { useMutation } from "@tanstack/react-query";
-
-const subjectOptions = [
-  "Artificial Intelligence",
-  "Informatics",
-  "Mathematics",
-];
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 type InitialFormProps = {
   gotoNextStep: () => void;
+};
+
+interface PredefinedSkills {
+  name: string;
+  type: string;
+}
+
+type Subject = {
+  name: string;
+  descriptiveLink: string;
+  color: string;
 };
 
 export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
@@ -23,6 +28,8 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
   const [loading, setLoading] = useState(false); // TODO
   const [subjects, setSubjects] = useState<string[]>([]);
   const [prefersHardSkills, setPrefersHardSkills] = useState<string>("");
+  const [prefersSoftSkills, setPrefersSoftSkills] = useState<string>("");
+
   const [file, setFile] = useState<File>();
 
   const onDropAccepted = useCallback((files: File[]) => {
@@ -48,9 +55,49 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
     })
   );
 
+  const sendInformationMutation = useMutation(["sendInformation"], () =>
+    api({
+      url: "nlp",
+      method: "POST",
+      params: {
+        userId: JSON.parse(sessionStorage.getItem("token") || "").state.uid,
+      },
+      data: {
+        subjects: subjects,
+        hardSkills: prefersHardSkills,
+        softSkills: prefersSoftSkills,
+      },
+    })
+  );
+
+  const subjectQuery = useQuery(
+    ["subjects"],
+    () =>
+      api<Subject[]>({
+        url: "/subjects",
+        method: "GET",
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
+
+  const predefinedSkillsQuery = useQuery(
+    ["predefined-skills"],
+    () =>
+      api<PredefinedSkills[]>({
+        url: "/predefined-skills",
+        method: "GET",
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
+
   const onSubmit = useCallback(() => {
     // TODO POST to back
     uploadFileMutation.mutate();
+    sendInformationMutation.mutate();
 
     gotoNextStep();
   }, [gotoNextStep]);
@@ -96,23 +143,39 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
       >
         <MultiSelect
           label={"What do you want to focus on?"}
-          options={subjectOptions}
+          options={
+            subjectQuery.data
+              ? subjectQuery.data.map((subject) => subject.name)
+              : []
+          }
           selectedOptions={subjects}
           setSelectedOptions={setSubjects}
         />
 
         <SimpleSelect
-          label={"What do you prefer?"}
-          options={["Yes", "No"]}
+          label={"What Hard skilldo you prefer?"}
+          options={
+            predefinedSkillsQuery.data
+              ? predefinedSkillsQuery.data
+                  .filter((e) => e.type === "HARD")
+                  .map((e) => e.name)
+              : []
+          }
           selectedOption={prefersHardSkills}
           setSelectedOption={setPrefersHardSkills}
         />
 
         <SimpleSelect
-          label={"What do you prefer?"}
-          options={["Yes", "No"]}
-          selectedOption={prefersHardSkills}
-          setSelectedOption={setPrefersHardSkills}
+          label={"What soft skill do you prefer?"}
+          options={
+            predefinedSkillsQuery.data
+              ? predefinedSkillsQuery.data
+                  .filter((e) => e.type === "SOFT")
+                  .map((e) => e.name)
+              : []
+          }
+          selectedOption={prefersSoftSkills}
+          setSelectedOption={setPrefersSoftSkills}
         />
       </Box>
 
