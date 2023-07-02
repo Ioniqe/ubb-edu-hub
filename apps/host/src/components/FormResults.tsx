@@ -39,22 +39,29 @@ export const FormResults = () => {
     }
   );
 
-  const updateSkillsMutation = useMutation(["updateSkills"], () =>
-    Promise.all(
-      (skillsQuery.data || []).map((skill) =>
-        api({
-          url: "/skill/update",
-          method: "PATCH",
-          data: {
-            color: skillsColors[skill.name],
-          },
-          params: {
-            id: skill.id,
-            firebaseId: firebaseId,
-          },
-        })
-      )
-    )
+  const updateSkillsMutation = useMutation(
+    ["updateSkills"],
+    () =>
+      Promise.all(
+        (skillsQuery.data || []).map((skill) =>
+          api({
+            url: "/skills/update",
+            method: "PATCH",
+            data: {
+              color: skillsColors[skill.name],
+            },
+            params: {
+              id: skill.id,
+              firebaseId: firebaseId,
+            },
+          })
+        )
+      ),
+    {
+      onSuccess: () => {
+        navigate("/" + BaseRoute.STUDENT);
+      },
+    }
   );
 
   useEffect(() => {
@@ -74,8 +81,6 @@ export const FormResults = () => {
 
   const onSubmit = useCallback(() => {
     updateSkillsMutation.mutate();
-    console.log(skillsColors);
-    navigate("/" + BaseRoute.STUDENT);
   }, [skillsColors]);
 
   if (!skillsQuery.data) {
