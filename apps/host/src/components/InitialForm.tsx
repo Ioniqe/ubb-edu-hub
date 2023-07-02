@@ -23,7 +23,6 @@ type Subject = {
 
 export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
   const { theme } = useAppTheme();
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false); // TODO
   const [subjects, setSubjects] = useState<string[]>([]);
@@ -31,6 +30,9 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
   const [prefersSoftSkills, setPrefersSoftSkills] = useState<string>("");
 
   const [file, setFile] = useState<File>();
+
+  const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
+    .user.uid;
 
   const onDropAccepted = useCallback((files: File[]) => {
     setFile(files[0]);
@@ -44,30 +46,33 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
     accept: { "image/jpeg": [], "image/png": [], "application/pdf": [] },
   });
 
-  const uploadFileMutation = useMutation(["uploadFile"], () =>
-    api({
-      url: "/nlp/file",
-      method: "POST",
-      headers: { "Content-Type": "multipart/form-data" },
-      data: {
-        file: file,
-      },
-    })
-  );
-
-  const sendInformationMutation = useMutation(["sendInformation"], () =>
-    api({
-      url: "nlp",
-      method: "POST",
-      params: {
-        userId: JSON.parse(sessionStorage.getItem("token") || "").state.uid,
-      },
-      data: {
-        subjects: subjects,
-        hardSkills: prefersHardSkills,
-        softSkills: prefersSoftSkills,
-      },
-    })
+  const sendInformationMutation = useMutation(
+    ["sendInformation"],
+    async () => {
+      await api({
+        url: "nlp",
+        method: "POST",
+        params: {
+          firebaseId: firebaseId,
+        },
+        data: {
+          subjects: subjects,
+          hardSkills: prefersHardSkills,
+          softSkills: prefersSoftSkills,
+        },
+      });
+      api({
+        url: "/nlp/file",
+        method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
+        data: {
+          file: file,
+        },
+      });
+    },
+    {
+      onSuccess: () => gotoNextStep(),
+    }
   );
 
   const subjectQuery = useQuery(
@@ -95,12 +100,8 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
   );
 
   const onSubmit = useCallback(() => {
-    // TODO POST to back
-    uploadFileMutation.mutate();
     sendInformationMutation.mutate();
-
-    gotoNextStep();
-  }, [gotoNextStep]);
+  }, []);
 
   return (
     <Box
