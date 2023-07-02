@@ -62,8 +62,6 @@ export const ChecklistTabContent = ({
   );
 
   const handleAdd = () => {
-    console.log("aa");
-    // TODO request
     addChecklistMutation.mutate({
       title: newChecklistTitle,
       description: newChecklistDetails,
@@ -169,7 +167,7 @@ export const ChecklistTabContent = ({
               </Typography>
 
               <Checkbox
-                onChange={() => handleCheckboxChange(_)}
+                onChange={() => handleCheckboxChange(checklistItem)}
                 sx={{
                   color,
                   "&.Mui-checked": {
