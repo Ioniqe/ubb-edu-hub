@@ -60,6 +60,7 @@ export const Card = ({ label, labelColor, children }: CardProps) => {
         position={"relative"}
         top={"25px"}
         height={"400px"}
+        width={"100%"}
         sx={{
           backgroundColor: theme.palette.text.secondary,
           color: theme.palette.primary.main,

@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Topic } from "../types";
-import { Board, useAppTheme } from "ui";
+import { Board, LoadingScreen, useAppTheme } from "ui";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "ui/util/api";
 import { Checklist } from "../types/checklist";
@@ -23,7 +23,11 @@ export const ChecklistTabContent = ({
   // TODO fetch checklists about interest
   const { theme } = useAppTheme();
 
-  const checklistQuery = useQuery(
+  const {
+    data: checklists,
+    isLoading,
+    refetch,
+  } = useQuery(
     ["checklists", { interest }],
     () =>
       api<Checklist[]>({
@@ -48,7 +52,7 @@ export const ChecklistTabContent = ({
         },
       }),
     {
-      onSuccess: () => checklistQuery.refetch(),
+      onSuccess: () => refetch(),
     }
   );
 
@@ -137,7 +141,7 @@ export const ChecklistTabContent = ({
     </Board>
   );
 
-  if (!checklistQuery.data) {
+  if (!checklists && !isLoading) {
     return null;
   }
 
@@ -149,38 +153,42 @@ export const ChecklistTabContent = ({
       height={"fit-content"}
       flex={"auto"}
     >
-      <Box
-        display={"flex"}
-        flexDirection={"column"}
-        width={"100%"}
-        height={"100%"}
-        flex={"auto"}
-      >
-        {checklistQuery.data.map((checklistItem, index) => (
-          <Board labelColor={interest.color} key={index}>
-            <Box
-              width={"100%"}
-              display={"flex"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-            >
-              <Typography variant={"h3"}>
-                {checklistItem.description}
-              </Typography>
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          width={"100%"}
+          height={"100%"}
+          flex={"auto"}
+        >
+          {checklists.map((checklistItem, index) => (
+            <Board labelColor={interest.color} key={index}>
+              <Box
+                width={"100%"}
+                display={"flex"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+              >
+                <Typography variant={"h3"}>
+                  {checklistItem.description}
+                </Typography>
 
-              <Checkbox
-                onChange={() => handleCheckboxChange(_)}
-                sx={{
-                  color,
-                  "&.Mui-checked": {
+                <Checkbox
+                  onChange={() => handleCheckboxChange(checklistItem)}
+                  sx={{
                     color,
-                  },
-                }}
-              />
-            </Box>
-          </Board>
-        ))}
-      </Box>
+                    "&.Mui-checked": {
+                      color,
+                    },
+                  }}
+                />
+              </Box>
+            </Board>
+          ))}
+        </Box>
+      )}
 
       {addingNewChecklist ? (
         newItem

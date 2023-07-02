@@ -6,7 +6,7 @@ import {
   Tooltip,
 } from "recharts";
 import { Box, Typography } from "@mui/material";
-import { useAppTheme } from "ui";
+import { LoadingScreen, useAppTheme } from "ui";
 import useSubjectsQuery from "../../queries/useSubjectsQuery";
 import { useQuery } from "@tanstack/react-query";
 import api from "ui/util/api";
@@ -84,7 +84,8 @@ export const OverallProgress = () => {
   const { theme } = useAppTheme();
   const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
     .user.uid;
-  const skillsQuery = useQuery(
+
+  const { data: skills, isLoading: skillsLoading } = useQuery(
     ["skillsDetailed", { firebaseId }],
     () =>
       api<OverviewSkillsProgress[]>({
@@ -100,30 +101,33 @@ export const OverallProgress = () => {
     }
   );
   // const challengesQuery = useChallengesQuery();
-  const subjectsQuery = useSubjectsQuery();
+  const { data: subjects, isLoading: subjectsLoading } = useSubjectsQuery();
 
   const progressData = useMemo(() => {
-    const skillData = (skillsQuery.data || []).map((skill) => ({
+    const skillData = (skills || []).map((skill) => ({
       name: `${skill.name} (Skill)`,
       fill: skill.color,
       uv: skill.steps.length,
     }));
-    const subjectData = (subjectsQuery.data || []).map((subject) => ({
+
+    const subjectData = (subjects || []).map((subject) => ({
       name: `${subject.name} (Subject)`,
       fill: subject.color,
       uv: 5,
     }));
     return [...skillData, ...subjectData];
-  }, [skillsQuery.data, subjectsQuery.data]);
+  }, [skills, subjects]);
 
   console.log(progressData);
 
-  if (!skillsQuery.data || !subjectsQuery.data) {
+  if ((!skills || !subjects) && !skillsLoading && !subjectsLoading) {
     return null;
   }
 
-  return (
-    <ResponsiveContainer width="100%" height="100%">
+  return skillsLoading || subjectsLoading ? (
+    <LoadingScreen />
+  ) : (
+    <ResponsiveContainer width="100%" height="100%" debounce={300}>
       <RadialBarChart
         cx="50%"
         cy="50%"
