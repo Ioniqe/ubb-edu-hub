@@ -77,4 +77,6 @@ type BoardProps = {
 };
 declare const Board: ({ label, labelColor, children }: BoardProps) => JSX.Element;
 
-export { Board, Card, Colors, MultiSelect, Route, SimpleSelect, Wrapper, useAppTheme };
+declare const LoadingScreen: () => JSX.Element;
+
+export { Board, Card, Colors, LoadingScreen, MultiSelect, Route, SimpleSelect, Wrapper, useAppTheme };
