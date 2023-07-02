@@ -11,6 +11,7 @@ import useSubjectsQuery from "../../queries/useSubjectsQuery";
 import { useQuery } from "@tanstack/react-query";
 import api from "ui/util/api";
 import { OverviewSkillsProgress } from "../../types";
+import useChallengesQuery from "../../queries/useChallengesQuery";
 
 const data = [
   {
@@ -99,7 +100,7 @@ export const OverallProgress = () => {
       select: (response) => response.data,
     }
   );
-  // const challengesQuery = useChallengesQuery();
+  const challengesQuery = useChallengesQuery();
   const subjectsQuery = useSubjectsQuery();
 
   const progressData = useMemo(() => {
@@ -113,12 +114,17 @@ export const OverallProgress = () => {
       fill: subject.color,
       uv: 5,
     }));
-    return [...skillData, ...subjectData];
+    const challengesData = (challengesQuery.data || []).map((challenge) => ({
+      name: `${challenge.name} (Challenge)`,
+      fill: challenge.color,
+      uv: 5,
+    }));
+    return [...skillData, ...subjectData, ...challengesData];
   }, [skillsQuery.data, subjectsQuery.data]);
 
   console.log(progressData);
 
-  if (!skillsQuery.data || !subjectsQuery.data) {
+  if (!skillsQuery.data || !subjectsQuery.data || !challengesQuery.data) {
     return null;
   }
 
