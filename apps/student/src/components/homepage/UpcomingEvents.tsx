@@ -10,7 +10,6 @@ import api from "ui/util/api";
 import { useQuery } from "@tanstack/react-query";
 
 export const UpcomingEvents = () => {
-  // TODO fetch upcoming assignments and exams
   const { theme } = useAppTheme();
 
   const upcomingEventsQuery = useQuery(

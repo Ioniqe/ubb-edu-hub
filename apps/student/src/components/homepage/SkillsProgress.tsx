@@ -61,6 +61,8 @@ export const SkillsProgress = () => {
     const color = skillColor ?? theme.palette.primary.main;
     const progress = Math.floor(((nodeIndex + 1) / totalNodes) * 100);
 
+    completed = nodeIndex + 1 !== totalNodes;
+
     return (
       <Box
         display={"flex"}
@@ -102,10 +104,7 @@ export const SkillsProgress = () => {
       </Typography>
 
       {(skillsQuery.data || []).map(
-        (
-          { name, color, SkillOnStep: steps }: OverviewSkillsProgress,
-          index: number
-        ) => (
+        ({ name, color, steps }: OverviewSkillsProgress, index: number) => (
           <Board label={name} labelColor={color} key={index}>
             <Box
               display={"flex"}
@@ -124,7 +123,7 @@ export const SkillsProgress = () => {
               >
                 {(steps || []).map((step, _index) => (
                   <Step key={_index}>
-                    <Tooltip title={step.name} placement={"top"}>
+                    <Tooltip title={step.description} placement={"top"}>
                       <StepLabel
                         StepIconComponent={() =>
                           renderNode(
@@ -148,7 +147,7 @@ export const SkillsProgress = () => {
                             textAlign: "center",
                           }}
                         >
-                          {step.name}
+                          {step.description}
                         </Typography>
                       </StepLabel>
                     </Tooltip>

@@ -3,92 +3,61 @@ import { ForceGraph3D } from "react-force-graph";
 import SpriteText from "three-spritetext";
 import { useAppTheme } from "ui";
 import { Box, Button, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import api from "ui/util/api";
+import { Topic } from "../types";
 
 type GraphProps = {
   width: number;
   height: number;
+  skill: Topic;
 };
 
-const data = {
-  // TODO create type
-  nodes: [
-    {
-      id: 1,
-      name: "Enroll",
-      completed: true,
-    },
-    {
-      id: 2,
-      name: "Assignment 1",
-      completed: false,
-    },
-    {
-      id: 3,
-      name: "Quiz",
-      completed: false,
-    },
-    {
-      id: 4,
-      name: "Assignment 2",
-      completed: false,
-    },
-    {
-      id: 5,
-      name: "Team project",
-      completed: false,
-    },
-    {
-      id: 6,
-      name: "Exam",
-      completed: false,
-    },
-  ],
+interface Node {
+  id: number;
+  name: string;
+  completed: boolean;
+}
+interface Link {
+  source: number;
+  target: number;
+  subject: string;
+}
+interface GraphResponse {
+  nodes: Node[];
+  links: Link[];
+}
 
-  links: [
-    {
-      source: 1,
-      target: 2,
-      subject: "Artificial Intelligence",
-    },
-    {
-      source: 1,
-      target: 3,
-      subject: "CMES",
-    },
-    {
-      source: 2,
-      target: 4,
-      subject: "Artificial Intelligence",
-    },
-    {
-      source: 4,
-      target: 5,
-      subject: "Artificial Intelligence",
-    },
-    {
-      source: 3,
-      target: 5,
-      subject: "CMES",
-    },
-    {
-      source: 5,
-      target: 6,
-      subject: "CMES",
-    },
-  ],
-};
-
-const Graph = ({ width, height }: GraphProps) => {
+const Graph = ({ width, height, skill }: GraphProps) => {
   const { theme } = useAppTheme();
   const fgRef = useRef();
 
   const [fixedNodes, setFixedNodes] = useState(false);
 
+  const skillQuery = useQuery(
+    ["skill/findOne", skill],
+    () =>
+      api<GraphResponse>({
+        url: "skills/findOne",
+        method: "GET",
+        params: {
+          id: skill.id,
+        },
+      }),
+    { select: (response) => response.data }
+  );
+
   const overallProgress = useMemo(() => {
-    const completed = data.nodes.filter(({ completed }) => completed).length;
-    const total = data.nodes.length;
+    const completed = (skillQuery.data?.nodes || []).filter(
+      ({ completed }) => completed
+    ).length;
+    const total = skillQuery.data?.nodes.length || 0;
     return Math.floor(((completed + 1) / total) * 100);
-  }, [data.nodes]);
+  }, [skillQuery.data]);
+
+  if (!skillQuery.data) {
+    return null;
+  }
 
   return (
     <Box width={"fit-content"} height={"fit-content"}>
@@ -102,7 +71,7 @@ const Graph = ({ width, height }: GraphProps) => {
 
       <ForceGraph3D
         ref={fgRef}
-        graphData={data}
+        graphData={skillQuery.data}
         linkDirectionalArrowLength={3.5}
         linkDirectionalArrowRelPos={1}
         width={width ?? 300}

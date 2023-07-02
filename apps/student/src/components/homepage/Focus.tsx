@@ -126,16 +126,15 @@ export const Focus = () => {
         topics={challengesQuery.data.map((el) => ({
           title: "",
           name: el.name,
-          color: "",
+          color: el.color,
         }))}
       />
-      {/* Todo: good types here */}
       <Subsection
         subsectionTitle={"Active Assignments"}
         topics={assignmentsQuery.data.map((el) => ({
           title: el.description,
           name: el.title,
-          color: "",
+          color: el.color,
         }))}
       />
     </Box>

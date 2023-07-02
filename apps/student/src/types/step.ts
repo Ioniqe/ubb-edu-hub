@@ -1,10 +1,13 @@
 import { Topic } from "./topic";
 
 export type OverviewSkillsProgress = Topic & {
-  SkillOnStep: Step[]; //array of descriptions -> MUST BE IN ORDER e.g. ['enroll', 'first assignent', 'second assignment']
+  steps: Step[]; //array of descriptions -> MUST BE IN ORDER e.g. ['enroll', 'first assignent', 'second assignment']
 };
 
 export type Step = {
-  descrption: string;
+  id: number;
+  description: string;
   completed: boolean;
+  nextSteps: Step[];
+  previousSteps: Step[];
 };

@@ -3,4 +3,5 @@ export type Assignment = {
   title: string;
   description: string;
   completed: boolean;
+  color: string;
 };
