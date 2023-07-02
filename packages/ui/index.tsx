@@ -3,3 +3,4 @@ export * from "./types";
 export * from "./enums";
 export * from "./theme";
 export * from "./components";
+export * from "./util";

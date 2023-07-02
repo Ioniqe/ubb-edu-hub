@@ -1,7 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { TopicQuickView } from "../../types/topic-quick-view";
-import { Board, Colors, useAppTheme } from "ui";
+import { Board, useAppTheme } from "ui";
+import { useQuery } from "@tanstack/react-query";
+import api from "ui/util/api";
+import { Challenge } from "../../types/challenge";
+import { Assignment } from "../../types/assignment";
 
 type SubsectionProps = {
   subsectionTitle: string;
@@ -58,40 +62,53 @@ const Subsection = ({ subsectionTitle, topics }: SubsectionProps) => {
 };
 
 export const Focus = () => {
-  // TODO fetch not completed challenges -> only title + interest + color
-  // TODO fetch assignments that are coming up -> title + subject
   const { theme } = useAppTheme();
 
-  const challenges: TopicQuickView[] = [
+  const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
+    .user.uid;
+  const challengesQuery = useQuery(
+    ["challenges", firebaseId],
+    () =>
+      api<Challenge[]>({
+        url: "/challenges",
+        method: "GET",
+        params: {
+          firebaseId: firebaseId,
+          filters: {
+            completed: false,
+          },
+        },
+      }),
     {
-      title: "Software engineering challenge",
-      name: "Software engineering",
-      color: Colors.ACCENT_SALMON,
-    },
-    {
-      title: "Artificial Intelligence challenge",
-      name: "Artificial Intelligence",
-      color: Colors.ACCENT_YELLOW,
-    },
-    {
-      title: "Artificial Intelligence challenge 2",
-      name: "Artificial Intelligence",
-      color: Colors.ACCENT_YELLOW,
-    },
-  ];
+      select: (response) => response.data,
+    }
+  );
 
-  const assignments: TopicQuickView[] = [
+  const assignmentsQuery = useQuery(
+    ["assignments", firebaseId],
+    () =>
+      api<Assignment[]>({
+        url: "/assessments",
+        method: "GET",
+        params: {
+          firebaseId: firebaseId,
+          filters: {
+            completed: false,
+          },
+        },
+      }),
     {
-      title: "Software Quality assignment",
-      name: "Software engineering",
-      color: null,
-    },
-    {
-      title: "CMES assignment 2",
-      name: "CMES",
-      color: null,
-    },
-  ];
+      select: (response) => response.data,
+    }
+  );
+
+  if (!assignmentsQuery.data) {
+    return null;
+  }
+
+  if (!challengesQuery.data) {
+    return null;
+  }
 
   return (
     <Box
@@ -104,9 +121,22 @@ export const Focus = () => {
       <Typography variant={"subtitle1"} color={theme.palette.primary.main}>
         Your focus this semester
       </Typography>
-
-      <Subsection subsectionTitle={"Active Challenges"} topics={challenges} />
-      <Subsection subsectionTitle={"Active Assignments"} topics={assignments} />
+      <Subsection
+        subsectionTitle={"Active Challenges"}
+        topics={challengesQuery.data.map((el) => ({
+          title: "",
+          name: el.name,
+          color: el.color,
+        }))}
+      />
+      <Subsection
+        subsectionTitle={"Active Assignments"}
+        topics={assignmentsQuery.data.map((el) => ({
+          title: el.description,
+          name: el.title,
+          color: el.color,
+        }))}
+      />
     </Box>
   );
 };

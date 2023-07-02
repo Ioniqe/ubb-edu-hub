@@ -21,7 +21,7 @@ export const RoadmapsTabContent = ({ skill }: RoadmapsTabContentProps) => {
 
   return (
     <Box width={"100%"} height={"100%"} ref={ref}>
-      <Graph width={width} height={height} />
+      <Graph width={width} height={height} skill={skill} />
     </Box>
   );
 };

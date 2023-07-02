@@ -9,6 +9,9 @@ import {
 } from "@mui/material";
 import { Topic } from "../types";
 import { Board, useAppTheme } from "ui";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import api from "ui/util/api";
+import { Checklist } from "../types/checklist";
 
 type ChecklistsTabContentProps = {
   interest: Topic;
@@ -20,7 +23,35 @@ export const ChecklistTabContent = ({
   // TODO fetch checklists about interest
   const { theme } = useAppTheme();
 
-  const [checklist, setChecklist] = useState([...Array(14)]);
+  const checklistQuery = useQuery(
+    ["checklists", { interest }],
+    () =>
+      api<Checklist[]>({
+        url: "checklists",
+        method: "GET",
+        params: { skillId: interest.id },
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
+
+  const addChecklistMutation = useMutation(
+    ["newChecklist"],
+    (checklist: Checklist) =>
+      api<Checklist>({
+        url: "checklists",
+        method: "POST",
+        data: {
+          ...checklist,
+          skillId: interest.id,
+        },
+      }),
+    {
+      onSuccess: () => checklistQuery.refetch(),
+    }
+  );
+
   const [addingNewChecklist, setAddingNewChecklist] = useState(false);
   const [newChecklistTitle, setNewChecklistTitle] = useState("");
   const [newChecklistDetails, setNewChecklistDetails] = useState("");
@@ -30,14 +61,16 @@ export const ChecklistTabContent = ({
     [interest.color, theme]
   );
 
-  const handleAdd = useCallback(() => {
-    // TODO request
-    setChecklist((_checklist) => [..._checklist, _checklist.length]);
+  const handleAdd = () => {
+    addChecklistMutation.mutate({
+      title: newChecklistTitle,
+      description: newChecklistDetails,
+    });
 
     setNewChecklistTitle("");
     setNewChecklistDetails("");
     setAddingNewChecklist(false);
-  }, []);
+  };
 
   const handleCheckboxChange = useCallback((item) => {
     // TODO request
@@ -102,6 +135,10 @@ export const ChecklistTabContent = ({
     </Board>
   );
 
+  if (!checklistQuery.data) {
+    return null;
+  }
+
   return (
     <Box
       display={"flex"}
@@ -117,33 +154,30 @@ export const ChecklistTabContent = ({
         height={"100%"}
         flex={"auto"}
       >
-        {checklist
-          .map((u, i) => i)
-          .map((_, index) => (
-            <Board labelColor={interest.color} key={index}>
-              <Box
-                width={"100%"}
-                display={"flex"}
-                justifyContent={"space-between"}
-                alignItems={"center"}
-              >
-                <Typography variant={"h3"}>
-                  EEE Macarens EEE Macarens EEE Macarens EEE Macarens EEE
-                  Macarens EEE Macarens EEE Macarens EEE Macarens
-                </Typography>
+        {checklistQuery.data.map((checklistItem, index) => (
+          <Board labelColor={interest.color} key={index}>
+            <Box
+              width={"100%"}
+              display={"flex"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+            >
+              <Typography variant={"h3"}>
+                {checklistItem.description}
+              </Typography>
 
-                <Checkbox
-                  onChange={() => handleCheckboxChange(_)}
-                  sx={{
+              <Checkbox
+                onChange={() => handleCheckboxChange(checklistItem)}
+                sx={{
+                  color,
+                  "&.Mui-checked": {
                     color,
-                    "&.Mui-checked": {
-                      color,
-                    },
-                  }}
-                />
-              </Box>
-            </Board>
-          ))}
+                  },
+                }}
+              />
+            </Box>
+          </Board>
+        ))}
       </Box>
 
       {addingNewChecklist ? (

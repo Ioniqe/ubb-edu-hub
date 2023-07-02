@@ -3,6 +3,10 @@ import { Box, Button, Typography } from "@mui/material";
 import { Topic } from "../types";
 import { Filters } from "./Filters";
 import { Card, useAppTheme } from "ui";
+import { useMutation } from "@tanstack/react-query";
+import api from "ui/util/api";
+import { Assignment } from "../types/assignment";
+import useAssigmentsQuery from "../queries/useAssignmentsQuery";
 
 type AssignmentsTabContentProps = {
   interest: Topic;
@@ -13,39 +17,62 @@ export const AssignmentsTabContent = ({
   interest,
   filters,
 }: AssignmentsTabContentProps) => {
-  // TODO fetch array of assignments details for given interest
   const { theme } = useAppTheme();
+
+  const assignmentsQuery = useAssigmentsQuery(interest, filters);
+
+  const completeAssignmentMutation = useMutation(
+    ["updateAssignment"],
+    (assignment: Assignment) =>
+      api<Assignment>({
+        url: "/assessments",
+        method: "PATCH",
+        params: { id: assignment.id },
+        data: {
+          completed: true,
+        },
+      }),
+    {
+      onSuccess: () => assignmentsQuery.refetch(),
+    }
+  );
+
+  if (!assignmentsQuery.data) {
+    return null;
+  }
+
+  const completeAssignment = (assignment: Assignment) => {
+    console.log("completed");
+    completeAssignmentMutation.mutate(assignment);
+  };
 
   return (
     <Box width={"100%"} height={"100%"}>
       <Filters filters={filters} />
 
       <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
-        {[...Array(13)]
-          .map((u, i) => i)
-          .map((_, index) => (
-            <Card label={interest.name} labelColor={interest.color} key={index}>
-              <Box
-                display={"flex"}
-                flexDirection={"column"}
-                width={"100%"}
-                height={"100%"}
-                alignItems={"center"}
-              >
-                <Box flex={"auto"} height={"100%"} sx={{ overflowY: "scroll" }}>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
-                  <Typography variant={"caption"}>
-                    Hello there traveler, I seek to find the sword of Saruman
-                  </Typography>
-                </Box>
+        {assignmentsQuery.data.map((assignment, index) => (
+          <Card
+            label={assignment.title}
+            labelColor={interest.color}
+            key={index}
+          >
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              width={"100%"}
+              height={"100%"}
+              alignItems={"center"}
+            >
+              <Box flex={"auto"} height={"100%"} sx={{ overflowY: "scroll" }}>
+                <Typography variant={"caption"}>
+                  {assignment.description}
+                </Typography>
+              </Box>
 
+              {!assignment.completed && (
                 <Button
-                  onClick={() => console.log("complete")}
+                  onClick={() => completeAssignment(assignment)}
                   sx={{
                     flex: 0,
                     backgroundColor: interest.color,
@@ -65,9 +92,10 @@ export const AssignmentsTabContent = ({
                 >
                   Complete
                 </Button>
-              </Box>
-            </Card>
-          ))}
+              )}
+            </Box>
+          </Card>
+        ))}
       </Box>
     </Box>
   );

@@ -3,22 +3,24 @@ import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 import { Topic } from "../types";
 import { ChecklistTabContent } from "../components";
-import { Colors, useAppTheme } from "ui";
+import { useAppTheme } from "ui";
+
+import useSkillsQuery from "../queries/useSkillsQuery";
 
 const Checklists = () => {
   const { theme } = useAppTheme();
 
-  const interests: Topic[] = [
-    { name: "Artificial Intelligence", color: Colors.ACCENT_YELLOW },
-    { name: "Leadership", color: Colors.ACCENT_SALMON },
-    { name: "Teamwork", color: Colors.ACCENT_BLUE },
-  ]; // TODO fetch
+  const skillsQuery = useSkillsQuery();
 
   const [value, setValue] = useState(0);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  if (!skillsQuery.data) {
+    return;
+  }
 
   return (
     <CustomAppThemeProvider>
@@ -44,13 +46,13 @@ const Checklists = () => {
             height={"20%"}
           >
             <MuiTabs value={value} onChange={handleChange}>
-              {interests.map((topic: Topic, index: number) => (
+              {skillsQuery.data.map((topic: Topic, index: number) => (
                 <Tab label={topic.name} value={index} key={index} />
               ))}
             </MuiTabs>
           </Box>
 
-          <ChecklistTabContent interest={interests[value]} />
+          <ChecklistTabContent interest={skillsQuery.data[value]} />
         </Box>
       </Box>
     </CustomAppThemeProvider>

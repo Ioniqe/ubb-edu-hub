@@ -4,8 +4,14 @@ import { Box, Button, Typography } from "@mui/material";
 import { BaseRoute } from "../enums";
 import { useNavigate } from "react-router-dom";
 import { HexColorPicker } from "react-colorful";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import api from "ui/util/api";
 
-const skills = ["Artificial Intelligence", "Teamwork", "Leadership"];
+type Skill = {
+  id?: string;
+  name: string;
+  color: string | null;
+};
 
 export const FormResults = () => {
   const { theme } = useAppTheme();
@@ -15,24 +21,71 @@ export const FormResults = () => {
     {}
   );
 
+  const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
+    .user.uid;
+
+  const skillsQuery = useQuery(
+    ["skills", { firebaseId }],
+    () =>
+      api<Skill[]>({
+        url: "/skills",
+        method: "GET",
+        params: {
+          userId: firebaseId,
+        },
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
+
+  const updateSkillsMutation = useMutation(
+    ["updateSkills"],
+    () =>
+      Promise.all(
+        (skillsQuery.data || []).map((skill) =>
+          api({
+            url: "/skills/update",
+            method: "PATCH",
+            data: {
+              color: skillsColors[skill.name],
+            },
+            params: {
+              id: skill.id,
+              firebaseId: firebaseId,
+            },
+          })
+        )
+      ),
+    {
+      onSuccess: () => {
+        navigate("/" + BaseRoute.STUDENT);
+      },
+    }
+  );
+
   useEffect(() => {
-    const _skillsColors = skills.reduce(
-      (acc: { [skill: string]: string }, skill) => {
+    if (!skillsQuery.data) {
+      return;
+    }
+
+    const _skillsColors = skillsQuery.data
+      .map((e) => e.name)
+      .reduce((acc: { [skill: string]: string }, skill) => {
         acc[skill] = Colors.WHITE;
         return acc;
-      },
-      {}
-    );
+      }, {});
 
     setSkillsColors(_skillsColors);
-  }, [skills]);
+  }, [skillsQuery.data]);
 
   const onSubmit = useCallback(() => {
-    // TODO POST to back
-
-    console.log(skillsColors);
-    navigate("/" + BaseRoute.STUDENT);
+    updateSkillsMutation.mutate();
   }, [skillsColors]);
+
+  if (!skillsQuery.data) {
+    return null;
+  }
 
   return (
     <Box
@@ -60,7 +113,7 @@ export const FormResults = () => {
           {`Please choose a color for each resulted skill`}
         </Typography>
 
-        {skills.map((skill, index) => (
+        {skillsQuery.data.map((skill, index) => (
           <Box
             key={index}
             display={"flex"}
@@ -71,13 +124,13 @@ export const FormResults = () => {
             my={4}
           >
             <Typography variant={"h4"} color={theme.palette.primary.main}>
-              {skill}
+              {skill.name}
             </Typography>
 
             <HexColorPicker
-              color={skillsColors[skill]}
+              color={skillsColors[skill.name]}
               onChange={(newColor) =>
-                setSkillsColors({ ...skillsColors, [skill]: newColor })
+                setSkillsColors({ ...skillsColors, [skill.name]: newColor })
               }
             />
           </Box>

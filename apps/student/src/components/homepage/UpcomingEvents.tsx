@@ -6,101 +6,31 @@ import { format, parseISO } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import styles from "react-day-picker/dist/style.module.css";
 import "./calendar-styles.css";
+import api from "ui/util/api";
+import { useQuery } from "@tanstack/react-query";
 
 export const UpcomingEvents = () => {
-  // TODO fetch upcoming assignments and exams
   const { theme } = useAppTheme();
 
-  const upcomingEvents: UpcomingEvent[] = [
+  const upcomingEventsQuery = useQuery(
+    ["upcomingEvents"],
+    () =>
+      api<UpcomingEvent[]>({
+        url: "/calendar-events",
+        method: "GET",
+      }),
     {
-      type: "ASSIGNMENT",
-      name: "Artificial Intelligence",
-      date: "2023-06-11T14:00:00",
-    },
-    {
-      type: "EXAM",
-      name: "Software Egineering",
-      date: "2023-06-13T14:00:00",
-    },
-    {
-      type: "EXAM",
-      name: "Artificial Intelligence",
-      date: "2023-06-20T14:00:00",
-    },
-    {
-      type: "ASSIGNMENT",
-      name: "CMES assignment 2",
-      date: "2023-07-11T14:00:00",
-    },
-    {
-      type: "ASSIGNMENT",
-      name: "Artificial Intelligence",
-      date: "2023-06-23T14:00:00",
-    },
-    {
-      type: "EXAM",
-      name: "Software Egineering",
-      date: "2023-06-29T14:00:00",
-    },
-    {
-      type: "EXAM",
-      name: "Software Egineering",
-      date: "2023-06-29T14:00:00",
-    },
-
-    {
-      type: "ASSIGNMENT",
-      name: "Artificial Intelligence",
-      date: "2023-06-23T14:00:00",
-    },
-    {
-      type: "EXAM",
-      name: "Software Egineering",
-      date: "2023-06-29T14:00:00",
-    },
-    {
-      type: "EXAM",
-      name: "Software Egineering",
-      date: "2023-06-29T14:00:00",
-    },
-
-    {
-      type: "ASSIGNMENT",
-      name: "Artificial Intelligence",
-      date: "2023-06-23T14:00:00",
-    },
-    {
-      type: "EXAM",
-      name: "Software Egineering",
-      date: "2023-06-29T14:00:00",
-    },
-    {
-      type: "EXAM",
-      name: "Software Egineering",
-      date: "2023-06-29T14:00:00",
-    },
-
-    {
-      type: "ASSIGNMENT",
-      name: "Artificial Intelligence",
-      date: "2023-06-23T14:00:00",
-    },
-    {
-      type: "EXAM",
-      name: "Software Egineering",
-      date: "2023-06-29T14:00:00",
-    },
-    {
-      type: "EXAM",
-      name: "Software Egineering",
-      date: "2023-06-29T14:00:00",
-    },
-  ];
+      select: (response) => response.data,
+    }
+  );
 
   const dates = useMemo(
-    () => upcomingEvents.map((event) => new Date(event.date)),
-    [upcomingEvents]
+    () => upcomingEventsQuery.data?.map((event) => new Date(event.date)),
+    [upcomingEventsQuery.data]
   );
+  if (!upcomingEventsQuery.data) {
+    return null;
+  }
 
   return (
     <Box
@@ -136,7 +66,7 @@ export const UpcomingEvents = () => {
       </Typography>
 
       <Box display={"flex"} flexDirection={"column"} width={"100%"}>
-        {upcomingEvents.map((event, index) => (
+        {upcomingEventsQuery.data.map((event, index) => (
           <Board key={index} labelColor={null} label={event.type}>
             <Box
               display={"flex"}
@@ -149,7 +79,7 @@ export const UpcomingEvents = () => {
                 sx={{ typography: "body" }}
                 color={theme.palette.primary.main}
               >
-                {event.name}
+                {event.title}
               </Typography>
               <Typography variant={"caption"}>
                 {format(parseISO(event.date), "dd/MM/yyyy")}

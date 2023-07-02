@@ -13,9 +13,6 @@ import { SkillsProgress } from "../components/homepage/SkillsProgress";
 const Dashboard = () => {
   const { theme } = useAppTheme();
 
-  // TODO fetch necessary data INCLUDING name and email and other profile stuff (based on UID)
-  // console.log(JSON.parse(sessionStorage.getItem("token")).state.user.uid);
-
   return (
     <Box
       width={"100%"}

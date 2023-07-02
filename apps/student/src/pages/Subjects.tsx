@@ -2,10 +2,28 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { Card, Colors, useAppTheme } from "ui";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
+import { useQuery } from "@tanstack/react-query";
+import { Subject } from "../types/subject";
+import api from "ui/util/api";
 
 const Subjects = () => {
-  // TODO fetch subjects
   const { theme } = useAppTheme();
+
+  const subjectsQuery = useQuery(
+    ["subjects"],
+    () =>
+      api<Subject[]>({
+        url: "/subjects",
+        method: "GET",
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
+
+  if (!subjectsQuery.data) {
+    return;
+  }
 
   return (
     <CustomAppThemeProvider>
@@ -20,19 +38,17 @@ const Subjects = () => {
         }}
       >
         <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
-          {[...Array(13)]
-            .map((u, i) => i)
-            .map((_, index) => (
-              <Card
-                label={"Subject 1"}
-                labelColor={Colors.ACCENT_YELLOW}
-                key={index}
-              >
-                <Typography variant={"caption"}>
-                  Hello there traveler, I seek to find the sword of Saruman
-                </Typography>
-              </Card>
-            ))}
+          {subjectsQuery.data.map((subject, index) => (
+            <Card
+              label={subject.name}
+              labelColor={Colors.ACCENT_YELLOW}
+              key={index}
+            >
+              <Typography variant={"caption"}>
+                <a href={subject.descriptiveLink}>{subject.name}</a>
+              </Typography>
+            </Card>
+          ))}
         </Box>
       </Box>
     </CustomAppThemeProvider>

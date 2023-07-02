@@ -3,9 +3,16 @@ import { Box, Typography } from "@mui/material";
 import { useAppTheme } from "ui";
 import WelcomeImage from "../../assets/images/home.svg";
 
+import useUserQuery from "../../queries/userQuery";
+
 export const WelcomeMessage = () => {
   const { theme } = useAppTheme();
-  const name = "Maria"; // TODO fetch name
+
+  const userQuery = useUserQuery();
+
+  if (!userQuery.data) {
+    return null;
+  }
 
   return (
     <Box
@@ -27,7 +34,7 @@ export const WelcomeMessage = () => {
           fontSize={"24px"}
           color={theme.palette.primary.main}
         >
-          Welcome back, <strong>{name}</strong>!
+          Welcome back, <strong>{userQuery.data.firstName}</strong>!
         </Typography>
 
         <Typography

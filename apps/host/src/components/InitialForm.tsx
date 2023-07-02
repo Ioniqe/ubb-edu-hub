@@ -1,28 +1,38 @@
 import React, { useCallback, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
-import { BaseRoute } from "../enums";
 import { MultiSelect, SimpleSelect, useAppTheme } from "ui";
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
-
-const subjectOptions = [
-  "Artificial Intelligence",
-  "Informatics",
-  "Mathematics",
-];
+import api from "ui/util/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 type InitialFormProps = {
   gotoNextStep: () => void;
 };
 
+interface PredefinedSkills {
+  name: string;
+  type: string;
+}
+
+type Subject = {
+  name: string;
+  descriptiveLink: string;
+  color: string;
+};
+
 export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
   const { theme } = useAppTheme();
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false); // TODO
   const [subjects, setSubjects] = useState<string[]>([]);
   const [prefersHardSkills, setPrefersHardSkills] = useState<string>("");
+  const [prefersSoftSkills, setPrefersSoftSkills] = useState<string>("");
+
   const [file, setFile] = useState<File>();
+
+  const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
+    .user.uid;
 
   const onDropAccepted = useCallback((files: File[]) => {
     setFile(files[0]);
@@ -36,11 +46,62 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
     accept: { "image/jpeg": [], "image/png": [], "application/pdf": [] },
   });
 
-  const onSubmit = useCallback(() => {
-    // TODO POST to back
+  const sendInformationMutation = useMutation(
+    ["sendInformation"],
+    async () => {
+      await api({
+        url: "nlp",
+        method: "POST",
+        params: {
+          firebaseId: firebaseId,
+        },
+        data: {
+          subjects: subjects,
+          hardSkills: prefersHardSkills,
+          softSkills: prefersSoftSkills,
+        },
+      });
+      api({
+        url: "/nlp/file",
+        method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
+        data: {
+          file: file,
+        },
+      });
+    },
+    {
+      onSuccess: () => gotoNextStep(),
+    }
+  );
 
-    gotoNextStep();
-  }, [gotoNextStep]);
+  const subjectQuery = useQuery(
+    ["subjects"],
+    () =>
+      api<Subject[]>({
+        url: "/subjects",
+        method: "GET",
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
+
+  const predefinedSkillsQuery = useQuery(
+    ["predefined-skills"],
+    () =>
+      api<PredefinedSkills[]>({
+        url: "/predefined-skills",
+        method: "GET",
+      }),
+    {
+      select: (response) => response.data,
+    }
+  );
+
+  const onSubmit = useCallback(() => {
+    sendInformationMutation.mutate();
+  }, []);
 
   return (
     <Box
@@ -83,23 +144,39 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
       >
         <MultiSelect
           label={"What do you want to focus on?"}
-          options={subjectOptions}
+          options={
+            subjectQuery.data
+              ? subjectQuery.data.map((subject) => subject.name)
+              : []
+          }
           selectedOptions={subjects}
           setSelectedOptions={setSubjects}
         />
 
         <SimpleSelect
-          label={"What do you prefer?"}
-          options={["Yes", "No"]}
+          label={"What Hard skilldo you prefer?"}
+          options={
+            predefinedSkillsQuery.data
+              ? predefinedSkillsQuery.data
+                  .filter((e) => e.type === "HARD")
+                  .map((e) => e.name)
+              : []
+          }
           selectedOption={prefersHardSkills}
           setSelectedOption={setPrefersHardSkills}
         />
 
         <SimpleSelect
-          label={"What do you prefer?"}
-          options={["Yes", "No"]}
-          selectedOption={prefersHardSkills}
-          setSelectedOption={setPrefersHardSkills}
+          label={"What soft skill do you prefer?"}
+          options={
+            predefinedSkillsQuery.data
+              ? predefinedSkillsQuery.data
+                  .filter((e) => e.type === "SOFT")
+                  .map((e) => e.name)
+              : []
+          }
+          selectedOption={prefersSoftSkills}
+          setSelectedOption={setPrefersSoftSkills}
         />
       </Box>
 

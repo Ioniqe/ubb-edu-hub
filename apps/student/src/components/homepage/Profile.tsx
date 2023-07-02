@@ -2,14 +2,16 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useAppTheme } from "ui";
 
+import useUserQuery from "../../queries/userQuery";
+
 export const Profile = () => {
-  const firstName = "Maria";
-  const lastName = "Cioroian";
-  const email = "bozdgioana@yahoo.com";
-
-  const fullName = `${firstName} ${lastName}`;
-
   const { theme } = useAppTheme();
+
+  const userQuery = useUserQuery();
+
+  if (!userQuery.data) {
+    return null;
+  }
 
   return (
     <Box
@@ -26,11 +28,11 @@ export const Profile = () => {
         justifyContent={"space-between"}
       >
         <Typography variant={"subtitle1"} color={theme.palette.primary.main}>
-          {fullName}
+          {`${userQuery.data.firstName} ${userQuery.data.lastName}`}
         </Typography>
 
         <Typography variant={"caption"} color={theme.palette.text.primary}>
-          {email}
+          {userQuery.data.email}
         </Typography>
       </Box>
 
@@ -47,7 +49,9 @@ export const Profile = () => {
           ml: 2,
         }}
       >
-        {firstName[0].toUpperCase() + "" + lastName[0].toUpperCase()}
+        {userQuery.data.firstName?.[0].toUpperCase() +
+          "" +
+          userQuery.data.lastName?.[0].toUpperCase()}
       </Box>
     </Box>
   );
