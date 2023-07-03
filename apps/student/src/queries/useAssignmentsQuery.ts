@@ -5,6 +5,8 @@ import { Topic } from "../types";
 
 const useAssigmentsQuery = (interest: Topic, filter?: string) => {
   const _filter = filter ? { filters: { [filter]: true } } : {};
+  const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
+    .user.uid;
 
   return useQuery(
     ["assignments", interest.name, filter],
@@ -12,7 +14,7 @@ const useAssigmentsQuery = (interest: Topic, filter?: string) => {
       api<Assignment[]>({
         url: "/assessments",
         method: "GET",
-        params: { skill: interest.id, ..._filter },
+        params: { skill: interest.id, firebaseId: firebaseId, ..._filter },
       }),
     {
       select: (response) => response.data,
