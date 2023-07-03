@@ -64,6 +64,9 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
         url: "/nlp/file",
         method: "POST",
         headers: { "Content-Type": "multipart/form-data" },
+        params: {
+          firebaseId: firebaseId,
+        },
         data: {
           file: file,
         },
