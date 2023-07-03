@@ -8,7 +8,6 @@ import useAuthStore from "../hooks/useAuth";
 import api from "ui/util/api";
 import { useMutation } from "@tanstack/react-query";
 
-//TODO move
 enum AuthStep {
   REGISTER = "REGISTER",
   FORM = "FORM",

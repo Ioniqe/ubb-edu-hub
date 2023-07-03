@@ -4,7 +4,6 @@ import { RouteEnums } from "../enums";
 import { Profile, Settings, NotFound } from "../pages";
 import { renderAuthRoutes } from "./authRoutes";
 import { renderStudentRoutes } from "./studentRoutes";
-// TODO add fallback for 500
 
 const AppRouter = () => {
   return (

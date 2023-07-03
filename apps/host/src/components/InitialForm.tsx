@@ -23,7 +23,7 @@ type Subject = {
 export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
   const { theme } = useAppTheme();
 
-  const [loading, setLoading] = useState(false); // TODO
+  const [loading, setLoading] = useState(false);
   const [subjects, setSubjects] = useState<string[]>([]);
   const [prefersHardSkills, setPrefersHardSkills] = useState<string>("");
   const [prefersSoftSkills, setPrefersSoftSkills] = useState<string>("");

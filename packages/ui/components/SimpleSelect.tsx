@@ -15,7 +15,6 @@ type SelectProps = {
   setSelectedOption: (option: string) => void;
 };
 
-// TODO make MultipleSelect and SimpleSelect one component
 export const SimpleSelect = ({
   label,
   options,
