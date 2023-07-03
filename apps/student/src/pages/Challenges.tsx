@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useState } from "react";
 import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { Topic } from "../types";
-import { useAppTheme } from "ui";
+import { LoadingScreen, useAppTheme } from "ui";
 import { Filter, mappedFilters } from "../enums";
 import { ChallengesTabContent } from "../components";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
@@ -10,7 +10,7 @@ import useSkillsQuery from "../queries/useSkillsQuery";
 const Challenges = () => {
   const { theme } = useAppTheme();
 
-  const skillsQuery = useSkillsQuery();
+  const { data: skills, isLoading } = useSkillsQuery();
 
   const filters: Filter[] = [
     Filter.ALL,
@@ -24,7 +24,7 @@ const Challenges = () => {
     setValue(newValue);
   };
 
-  if (!skillsQuery.data) {
+  if (!skills && !isLoading) {
     return null;
   }
 
@@ -40,25 +40,32 @@ const Challenges = () => {
           overflowY: "scroll",
         }}
       >
-        <Box
-          display={"flex"}
-          flexDirection={"row"}
-          flexWrap={"wrap"}
-          width={"100%"}
-        >
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }} width={"100%"}>
-            <MuiTabs value={value} onChange={handleChange}>
-              {skillsQuery.data.map((topic: Topic, index: number) => (
-                <Tab label={topic.name} value={index} key={index} />
-              ))}
-            </MuiTabs>
-          </Box>
+        {isLoading ? (
+          <LoadingScreen />
+        ) : (
+          <Box
+            display={"flex"}
+            flexDirection={"row"}
+            flexWrap={"wrap"}
+            width={"100%"}
+          >
+            <Box
+              sx={{ borderBottom: 1, borderColor: "divider" }}
+              width={"100%"}
+            >
+              <MuiTabs value={value} onChange={handleChange}>
+                {skills.map((topic: Topic, index: number) => (
+                  <Tab label={topic.name} value={index} key={index} />
+                ))}
+              </MuiTabs>
+            </Box>
 
-          <ChallengesTabContent
-            interest={skillsQuery.data[value]}
-            filters={filters.map((filter) => mappedFilters[filter])}
-          />
-        </Box>
+            <ChallengesTabContent
+              interest={skills[value]}
+              filters={filters.map((filter) => mappedFilters[filter])}
+            />
+          </Box>
+        )}
       </Box>
     </CustomAppThemeProvider>
   );

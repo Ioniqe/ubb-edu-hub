@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Chip } from "@mui/material";
-import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 
 type FiltersProps = {
   filters: string[];
+  selectedFilter: string | null;
+  setSelectedFilter: (selectedFilter: string | null) => void;
 };
 
-export const Filters = ({ filters }: FiltersProps) => {
-  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
-
+export const Filters = ({
+  filters,
+  selectedFilter,
+  setSelectedFilter,
+}: FiltersProps) => {
   const isFilterSelected = (filter: string) => selectedFilter === filter;
 
   const handleChipClick = (filter: string) => {

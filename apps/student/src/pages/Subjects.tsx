@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import { Card, Colors, useAppTheme } from "ui";
+import { Box, CircularProgress, Typography } from "@mui/material";
+import { Card, LoadingScreen, useAppTheme } from "ui";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
 import { useQuery } from "@tanstack/react-query";
 import { Subject } from "../types/subject";
@@ -9,7 +9,7 @@ import api from "ui/util/api";
 const Subjects = () => {
   const { theme } = useAppTheme();
 
-  const subjectsQuery = useQuery(
+  const { data: subjects, isLoading } = useQuery(
     ["subjects"],
     () =>
       api<Subject[]>({
@@ -21,7 +21,7 @@ const Subjects = () => {
     }
   );
 
-  if (!subjectsQuery.data) {
+  if (!subjects && !isLoading) {
     return;
   }
 
@@ -37,19 +37,23 @@ const Subjects = () => {
           overflowY: "scroll",
         }}
       >
-        <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
-          {subjectsQuery.data.map((subject, index) => (
-            <Card
-              label={subject.name}
-              labelColor={Colors.ACCENT_YELLOW}
-              key={index}
-            >
-              <Typography variant={"caption"}>
-                <a href={subject.descriptiveLink}>{subject.name}</a>
-              </Typography>
-            </Card>
-          ))}
-        </Box>
+        {isLoading ? (
+          <LoadingScreen />
+        ) : (
+          <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
+            {subjects.map((subject, index) => (
+              <Card
+                label={subject.name}
+                labelColor={subject.color ?? theme.palette.primary.main}
+                key={index}
+              >
+                <Typography sx={{ typography: "body" }}>
+                  <a href={subject.descriptiveLink}>{subject.name}</a>
+                </Typography>
+              </Card>
+            ))}
+          </Box>
+        )}
       </Box>
     </CustomAppThemeProvider>
   );

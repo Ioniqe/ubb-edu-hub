@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Box, Typography } from "@mui/material";
-import { Board, useAppTheme } from "ui";
+import { Board, LoadingScreen, useAppTheme } from "ui";
 import { UpcomingEvent } from "../../types";
 import { format, parseISO } from "date-fns";
 import { DayPicker } from "react-day-picker";
@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 export const UpcomingEvents = () => {
   const { theme } = useAppTheme();
 
-  const upcomingEventsQuery = useQuery(
+  const { data: upcomingEvents, isLoading } = useQuery(
     ["upcomingEvents"],
     () =>
       api<UpcomingEvent[]>({
@@ -25,10 +25,11 @@ export const UpcomingEvents = () => {
   );
 
   const dates = useMemo(
-    () => upcomingEventsQuery.data?.map((event) => new Date(event.date)),
-    [upcomingEventsQuery.data]
+    () => upcomingEvents?.map((event) => new Date(event.date)),
+    [upcomingEvents]
   );
-  if (!upcomingEventsQuery.data) {
+
+  if (!upcomingEvents && !isLoading) {
     return null;
   }
 
@@ -49,12 +50,16 @@ export const UpcomingEvents = () => {
           mb: 3,
         }}
       >
-        <DayPicker
-          mode="multiple"
-          selected={dates}
-          classNames={styles}
-          modifiersClassNames={{ selected: "day_selected" }}
-        />
+        {isLoading ? (
+          <LoadingScreen />
+        ) : (
+          <DayPicker
+            mode="multiple"
+            selected={dates}
+            classNames={styles}
+            modifiersClassNames={{ selected: "day_selected" }}
+          />
+        )}
       </Box>
 
       <Typography
@@ -65,29 +70,33 @@ export const UpcomingEvents = () => {
         Upcoming Events
       </Typography>
 
-      <Box display={"flex"} flexDirection={"column"} width={"100%"}>
-        {upcomingEventsQuery.data.map((event, index) => (
-          <Board key={index} labelColor={null} label={event.type}>
-            <Box
-              display={"flex"}
-              width={"100%"}
-              height={"100%"}
-              flexDirection={"column"}
-              justifyContent={"start"}
-            >
-              <Typography
-                sx={{ typography: "body" }}
-                color={theme.palette.primary.main}
+      {isLoading ? (
+        <LoadingScreen />
+      ) : (
+        <Box display={"flex"} flexDirection={"column"} width={"100%"}>
+          {upcomingEvents.map((event, index) => (
+            <Board key={index} labelColor={null} label={event.type}>
+              <Box
+                display={"flex"}
+                width={"100%"}
+                height={"100%"}
+                flexDirection={"column"}
+                justifyContent={"start"}
               >
-                {event.title}
-              </Typography>
-              <Typography variant={"caption"}>
-                {format(parseISO(event.date), "dd/MM/yyyy")}
-              </Typography>
-            </Box>
-          </Board>
-        ))}
-      </Box>
+                <Typography
+                  sx={{ typography: "body" }}
+                  color={theme.palette.primary.main}
+                >
+                  {event.title}
+                </Typography>
+                <Typography variant={"caption"}>
+                  {format(parseISO(event.date), "dd/MM/yyyy")}
+                </Typography>
+              </Box>
+            </Board>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 };

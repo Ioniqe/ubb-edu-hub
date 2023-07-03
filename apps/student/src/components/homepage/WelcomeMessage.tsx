@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { useAppTheme } from "ui";
+import { LoadingScreen, useAppTheme } from "ui";
 import WelcomeImage from "../../assets/images/home.svg";
 
 import useUserQuery from "../../queries/userQuery";
@@ -8,13 +8,15 @@ import useUserQuery from "../../queries/userQuery";
 export const WelcomeMessage = () => {
   const { theme } = useAppTheme();
 
-  const userQuery = useUserQuery();
+  const { data: user, isLoading } = useUserQuery();
 
-  if (!userQuery.data) {
+  if (!user && !isLoading) {
     return null;
   }
 
-  return (
+  return isLoading ? (
+    <LoadingScreen />
+  ) : (
     <Box
       display={"flex"}
       width={"100%"}
@@ -34,7 +36,7 @@ export const WelcomeMessage = () => {
           fontSize={"24px"}
           color={theme.palette.primary.main}
         >
-          Welcome back, <strong>{userQuery.data.firstName}</strong>!
+          Welcome back, <strong>{user.firstName}</strong>!
         </Typography>
 
         <Typography

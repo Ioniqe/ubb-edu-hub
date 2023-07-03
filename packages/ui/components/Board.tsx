@@ -16,7 +16,10 @@ export const Board = ({ label, labelColor, children }: BoardProps) => {
   const { theme } = useAppTheme();
 
   const color = useMemo(
-    () => labelColor ?? theme.palette.primary.main,
+    () =>
+      labelColor && labelColor.length > 0
+        ? labelColor
+        : theme.palette.primary.main,
     [labelColor, theme]
   );
 

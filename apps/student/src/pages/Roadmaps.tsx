@@ -2,19 +2,18 @@ import React, { SyntheticEvent, useState } from "react";
 import { Box, Tab, Tabs as MuiTabs } from "@mui/material";
 import { Topic } from "../types";
 import { CustomAppThemeProvider } from "ui/CustomAppThemeProvider";
-import { useAppTheme } from "ui";
+import { LoadingScreen, useAppTheme } from "ui";
 import { RoadmapsTabContent } from "../components";
 
 import useSkillsQuery from "../queries/useSkillsQuery";
 
-// TODO rename every interest to skill
 const Roadmaps = () => {
   const { theme } = useAppTheme();
   const [value, setValue] = useState(0);
 
-  const skillsQuery = useSkillsQuery();
+  const { data: skills, isLoading } = useSkillsQuery();
 
-  if (!skillsQuery.data) {
+  if (!skills && !isLoading) {
     return;
   }
 
@@ -36,23 +35,30 @@ const Roadmaps = () => {
           overflowY: "scroll",
         }}
       >
-        <Box
-          display={"flex"}
-          flexDirection={"row"}
-          flexWrap={"wrap"}
-          width={"100%"}
-          height={"90%"}
-        >
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }} width={"100%"}>
-            <MuiTabs value={value} onChange={handleChange}>
-              {skillsQuery.data.map((topic: Topic, index: number) => (
-                <Tab label={topic.name} value={index} key={index} />
-              ))}
-            </MuiTabs>
-          </Box>
+        {isLoading ? (
+          <LoadingScreen />
+        ) : (
+          <Box
+            display={"flex"}
+            flexDirection={"row"}
+            flexWrap={"wrap"}
+            width={"100%"}
+            height={"90%"}
+          >
+            <Box
+              sx={{ borderBottom: 1, borderColor: "divider" }}
+              width={"100%"}
+            >
+              <MuiTabs value={value} onChange={handleChange}>
+                {skills.map((topic: Topic, index: number) => (
+                  <Tab label={topic.name} value={index} key={index} />
+                ))}
+              </MuiTabs>
+            </Box>
 
-          <RoadmapsTabContent skill={skillsQuery.data[value]} />
-        </Box>
+            <RoadmapsTabContent skill={skills[value]} />
+          </Box>
+        )}
       </Box>
     </CustomAppThemeProvider>
   );

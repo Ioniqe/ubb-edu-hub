@@ -1,9 +1,9 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ForceGraph3D } from "react-force-graph";
 import SpriteText from "three-spritetext";
-import { useAppTheme } from "ui";
+import { LoadingScreen, useAppTheme } from "ui";
 import { Box, Button, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "ui/util/api";
 import { Topic } from "../types";
 
@@ -34,7 +34,15 @@ const Graph = ({ width, height, skill }: GraphProps) => {
 
   const [fixedNodes, setFixedNodes] = useState(false);
 
-  const skillQuery = useQuery(
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient
+      .invalidateQueries({ queryKey: ["skill/findOne", skill] })
+      .then();
+  }, [skill]);
+
+  const { data, isLoading } = useQuery(
     ["skill/findOne", skill],
     () =>
       api<GraphResponse>({
@@ -48,18 +56,20 @@ const Graph = ({ width, height, skill }: GraphProps) => {
   );
 
   const overallProgress = useMemo(() => {
-    const completed = (skillQuery.data?.nodes || []).filter(
+    const completed = (data?.nodes || []).filter(
       ({ completed }) => completed
     ).length;
-    const total = skillQuery.data?.nodes.length || 0;
+    const total = data?.nodes.length || 0;
     return Math.floor(((completed + 1) / total) * 100);
-  }, [skillQuery.data]);
+  }, [data]);
 
-  if (!skillQuery.data) {
+  if (!data) {
     return null;
   }
 
-  return (
+  return isLoading ? (
+    <LoadingScreen />
+  ) : (
     <Box width={"fit-content"} height={"fit-content"}>
       <Button onClick={() => setFixedNodes((prevState) => !prevState)}>
         {fixedNodes ? "Free node movement" : "Fixed node movement"}
@@ -71,7 +81,7 @@ const Graph = ({ width, height, skill }: GraphProps) => {
 
       <ForceGraph3D
         ref={fgRef}
-        graphData={skillQuery.data}
+        graphData={data}
         linkDirectionalArrowLength={3.5}
         linkDirectionalArrowRelPos={1}
         width={width ?? 300}
@@ -116,13 +126,6 @@ const Graph = ({ width, height, skill }: GraphProps) => {
           node.fx = node.x;
           node.fy = node.y;
           node.fz = node.z;
-        }}
-        onEngineStop={() => {
-          if (!fgRef.current) {
-            return;
-          }
-
-          (fgRef.current as any).zoomToFit(400);
         }}
         cooldownTicks={100}
       />

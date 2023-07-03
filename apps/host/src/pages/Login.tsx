@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { BaseRoute, RouteEnums } from "../enums";
@@ -24,6 +24,25 @@ export const Login = () => {
     // TODO fetch user type
     navigate("/" + BaseRoute.STUDENT);
   }, [user]);
+
+  const keyDownHandler = useCallback(
+    async (event: KeyboardEvent) => {
+      if (event.key === "Enter" && email.length > 0 && password.length > 0) {
+        event.preventDefault();
+
+        await onLogin();
+      }
+    },
+    [email, password]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", keyDownHandler);
+
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, [keyDownHandler]);
 
   const onLogin = async () => {
     try {

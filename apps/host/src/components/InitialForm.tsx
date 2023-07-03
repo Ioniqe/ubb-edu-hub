@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { MultiSelect, SimpleSelect, useAppTheme } from "ui";
-import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import api from "ui/util/api";
 import { useMutation, useQuery } from "@tanstack/react-query";

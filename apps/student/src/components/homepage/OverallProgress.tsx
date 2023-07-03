@@ -6,50 +6,12 @@ import {
   Tooltip,
 } from "recharts";
 import { Box, Typography } from "@mui/material";
-import { useAppTheme } from "ui";
+import { LoadingScreen, useAppTheme } from "ui";
 import useSubjectsQuery from "../../queries/useSubjectsQuery";
 import { useQuery } from "@tanstack/react-query";
 import api from "ui/util/api";
 import { OverviewSkillsProgress } from "../../types";
 import useChallengesQuery from "../../queries/useChallengesQuery";
-
-const data = [
-  {
-    name: "Artificial Intelligence (skill)",
-    uv: 70,
-    fill: "#8884d8",
-  },
-  {
-    name: "Teamwork (skill)",
-    uv: 100,
-    fill: "#83a6ed",
-  },
-  {
-    name: "Leadership (skill)",
-    uv: 15.69,
-    fill: "#8dd1e1",
-  },
-  {
-    name: "Artificial Intelligence (subject)",
-    uv: 30,
-    fill: "#82ca9d",
-  },
-  {
-    name: "CMES (subject)",
-    uv: 8.63,
-    fill: "#a4de6c",
-  },
-  {
-    name: "Mathematics (challenges)",
-    uv: 0,
-    fill: "#d0ed57",
-  },
-  {
-    name: "CMES (challenges)",
-    uv: 50,
-    fill: "#ffc658",
-  },
-];
 
 // TODO improve
 const CustomTooltip = ({ active, payload }: any) => {
@@ -80,12 +42,11 @@ const CustomTooltip = ({ active, payload }: any) => {
 };
 
 export const OverallProgress = () => {
-  // TODO fetch data
-
   const { theme } = useAppTheme();
   const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
     .user.uid;
-  const skillsQuery = useQuery(
+
+  const { data: skills, isLoading: skillsLoading } = useQuery(
     ["skillsDetailed", { firebaseId }],
     () =>
       api<OverviewSkillsProgress[]>({
@@ -100,36 +61,48 @@ export const OverallProgress = () => {
       select: (response) => response.data,
     }
   );
-  const challengesQuery = useChallengesQuery();
-  const subjectsQuery = useSubjectsQuery();
+
+  const { data: challenges, isLoading: challengesLoading } =
+    useChallengesQuery();
+  const { data: subjects, isLoading: subjectsLoading } = useSubjectsQuery();
 
   const progressData = useMemo(() => {
-    const skillData = (skillsQuery.data || []).map((skill) => ({
+    const skillData = (skills || []).map((skill) => ({
       name: `${skill.name} (Skill)`,
-      fill: skill.color,
+      fill: skill.color ?? theme.palette.primary.main,
       uv: skill.steps.length,
     }));
-    const subjectData = (subjectsQuery.data || []).map((subject) => ({
+
+    const subjectData = (subjects || []).map((subject) => ({
       name: `${subject.name} (Subject)`,
-      fill: subject.color,
+      fill: subject.color ?? theme.palette.primary.main,
       uv: 5,
     }));
-    const challengesData = (challengesQuery.data || []).map((challenge) => ({
+
+    const challengesData = (challenges || []).map((challenge) => ({
       name: `${challenge.name} (Challenge)`,
-      fill: challenge.color,
+      fill: challenge.color ?? theme.palette.primary.main,
       uv: 5,
     }));
+
     return [...skillData, ...subjectData, ...challengesData];
-  }, [skillsQuery.data, subjectsQuery.data]);
+  }, [skills, subjects, challenges]);
 
   console.log(progressData);
 
-  if (!skillsQuery.data || !subjectsQuery.data || !challengesQuery.data) {
+  if (
+    (!skills || !subjects || !challenges) &&
+    !skillsLoading &&
+    !subjectsLoading &&
+    !challengesLoading
+  ) {
     return null;
   }
 
-  return (
-    <ResponsiveContainer width="100%" height="100%">
+  return skillsLoading || subjectsLoading || challengesLoading ? (
+    <LoadingScreen />
+  ) : (
+    <ResponsiveContainer width="100%" height="100%" debounce={300}>
       <RadialBarChart
         cx="50%"
         cy="50%"

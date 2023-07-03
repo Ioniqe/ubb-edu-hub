@@ -1,18 +1,19 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { TopicQuickView } from "../../types/topic-quick-view";
-import { Board, useAppTheme } from "ui";
+import { Board, LoadingScreen, useAppTheme } from "ui";
 import { useQuery } from "@tanstack/react-query";
 import api from "ui/util/api";
 import { Challenge } from "../../types/challenge";
 import { Assignment } from "../../types/assignment";
 
 type SubsectionProps = {
+  loading: boolean;
   subsectionTitle: string;
   topics: TopicQuickView[];
 };
 
-const Subsection = ({ subsectionTitle, topics }: SubsectionProps) => {
+const Subsection = ({ loading, subsectionTitle, topics }: SubsectionProps) => {
   const { theme } = useAppTheme();
 
   return (
@@ -27,36 +28,40 @@ const Subsection = ({ subsectionTitle, topics }: SubsectionProps) => {
         {subsectionTitle}
       </Typography>
 
-      <Box
-        display={"flex"}
-        width={"100%"}
-        height={"70px"}
-        flexDirection={"column"}
-        sx={{ overflowY: "scroll" }}
-      >
-        {topics.map((_topic: TopicQuickView, index: number) => (
-          <Board
-            key={index}
-            labelColor={_topic.color ?? theme.palette.primary.main}
-          >
-            <Box
-              display={"flex"}
-              width={"100%"}
-              height={"100%"}
-              flexDirection={"column"}
-              justifyContent={"start"}
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <Box
+          display={"flex"}
+          width={"100%"}
+          height={"70px"}
+          flexDirection={"column"}
+          sx={{ overflowY: "scroll" }}
+        >
+          {topics.map((_topic: TopicQuickView, index: number) => (
+            <Board
+              key={index}
+              labelColor={_topic.color ?? theme.palette.primary.main}
             >
-              <Typography
-                sx={{ typography: "body" }}
-                color={theme.palette.primary.main}
+              <Box
+                display={"flex"}
+                width={"100%"}
+                height={"100%"}
+                flexDirection={"column"}
+                justifyContent={"start"}
               >
-                {_topic.name}
-              </Typography>
-              <Typography variant={"caption"}>{_topic.title}</Typography>
-            </Box>
-          </Board>
-        ))}
-      </Box>
+                <Typography
+                  sx={{ typography: "body" }}
+                  color={theme.palette.primary.main}
+                >
+                  {_topic.name}
+                </Typography>
+                <Typography variant={"caption"}>{_topic.title}</Typography>
+              </Box>
+            </Board>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 };
@@ -66,7 +71,8 @@ export const Focus = () => {
 
   const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
     .user.uid;
-  const challengesQuery = useQuery(
+
+  const { data: challenges, isLoading: challengesLoading } = useQuery(
     ["challenges", firebaseId],
     () =>
       api<Challenge[]>({
@@ -84,7 +90,7 @@ export const Focus = () => {
     }
   );
 
-  const assignmentsQuery = useQuery(
+  const { data: assignments, isLoading: assignmentsLoading } = useQuery(
     ["assignments", firebaseId],
     () =>
       api<Assignment[]>({
@@ -102,11 +108,11 @@ export const Focus = () => {
     }
   );
 
-  if (!assignmentsQuery.data) {
+  if (!assignments && !assignmentsLoading) {
     return null;
   }
 
-  if (!challengesQuery.data) {
+  if (!challenges && !challengesLoading) {
     return null;
   }
 
@@ -122,16 +128,18 @@ export const Focus = () => {
         Your focus this semester
       </Typography>
       <Subsection
+        loading={challengesLoading}
         subsectionTitle={"Active Challenges"}
-        topics={challengesQuery.data.map((el) => ({
+        topics={(challenges ?? []).map((el) => ({
           title: "",
           name: el.name,
           color: el.color,
         }))}
       />
       <Subsection
+        loading={assignmentsLoading}
         subsectionTitle={"Active Assignments"}
-        topics={assignmentsQuery.data.map((el) => ({
+        topics={(assignments ?? []).map((el) => ({
           title: el.description,
           name: el.title,
           color: el.color,
