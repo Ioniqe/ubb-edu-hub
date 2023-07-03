@@ -56,6 +56,22 @@ export const ChecklistTabContent = ({
     }
   );
 
+  const updateChecklistMutation = useMutation(
+    ["updateChecklist"],
+    (checklist: Checklist) =>
+      api<Checklist>({
+        url: "checklists/update",
+        method: "PATCH",
+        params: {
+          id: checklist.id,
+          checked: !checklist.checked,
+        },
+      }),
+    {
+      onSuccess: () => refetch(),
+    }
+  );
+
   const [addingNewChecklist, setAddingNewChecklist] = useState(false);
   const [newChecklistTitle, setNewChecklistTitle] = useState("");
   const [newChecklistDetails, setNewChecklistDetails] = useState("");
@@ -79,7 +95,7 @@ export const ChecklistTabContent = ({
   };
 
   const handleCheckboxChange = useCallback((item) => {
-    // TODO request
+    updateChecklistMutation.mutate(item);
   }, []);
 
   const newItem = (
@@ -176,6 +192,7 @@ export const ChecklistTabContent = ({
                 </Typography>
 
                 <Checkbox
+                  checked={checklistItem.checked}
                   onChange={() => handleCheckboxChange(checklistItem)}
                   sx={{
                     color,
