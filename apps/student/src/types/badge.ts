@@ -1,6 +1,6 @@
 export type Badge = {
   name: string;
-  filename: string;
+  iconName: string;
   description: string;
 
   url?: string; // frontend only

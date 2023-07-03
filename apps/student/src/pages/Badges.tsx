@@ -11,39 +11,8 @@ import { storage } from "../firebase";
 import { Badge, FirebaseImage } from "../types";
 import { useAppTheme } from "ui";
 import unknownBadge from "../assets/images/unknown-badge.png";
-
-const mockedAcquiredBadges = [
-  {
-    name: "Marathoner Marathoner Marathoner Marathoner Marathoner",
-    filename: "marathoner.png",
-    description: "EE macarenamacaren",
-  },
-  {
-    name: "Hello",
-    filename: "finish_1.png",
-    description: "EE macarvdsvbhds vudsi vudhis v hcudis ena",
-  },
-  {
-    name: "Helloeee",
-    filename: "finish_1.png",
-    description: "EE macarvdsvbhds vudsi vudhis v hcudis ena",
-  },
-  {
-    name: "Hello There",
-    filename: "finish_1.png",
-    description: "EE macarvdsvbhds vudsi vudhis v hcudis ena",
-  },
-  {
-    name: "Hello",
-    filename: "finish_2.png",
-    description: "EE macarvdsvbhds vudsi vudhis v hcudis ena",
-  },
-  {
-    name: "ee Macarenaa",
-    filename: "ee.png",
-    description: "Hello",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import api from "ui/util/api";
 
 const Badges = () => {
   const imagesListRef = ref(storage, "/badges");
@@ -52,6 +21,25 @@ const Badges = () => {
   const [loading, setLoading] = useState(true);
   const [firebaseImages, setFirebaseImages] = useState<FirebaseImage[]>([]);
   const [acquiredBadges, setAcquiredBadges] = useState<Badge[]>([]);
+
+  const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
+    .user.uid;
+
+  const badgesQuery = useQuery(
+    ["badges", firebaseId],
+    () =>
+      api<Badge[]>({
+        url: "/badges",
+        method: "GET",
+        params: {
+          firebaseId: firebaseId,
+        },
+      }),
+    {
+      select: (response) => response.data,
+      onSuccess: (response) => setAcquiredBadges(response),
+    }
+  );
 
   useEffect(() => {
     listAll(imagesListRef).then((response) => {
@@ -67,8 +55,6 @@ const Badges = () => {
       });
     });
 
-    // TODO fetch from back
-    setAcquiredBadges(mockedAcquiredBadges);
     setLoading(false);
   }, []);
 
@@ -79,7 +65,7 @@ const Badges = () => {
 
     return acquiredBadges.map((badge: Badge) => {
       const foundImage: FirebaseImage | undefined = firebaseImages.find(
-        (image: FirebaseImage) => image.name === badge.filename
+        (image: FirebaseImage) => image.name === badge.iconName
       );
 
       if (!foundImage) {
