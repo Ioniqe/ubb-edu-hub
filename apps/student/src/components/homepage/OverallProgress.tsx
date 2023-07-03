@@ -13,7 +13,6 @@ import api from "ui/util/api";
 import { OverviewSkillsProgress } from "../../types";
 import useChallengesQuery from "../../queries/useChallengesQuery";
 
-// TODO improve
 const CustomTooltip = ({ active, payload }: any) => {
   const { theme } = useAppTheme();
 

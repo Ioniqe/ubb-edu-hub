@@ -153,7 +153,7 @@ export const InitialForm = ({ gotoNextStep }: InitialFormProps) => {
         />
 
         <SimpleSelect
-          label={"What Hard skilldo you prefer?"}
+          label={"What Hard skill do you prefer?"}
           options={
             predefinedSkillsQuery.data
               ? predefinedSkillsQuery.data

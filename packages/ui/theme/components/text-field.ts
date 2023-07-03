@@ -1,5 +1,4 @@
 export const TextField = {
-  // TODO
   styleOverrides: {
     root: {
       width: "100%",

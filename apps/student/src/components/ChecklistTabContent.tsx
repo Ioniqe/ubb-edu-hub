@@ -20,7 +20,6 @@ type ChecklistsTabContentProps = {
 export const ChecklistTabContent = ({
   interest,
 }: ChecklistsTabContentProps) => {
-  // TODO fetch checklists about interest
   const { theme } = useAppTheme();
 
   const {
@@ -83,7 +82,6 @@ export const ChecklistTabContent = ({
 
   const handleAdd = () => {
     console.log("aa");
-    // TODO request
     addChecklistMutation.mutate({
       title: newChecklistTitle,
       description: newChecklistDetails,
