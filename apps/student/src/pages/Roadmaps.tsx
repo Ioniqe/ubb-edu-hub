@@ -17,8 +17,6 @@ const Roadmaps = () => {
     return;
   }
 
-  // TODO add overall progress
-
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
