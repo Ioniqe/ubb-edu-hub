@@ -32,7 +32,6 @@ const Connector = ({ color }: { color: string }) => {
 };
 
 export const SkillsProgress = () => {
-  // TODO fetch skills array
   const { theme } = useAppTheme();
   const firebaseId = JSON.parse(sessionStorage.getItem("token") || "").state
     .user.uid;
