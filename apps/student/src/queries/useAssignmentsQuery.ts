@@ -12,7 +12,7 @@ const useAssigmentsQuery = (interest: Topic, filter?: string) => {
       api<Assignment[]>({
         url: "/assessments",
         method: "GET",
-        params: { subject: interest.name, ..._filter },
+        params: { skill: interest.id, ..._filter },
       }),
     {
       select: (response) => response.data,
