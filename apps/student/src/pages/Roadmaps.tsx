@@ -7,7 +7,6 @@ import { RoadmapsTabContent } from "../components";
 
 import useSkillsQuery from "../queries/useSkillsQuery";
 
-// TODO rename every interest to skill
 const Roadmaps = () => {
   const { theme } = useAppTheme();
   const [value, setValue] = useState(0);
