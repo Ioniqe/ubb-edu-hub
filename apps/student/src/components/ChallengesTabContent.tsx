@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { Topic } from "../types";
 import { Filters } from "./Filters";
@@ -14,9 +14,13 @@ export const ChallengesTabContent = ({
   interest,
   filters,
 }: ChallengesTabContentProps) => {
-  const { theme } = useAppTheme();
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
-  const { data: challenges, isLoading } = useChallengesQuery(interest);
+  const { theme } = useAppTheme();
+  const { data: challenges, isLoading } = useChallengesQuery(
+    interest,
+    selectedFilter?.toLowerCase().split(" ").join("_") ?? undefined
+  );
 
   if (!challenges && !isLoading) {
     return null;
@@ -24,7 +28,11 @@ export const ChallengesTabContent = ({
 
   return (
     <Box width={"100%"} height={"100%"}>
-      <Filters filters={filters} />
+      <Filters
+        filters={filters}
+        selectedFilter={selectedFilter}
+        setSelectedFilter={setSelectedFilter}
+      />
 
       {isLoading ? (
         <LoadingScreen />

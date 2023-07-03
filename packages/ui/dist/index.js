@@ -19517,7 +19517,7 @@ var Board = ({ label, labelColor, children }) => {
   const containerRef = (0, import_react13.useRef)(null);
   const { theme } = useAppTheme();
   const color2 = (0, import_react13.useMemo)(
-    () => labelColor != null ? labelColor : theme.palette.primary.main,
+    () => labelColor && labelColor.length > 0 ? labelColor : theme.palette.primary.main,
     [labelColor, theme]
   );
   (0, import_react13.useEffect)(

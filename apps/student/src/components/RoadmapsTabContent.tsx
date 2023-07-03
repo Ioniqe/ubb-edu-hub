@@ -8,7 +8,6 @@ type RoadmapsTabContentProps = {
 };
 
 export const RoadmapsTabContent = ({ skill }: RoadmapsTabContentProps) => {
-  // TODO fetch progress details for given interest + progress overall!!
   const ref = useRef<HTMLDivElement>(null);
 
   const [height, setHeight] = useState(500);

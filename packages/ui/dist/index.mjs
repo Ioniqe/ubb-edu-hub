@@ -19497,7 +19497,7 @@ var Board = ({ label, labelColor, children }) => {
   const containerRef = useRef21(null);
   const { theme } = useAppTheme();
   const color2 = useMemo6(
-    () => labelColor != null ? labelColor : theme.palette.primary.main,
+    () => labelColor && labelColor.length > 0 ? labelColor : theme.palette.primary.main,
     [labelColor, theme]
   );
   useEffect16(

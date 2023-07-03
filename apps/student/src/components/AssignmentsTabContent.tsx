@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { Topic } from "../types";
 import { Filters } from "./Filters";
@@ -17,13 +17,17 @@ export const AssignmentsTabContent = ({
   interest,
   filters,
 }: AssignmentsTabContentProps) => {
-  const { theme } = useAppTheme();
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
+  const { theme } = useAppTheme();
   const {
     data: assignments,
     isLoading,
     refetch,
-  } = useAssigmentsQuery(interest, filters);
+  } = useAssigmentsQuery(
+    interest,
+    selectedFilter?.toLowerCase().split(" ").join("_") ?? undefined
+  );
 
   const completeAssignmentMutation = useMutation(
     ["updateAssignment"],
@@ -52,7 +56,11 @@ export const AssignmentsTabContent = ({
 
   return (
     <Box width={"100%"} height={"100%"}>
-      <Filters filters={filters} />
+      <Filters
+        filters={filters}
+        selectedFilter={selectedFilter}
+        setSelectedFilter={setSelectedFilter}
+      />
 
       {isLoading ? (
         <LoadingScreen />
